@@ -8,7 +8,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import './css/catanBoard.css';
+import './css/board2.scss';
 
 class CatanBoard extends React.Component {
     static propTypes = {
@@ -63,10 +63,141 @@ class CatanBoard extends React.Component {
 
         return (
             <div>
-                <table id="board">
-                    <tbody>{tbody}</tbody>
-                </table>
-                {winner}
+                <ol className="even">
+                    <li className='hex spacer'></li>
+                    <li className='hex water'></li>
+                    <li className='hex water'>
+                        <div className='harbor two-one wood'>
+                            <div className='harbor-piece br'></div>
+                        </div>
+                    </li>
+                    <li className='hex water'></li>
+                    <li className='hex water'>
+                        <div className='harbor three-one wood'>
+                            <div className='harbor-piece bl'></div>
+                        </div>
+                    </li>
+                </ol>
+
+                <ol className="odd">
+                    <li className='hex spacer'></li>
+                    <li className='hex water'>
+                        <div className='harbor three-one sheep'>
+                            <div className='harbor-piece br'></div>
+                        </div>
+                    </li>
+                    <li className='hex wheat'>
+                        <div className='number two'></div>
+                    </li>
+                    <li className='hex wood'>
+                        <div className='number three'></div>
+                    </li>
+                    <li className='hex wheat'>
+                        <div className='number three'></div>
+
+                    </li>
+                    <li className='hex water'></li>
+                </ol>
+
+                <ol className="even">
+                    <li className='hex water'></li>
+                    <li className='hex coal'>
+                        <div className='number four'></div>
+                    </li>
+                    <li className='hex sheep'>
+                        <div className='number four'></div>
+                    </li>
+                    <li className='hex wood'>
+                        <div className='number five'></div>
+                    </li>
+                    <li className='hex sheep'>
+                        <div className='number five'></div>
+                    </li>
+                    <li className='hex water'>
+                        <div className='harbor three-one brick'>
+                            <div className='harbor-piece l'></div>
+                        </div>
+                    </li>
+                </ol>
+
+                <ol className="odd">
+                    <li className='hex water'>
+                        <div className='harbor three-one sheep'>
+                            <div className='harbor-piece r'></div>
+                        </div>
+                    </li>
+                    <li className='hex sheep'>
+                        <div className='number six'></div>
+                    </li>
+                    <li className='hex wheat'>
+                        <div className='number six'></div>
+                    </li>
+                    <li className='hex wood'>
+                        <div className='number eight robber'></div>
+                    </li>
+                    <li className='hex brick'>
+                        <div className='number eight'></div>
+                    </li>
+                    <li className='hex brick'>
+                        <div className='number nine'></div>
+                    </li>
+                    <li className='hex water'>
+
+                    </li>
+                </ol>
+                <ol className="even">
+                    <li className='hex water'></li>
+                    <li className='hex coal'>
+                        <div className='number nine'></div>
+                    </li>
+                    <li className='hex brick'>
+                        <div className='number ten'></div>
+                    </li>
+                    <li className='hex wood'>
+                        <div className='house tl target'></div>
+                        <div className='number ten'></div>
+                    </li>
+                    <li className='hex sheep'>
+                        <div className='number eleven'></div>
+                    </li>
+                    <li className='hex water'>
+                        <div className='harbor three-one brick'>
+                            <div className='harbor-piece l'></div>
+                        </div>
+                    </li>
+                </ol>
+                <ol className="odd">
+                    <li className='hex spacer'></li>
+                    <li className='hex water'>
+                        <div className='harbor two-one any'>
+                            <div className='harbor-piece tr'></div>
+                        </div>
+                    </li>
+                    <li className='hex sand'></li>
+                    <li className='hex coal'>
+                        <div className='number twelve'></div>
+                    </li>
+                    <li className='hex wheat'>
+                        <div className='number eight'></div>
+                    </li>
+                    <li className='hex water'>
+                    </li>
+                </ol>
+                <ol className="even">
+                    <li className='hex spacer'></li>
+                    <li className='hex water'></li>
+                    <li className='hex water'>
+                        <div className='harbor two-one any'>
+                            <div className='harbor-piece tr'></div>
+                        </div>
+                    </li>
+                    <li className='hex water'></li>
+                    <li className='hex water'>
+                        <div className='harbor three-one wood'>
+                            <div className='harbor-piece tl'></div>
+                        </div>
+                    </li>
+                </ol>
             </div>
         );
     }

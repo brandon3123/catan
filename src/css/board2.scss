@@ -1,0 +1,541 @@
+
+$hex-size: 75px; // Only change size here. Best used with sizes from 5em - 10em.
+
+$number-size: 45px;
+
+
+/* ----------------------------------------- */
+.container {
+  position: relative;
+  width: 1200px;
+  line-height: 1.3;
+}
+ol.even {
+  position: relative;
+  left: ($hex-size / 1.1);
+}
+ol.odd {
+  position: relative;
+  margin-top: -78px;
+  margin-bottom: -80px;
+}
+
+/* ----------------------------------------- */
+/* begin base hex */
+.hex {
+  position: relative;
+  margin: 25px auto;
+  width: $hex-size;
+  height: ($hex-size * 1.7);
+  border-radius: 5px;
+  background: #ccc;
+  transform: rotate(-90deg);
+  display: inline-block;
+  margin-right: 60px;
+  transition: all 150ms ease-in-out;
+}
+.hex:before, .hex:after {
+  position: absolute;
+  width: inherit; height: inherit;
+  border-radius: inherit;
+  background: inherit;
+  content: '';
+}
+.hex:hover {
+  cursor: pointer;
+}
+
+.hex:before {
+  transform: rotate(60deg);
+}
+.hex:after {
+  transform: rotate(-60deg);
+}
+
+/* end base hex */
+/* ----------------------------------------- */
+
+
+
+/* ----------------------------------------- */
+/* begin types of hexs */
+.hex.spacer {
+  opacity: 0;
+}
+
+.hex.water {
+  background-image: url("water3.png");
+  background-repeat: no-repeat, repeat;
+  background-position: center; /* Center the image */
+  background-size: cover; /* Resize the background image to cover the entire container */
+  //background-color: rgb(142, 142, 231);
+}
+
+
+.hex.sand {
+  background-image: url("sand.png");
+  background-repeat: no-repeat, repeat;
+  background-position: center; /* Center the image */
+  background-size: cover; /* Resize the background image to cover the entire container */
+}
+
+.hex.sheep {
+  background-image: url("sheep2.png");
+  background-repeat: no-repeat, repeat;
+  background-position: center; /* Center the image */
+  background-size: cover; /* Resize the background image to cover the entire container */
+  //background-color: green;
+}
+
+.hex.coal {
+  background-image: url("ore.png");
+  background-repeat: no-repeat, repeat;
+  background-position: center; /* Center the image */
+  background-size: cover; /* Resize the background image to cover the entire container */
+}
+
+.hex.wheat {
+  background-image: url("wheat3.png");
+  background-repeat: no-repeat, repeat;
+  background-position: center; /* Center the image */
+  background-size: cover; /* Resize the background image to cover the entire container */
+}
+
+.hex.brick {
+  background-image: url("brick5.png");
+  background-repeat: no-repeat, repeat;
+  background-position: center; /* Center the image */
+  background-size: cover; /* Resize the background image to cover the entire container */
+}
+
+.hex.wood {
+  background-image: url("wood4.png");
+  background-repeat: no-repeat, repeat;
+  background-position: center; /* Center the image */
+  background-size: cover; /* Resize the background image to cover the entire container */
+  //background-color: brown;
+}
+
+/* end types of hexs */
+/* ----------------------------------------- */
+
+/* ----------------------------------------- */
+/* begin roads */
+
+.road {
+  border-radius: 3px;
+  background-color: red;
+  position: absolute;
+  width: 9px;
+  height: 58px;
+  z-index: 150;
+}
+
+.road.target {
+  background-color: transparent;
+  position: absolute;
+  border: 2px dashed black;
+}
+
+.road.target:hover {
+  background-color: yellow;
+}
+
+
+.road.l {
+  right: 33px;
+  bottom: 104px;
+  transform: rotate(90deg);
+}
+.road.tl {
+  left: 94px;
+  top: 1px;
+  transform: rotate(150deg);
+}
+.road.tr {
+  left: 93px;
+  top: 69px;
+  transform: rotate(30deg);
+}
+
+/* end roads */
+/* ----------------------------------------- */
+
+/* ----------------------------------------- */
+/* begin harbors */
+.harbor {
+  position: absolute;
+  left:45px;
+  top: 0px;
+  text-align: center;
+  transform: rotate(90deg);
+  z-index: 600;
+}
+
+.harbor::before, .harbor::after {
+  font-size: 20px;
+  line-height: 25px;
+  height:25px;
+  width: 125px;
+}
+
+.harbor::before {
+  top:-15px;
+  position: absolute;
+}
+.harbor::after {
+  top: 10px;
+  position: absolute;
+}
+
+.harbor-piece {
+  border-radius: 7px;
+  background-color: #f8ffa6;
+  position: absolute;
+  width: 15px;
+  height: 75px;
+  z-index: 150;
+}
+
+.harbor-piece.tl {
+  top: -74px;
+  left: 30px;
+  transform: rotate(60deg);
+}
+
+.harbor-piece.l {
+  top: -29px;
+  left: 5px;
+  transform: rotate(180deg);
+}
+
+.harbor-piece.bl {
+  top: 13px;
+  left: 30px;
+  transform: rotate(120deg);
+}
+
+.harbor-piece.tr {
+  top: -73px;
+  left: 80px;
+  transform: rotate(300deg);
+}
+
+.harbor-piece.r {
+  top: -31px;
+  left: 105px;
+  transform: rotate(360deg);
+}
+
+.harbor-piece.br {
+  top: 13px;
+  left: 80px;
+  transform: rotate(240deg);
+}
+
+.harbor.two-one::before { content: "2:1";  font-weight: 600; color:yellow;}
+.harbor.three-one::before { content: "3:1";  font-weight: 600; color:yellow;}
+.harbor.any::after { content: "any";  font-weight: 600; color:yellow;}
+.harbor.wood::after { content: "wood";  font-weight: 600; color:yellow;}
+.harbor.coal::after { content: "coal";    font-weight: 600; color:yellow;}
+.harbor.sheep::after { content: "sheep";    font-weight: 600; color:yellow;}
+.harbor.brick::after { content: "brick";    font-weight: 600; color:yellow;}
+.harbor.wheat::after { content: "wheat";    font-weight: 600; color:yellow;}
+
+
+/* end harbors */
+/* ----------------------------------------- */
+
+
+/* ----------------------------------------- */
+/* begin numbers */
+
+
+.hex .number {
+  position: absolute;
+  font-size: 25px;
+  line-height: ($number-size - 5);
+  text-align: center;
+  z-index: 200;
+  height: $number-size;
+  width: $number-size;
+  border-radius: $number-size;
+  border: 2px solid black;
+  top: 42px;
+  left: 18px;
+  transform: rotate(90deg);
+  background-color: white;
+}
+.hex .number::after {
+  position: absolute;
+  font-size: 25px;
+  line-height: ($number-size - 5);
+  text-align: center;
+  z-index: 500;
+  height: $number-size;
+  width: $number-size;
+  top: 8px;
+  left: 0px;
+}
+
+.hex .number.robber {
+  opacity: .2;
+  border: 2px dotted;
+}
+
+.hex .number.two::before { content: "2";  font-weight: bold;}
+.hex .number.two::after { content: ".";  font-weight: bold;}
+
+.hex .number.three::before { content: "3";  font-weight: bold;}
+.hex .number.three::after { content: "..";  font-weight: bold;}
+
+
+.hex .number.four::before { content: "4";  font-weight: bold;}
+.hex .number.four::after { content: "...";  font-weight: bold;}
+
+
+.hex .number.five::before { content: "5";  font-weight: bold;}
+.hex .number.five::after { content: "....";  font-weight: bold;}
+
+
+.hex .number.six::before { content: "6"; color: red; font-weight: bold;}
+.hex .number.six::after { content: "....."; color: red;  font-weight: bold;}
+
+
+.hex .number.eight::before { content: "8"; color: red;  font-weight: bold;}
+.hex .number.eight::after { content: "....."; color: red;  font-weight: bold;}
+
+.hex .number.nine::before { content: "9";  font-weight: bold;}
+.hex .number.nine::after { content: "....";  font-weight: bold;}
+
+.hex .number.ten::before { content: "10";  font-weight: bold;}
+.hex .number.ten::after { content: "...";  font-weight: bold;}
+
+.hex .number.eleven::before { content: "11";  font-weight: bold;}
+.hex .number.eleven::after { content: "..";  font-weight: bold;}
+
+.hex .number.twelve::before { content: "12";  font-weight: bold;}
+.hex .number.twelve::after { content: ".";  font-weight: bold;}
+
+
+/* end numbers */
+/* ----------------------------------------- */
+
+
+
+/* ----------------------------------------- */
+/* begin houses */
+.hex .house {
+  border-top: 2px solid black;
+  border-left: 2px solid black;
+  border-bottom: 2px solid black;
+  height: 20px;
+  width: 20px;
+  position: absolute;
+  z-index:800;
+}
+.hex .house::before {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  transform: rotate(90deg);
+  content: "";
+  position: absolute;
+}
+
+/* roof of the house */
+.hex .house::before {
+  top: 4px;
+  left: 14px;
+  border-width: 0 12px 12px 12px;
+  border-color: transparent transparent #000000 transparent;
+}
+
+
+.hex .house.target {
+  background-color: red;
+  border: 3px dashed black;
+}
+
+.hex .house.target:hover {
+  background-color: yellow;
+}
+
+.hex .house.target::before {
+  display: none;
+}
+
+.hex .house.tl.target {
+
+}
+
+.hex .house.tr.target {
+
+}
+
+
+.hex .house.t {
+  top: 55px;
+  left: 100px;
+}
+
+.hex .house.tl {
+  top: -15px;
+  left: 65px;
+}
+
+.hex .house.tr {
+  left: 93px;
+  top: 69px;
+}
+/* end  houses */
+/* ----------------------------------------- */
+
+/* ----------------------------------------- */
+/* begin cities */
+.hex .city {
+  border-top: 2px solid black;
+  border-left: 2px solid black;
+  border-bottom: 2px solid black;
+  height: 20px;
+  width: 30px;
+  position: absolute;
+  z-index:800;
+
+}
+.hex .city::before {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  transform: rotate(90deg);
+  content: "";
+  position: absolute;
+}
+
+.hex .city::after {
+  content: "";
+  width: 20px;
+  height: 40px;
+  top: -2px;
+  left:-2px;
+  position: absolute;
+  border: 2px solid black;
+  background-color: inherit;
+}
+
+.hex .city::before {
+  top: 4px;
+  left: 24px;
+  border-width: 0 12px 12px 12px;
+  border-color: transparent transparent #000000 transparent;
+}
+
+
+.hex .city.t {
+  top: 55px;
+  left: 100px;
+}
+
+.hex .city.tl {
+  top: -15px;
+  left: 65px;
+
+}
+/* end cities */
+/* ----------------------------------------- */
+
+
+/* TODO: finish the colors */
+.hex .city.red { background-color: #ff0000;}
+.hex .house.red { background-color: #ff0000;}
+.hex .city.blue { background-color: #0000ff;}
+.hex .house.blue { background-color: #0000ff;}
+
+
+.roster {
+  border-radius: 7px;
+  height: 195px;
+  width: 300px;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  background-color: rgb(243, 226, 138);
+}
+
+.player-roster-list {
+  margin: 0px;
+  padding: 2px;
+}
+
+.player-roster.current-player {
+  border-right: 4px solid black;
+  border-left: 4px solid black;
+}
+
+.player-roster {
+  display: block;
+  left: 0px;
+  right: 0px;
+  border-radius: 5px;
+  margin: 5px;
+  padding: 2px;
+  background-color:red;
+  position: relative;
+}
+.player-roster .points {
+  right: 15px;
+  top: 2px;
+  position: absolute;
+  border-radius: 5px;
+
+}
+.player-roster .points::after {
+  content: " points";
+}
+
+.roster-card-bank {
+  margin-left: 20px;
+}
+
+.roster-card-stack {
+  float: left;
+  margin: 0px;
+  padding: 0px;
+  margin-right: 20px;
+}
+
+.roster-card {
+  display: block;
+  height: 30px;
+  width: 20px;
+  border: 1px solid black;
+  border-radius: 5px;
+  float:left;
+  margin-left: -15px;
+  background-color: rgb(231, 222, 206);
+}
+
+.clear { clear: both; }
+
+
+.red { background: linear-gradient(to bottom, #ff3019 0%,#cf0404 100%); }
+.white { background: linear-gradient(to bottom, #fcfff4 0%,#dfe5d7 40%,#b3bead 100%); }
+.blue { background: linear-gradient(to bottom, #49c0f0 0%,#2cafe3 100%); }
+
+.action-prompt {
+  position: absolute;
+  top: 0px;
+  left: 50%;
+  margin-left: -200px;
+  width: 400px;
+  height: 50px;
+  border: 1px solid black;
+  background: linear-gradient(to bottom, #ffd65e 0%,#febf04 100%);
+  line-height: 50px;
+  z-index:1;
+  color: white;
+  font-weight: 700;
+  text-align: center;
+  border-radius: 10px;
+  opacity: .85;
+}
