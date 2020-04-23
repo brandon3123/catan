@@ -8,7 +8,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import './css/board2.scss';
+import './css/catan-board.scss';
 
 class CatanBoard extends React.Component {
     static propTypes = {
@@ -218,6 +218,16 @@ class CatanBoard extends React.Component {
         let sixthRow = this.renderSecondRow(tiles, tileValues);
         let lastRow = this.renderLastRow(tiles, tileValues);
 
+        // this.props.G.rows = [
+        //     {firstRow},
+        //     {secondRow},
+        //     {thirdRow},
+        //     {fourthRow},
+        //     {fifthRow},
+        //     {sixthRow},
+        //     {lastRow},
+        // ];
+
         let winner = null;
         if (this.props.ctx.gameover) {
             winner =
@@ -230,6 +240,7 @@ class CatanBoard extends React.Component {
 
         return (
             <div>
+                <button onClick={this.props.moves.determinePlayerOrder}>here</button>
                 {firstRow}
                 {secondRow}
                 {thirdRow}
