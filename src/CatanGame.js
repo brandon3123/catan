@@ -16,7 +16,6 @@ const Catan = {
 
     setup: () => ({
         playerOrder:[],
-        numPlayers: 3,
         rows: []
     }),
 
