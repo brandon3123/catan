@@ -1,18 +1,11 @@
 import { Client } from 'boardgame.io/react';
 import CatanBoard from './CatanBoard';
-
-const Catan = {
-  setup: () => ({ cells: Array(9).fill(null) }),
-
-  moves: {
-    clickCell: (G, ctx, id) => {
-      G.cells[id] = ctx.currentPlayer;
-    },
-  },
-};
+import Catan from "./CatanGame";
 
 const App = Client({
   game: Catan,
-  board: CatanBoard});
+  board: CatanBoard,
+  numPlayers:4
+});
 
 export default App;
