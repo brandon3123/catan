@@ -240,7 +240,6 @@ class CatanBoard extends React.Component {
 
         return (
             <div>
-                <button onClick={this.props.moves.determinePlayerOrder}>here</button>
                 {firstRow}
                 {secondRow}
                 {thirdRow}
