@@ -1,13 +1,6 @@
-/*
- * Copyright 2017 The boardgame.io Authors.
- *
- * Use of this source code is governed by a MIT-style
- * license that can be found in the LICENSE file or at
- * https://opensource.org/licenses/MIT.
- */
-
 import React from 'react';
 import PropTypes from 'prop-types';
+import Tile from './components/Tile';
 import './css/catan-board.scss';
 
 class CatanBoard extends React.Component {
@@ -21,39 +14,35 @@ class CatanBoard extends React.Component {
     };
 
     renderFirstRow() {
-        return<ol className="even">
-                <li className='hex spacer'></li>
-                <li className='hex water'></li>
-                <li className='hex water'>
-                    <div className='harbor two-one wood'>
-                        <div className='harbor-piece br'></div>
-                    </div>
-                </li>
-                <li className='hex water'></li>
-                <li className='hex water'>
-                    <div className='harbor three-one wood'>
-                        <div className='harbor-piece bl'></div>
-                    </div>
-                </li>
-            </ol>
+        return <ol className="even">
+            <Tile type={'spacer'}/>
+            <Tile type={'water'}/>
+            <Tile
+                type={'water'}
+                harborType={'two-one wood'}
+                harborPiece={'br'}/>
+            <Tile type={'water'}/>
+            <Tile
+                type={'water'}
+                harborType={'three-one wood'}
+                harborPiece={'bl'}/>
+        </ol>
     };
 
     renderLastRow() {
         return (
             <ol className="even">
-                <li className='hex spacer'></li>
-                <li className='hex water'></li>
-                <li className='hex water'>
-                    <div className='harbor two-one any'>
-                        <div className='harbor-piece tr'></div>
-                    </div>
-                </li>
-                <li className='hex water'></li>
-                <li className='hex water'>
-                    <div className='harbor three-one wood'>
-                        <div className='harbor-piece tl'></div>
-                    </div>
-                </li>
+                <Tile type={'spacer'}/>
+                <Tile type={'water'}/>
+                <Tile
+                    type={'water'}
+                    harborType={'two-one any'}
+                    harborPiece={'tr'}/>
+                <Tile type={'water'}/>
+                <Tile
+                    type={'water'}
+                    harborType={'three-one wood'}
+                    harborPiece={'tl'}/>
             </ol>
         )
     }
@@ -64,17 +53,16 @@ class CatanBoard extends React.Component {
         let thirdTile = this.resolveTileType(tiles, tileValues);
 
         return <ol className="odd">
-                <li className='hex spacer'></li>
-                <li className='hex water'>
-                    <div className='harbor three-one sheep'>
-                        <div className='harbor-piece br'></div>
-                    </div>
-                </li>
-                {firstTile}
-                {secondTile}
-                {thirdTile}
-                <li className='hex water'></li>
-            </ol>
+            <Tile type={'spacer'}/>
+            <Tile
+                type={'water'}
+                harborType={'three-one sheep'}
+                harborPiece={'br'}/>
+            {firstTile}
+            {secondTile}
+            {thirdTile}
+            <Tile type={'water'}/>
+        </ol>
 
     }
 
@@ -85,17 +73,16 @@ class CatanBoard extends React.Component {
         let fourthTile = this.resolveTileType(tiles, tileValues);
 
         return <ol className="even">
-                <li className='hex water'></li>
+            <Tile type={'water'}/>
             {firstTile}
             {secondTile}
             {thirdTile}
             {fourthTile}
-                <li className='hex water'>
-                    <div className='harbor three-one brick'>
-                        <div className='harbor-piece l'></div>
-                    </div>
-                </li>
-            </ol>
+            <Tile
+                type={'water'}
+                harborType={'three-one brick'}
+                harborPiece={'l'}/>
+        </ol>
     }
 
     renderFourthRow(tiles, tileValues) {
@@ -108,19 +95,16 @@ class CatanBoard extends React.Component {
 
         return (
             <ol className="odd">
-                <li className='hex water'>
-                    <div className='harbor three-one sheep'>
-                        <div className='harbor-piece r'></div>
-                    </div>
-                </li>
+                <Tile
+                    type={'water'}
+                    harborType={'three-one sheep'}
+                    harborPiece={'r'}/>
                 {firstTile}
                 {secondTile}
                 {thirdTile}
                 {fourthTile}
                 {fifthTile}
-                <li className='hex water'>
-
-                </li>
+                <Tile type={'water'}/>
             </ol>
         )
     }
@@ -129,11 +113,11 @@ class CatanBoard extends React.Component {
         let index = Math.floor(Math.random() * tiles.length);
         let tileData = tiles[index];
 
-        let tile;
+        let type;
 
-        while (!tile) {
+        while (!type) {
             if (tileData.used < tileData.max) {
-                tile = tileData.type;
+                type = tileData.type;
                 tileData.used++;
             } else {
                 index = Math.floor(Math.random() * tiles.length);
@@ -141,18 +125,11 @@ class CatanBoard extends React.Component {
             }
         }
 
-        if (tile === ('sand')) {
-            let tileClass = 'hex ' + tile;
-
-            return <li className={tileClass}></li>
+        if (type === ('sand')) {
+            return <Tile type={type}></Tile>
         } else {
-            let numberClass = 'number ' + this.resolveTileValue(tiles, tileValues);
-            let tileClass = 'hex ' + tile;
-
-            return <li className={tileClass}>
-                <div className={numberClass}></div>
-            </li>
-
+            return <Tile type={type}
+                         value={this.resolveTileValue(tiles, tileValues)}/>
         }
     }
 
@@ -188,26 +165,26 @@ class CatanBoard extends React.Component {
     }
 
     render() {
-        let tiles =  [
-            {used:0, max: 4, type: 'sheep'},
-            {used:0, max: 4, type: 'wood'},
-            {used:0, max: 4, type: 'wheat'},
-            {used:0, max: 4, type: 'coal'},
-            {used:0, max: 4, type: 'brick'},
-            {used:0, max: 1, type: 'sand'}
+        let tiles = [
+            {used: 0, max: 4, type: 'sheep'},
+            {used: 0, max: 4, type: 'wood'},
+            {used: 0, max: 4, type: 'wheat'},
+            {used: 0, max: 4, type: 'coal'},
+            {used: 0, max: 4, type: 'brick'},
+            {used: 0, max: 1, type: 'sand'}
         ]
 
         let tileValues = [
-            {used: 0, max: 2, value:'two'},
-            {used: 0, max: 2, value:'three'},
-            {used: 0, max: 2, value:'four'},
-            {used: 0, max: 2, value:'five'},
-            {used: 0, max: 2, value:'six'},
-            {used: 0, max: 2, value:'eight'},
-            {used: 0, max: 2, value:'nine'},
-            {used: 0, max: 2, value:'ten'},
-            {used: 0, max: 2, value:'eleven'},
-            {used: 0, max: 2, value:'twelve'}
+            {used: 0, max: 2, value: 'two'},
+            {used: 0, max: 2, value: 'three'},
+            {used: 0, max: 2, value: 'four'},
+            {used: 0, max: 2, value: 'five'},
+            {used: 0, max: 2, value: 'six'},
+            {used: 0, max: 2, value: 'eight'},
+            {used: 0, max: 2, value: 'nine'},
+            {used: 0, max: 2, value: 'ten'},
+            {used: 0, max: 2, value: 'eleven'},
+            {used: 0, max: 2, value: 'twelve'}
         ]
 
         let firstRow = this.renderFirstRow(tiles, tileValues);
@@ -217,16 +194,6 @@ class CatanBoard extends React.Component {
         let fifthRow = this.renderThirdRow(tiles, tileValues);
         let sixthRow = this.renderSecondRow(tiles, tileValues);
         let lastRow = this.renderLastRow(tiles, tileValues);
-
-        // this.props.G.rows = [
-        //     {firstRow},
-        //     {secondRow},
-        //     {thirdRow},
-        //     {fourthRow},
-        //     {fifthRow},
-        //     {sixthRow},
-        //     {lastRow},
-        // ];
 
         let winner = null;
         if (this.props.ctx.gameover) {

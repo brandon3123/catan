@@ -8,7 +8,16 @@ function determinePlayerOrder(ctx) {
     return ctx.playOrder.sort(() => Math.random() - 0.5);
 }
 
-function rollDice(G, ctx) {
+function placeSettlement(G, ctx) {
+}
+
+function placeRoad(G, ctx) {
+}
+
+function showAllBuildingLocations(G, ctx) {
+}
+
+function hideAllBuildingLocations(G, ctx) {
 }
 
 const Catan = {
@@ -35,20 +44,23 @@ const Catan = {
         }
     },
 
-    // phases: {
-    //     whoGoesFirst: {
-    //         moves: {
-    //             determinePlayerOrder: determinePlayerOrder
-    //         },
-    //         endIf: (G, ctx) => G.playerOrder.length > 0,
-    //         next: "play",
-    //         start: true
-    //     },
-    //
-    //     play: {
-    //         endIf: G => G.points == 10
-    //     }
-    // }
+    phases: {
+        initialPiecePlacement: {
+            onBegin: showAllBuildingLocations,
+            onEnd: hideAllBuildingLocations,
+            moves: {
+                placeSettlement: placeSettlement,
+                placeRoad: placeRoad,
+            },
+            // endIf: (G, ctx) => G.playerOrder.length > 0,
+            next: "collectResources",
+            start: true
+        },
+
+        collectResources: {
+            endIf: G => G.points == 10
+        }
+    }
 }
 
 export default Catan;
