@@ -1,4 +1,3 @@
-import {TurnOrder} from "boardgame.io/core";
 import {Ctx} from "boardgame.io";
 
 /*
@@ -23,9 +22,19 @@ function hideAllBuildingLocations(G, ctx) {
 const Catan = {
     name: "Catan",
 
-    // setup: (ctx) => ({
-    //     rows: [],
-    // }),
+    setup: () => ({
+        place: [],
+        board: [
+            [[],[],[],[]],
+            [[],[],[],[],[]],
+            [[],[],[],[],[],[]],
+            [[],[],[],[],[],[],[]],
+            [[],[],[],[],[],[]],
+            [[],[],[],[],[]],
+            [[],[],[],[]],
+        ],
+        tiles: new Map()
+    }),
 
     turn: {
         order: {
@@ -44,23 +53,29 @@ const Catan = {
         }
     },
 
-    phases: {
-        initialPiecePlacement: {
-            onBegin: showAllBuildingLocations,
-            onEnd: hideAllBuildingLocations,
-            moves: {
-                placeSettlement: placeSettlement,
-                placeRoad: placeRoad,
-            },
-            // endIf: (G, ctx) => G.playerOrder.length > 0,
-            next: "collectResources",
-            start: true
-        },
-
-        collectResources: {
-            endIf: G => G.points == 10
-        }
+    moves: {
+      test(G, ctx, id) {
+          G.place[0] = G.tiles.get(id).props.value;
+      }
     }
+
+    // phases: {
+    //     initialPiecePlacement: {
+    //         onBegin: showAllBuildingLocations,
+    //         onEnd: hideAllBuildingLocations,
+    //         moves: {
+    //             placeSettlement: placeSettlement,
+    //             placeRoad: placeRoad,
+    //         },
+    //         // endIf: (G, ctx) => G.playerOrder.length > 0,
+    //         next: "collectResources",
+    //         start: true
+    //     },
+    //
+    //     collectResources: {
+    //         endIf: G => G.points == 10
+    //     }
+    // }
 }
 
 export default Catan;
