@@ -1,4 +1,6 @@
 import {Ctx} from "boardgame.io";
+import React from 'react';
+import {generateBoardJson} from "./utilities/CreateBoardUtils";
 
 /*
  Function to randomize the player turn order
@@ -23,17 +25,8 @@ const Catan = {
     name: "Catan",
 
     setup: () => ({
-        place: [],
-        board: [
-            [[],[],[],[]],
-            [[],[],[],[],[]],
-            [[],[],[],[],[],[]],
-            [[],[],[],[],[],[],[]],
-            [[],[],[],[],[],[]],
-            [[],[],[],[],[]],
-            [[],[],[],[]],
-        ],
-        tiles: new Map()
+        place:[],
+        boardData: generateBoardJson(),
     }),
 
     turn: {
@@ -54,9 +47,14 @@ const Catan = {
     },
 
     moves: {
-      test(G, ctx, id) {
-          G.place[0] = G.tiles.get(id).props.value;
-      }
+        buildStructure: {
+            move: (G, ctx, id) => {
+                let tile = G.boardData.tiles.get(id);
+                tile.structure = 'house';
+                tile.structureColor = 'red';
+                G.place[0] = {value: tile.value, type: tile.type};
+            }
+        }
     }
 
     // phases: {

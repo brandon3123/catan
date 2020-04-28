@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 
 class Tile extends React.Component {
     constructor(props) {
@@ -12,11 +12,12 @@ class Tile extends React.Component {
                 className={'hex ' + this.props.type}>
                 {this.tileValue()}
                 {this.harborType()}
-                {/*<div className='house t target'></div>*/}
+                <div className={this.props.structure + ' t ' + this.props.structureColor} onClick={this.props.buildStructure}></div>
+                {/*<div className={this.props.structure + ' t ' + this.props.structureColor} onClick={this.props.buildStructure}></div>*/}
                 {/*<div className='house tl target'></div>*/}
             </li>
         )
-    }
+    };
 
     tileValue() {
         if (this.props.value) {
@@ -26,7 +27,7 @@ class Tile extends React.Component {
         } else {
             return null;
         }
-    }
+    };
 
     harborType() {
         if (this.props.harborType && this.props.harborPiece) {
@@ -38,7 +39,7 @@ class Tile extends React.Component {
         } else {
             return null;
         }
-    }
+    };
 }
 
 export default Tile;
