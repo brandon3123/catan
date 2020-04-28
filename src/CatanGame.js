@@ -1,6 +1,6 @@
 import {Ctx} from "boardgame.io";
 import React from 'react';
-import {generateBoardJson} from "./utilities/CreateBoardUtils";
+import {initializeBoardMetaData} from "./utilities/CreateBoardUtils";
 
 /*
  Function to randomize the player turn order
@@ -15,7 +15,11 @@ function placeSettlement(G, ctx) {
 function placeRoad(G, ctx) {
 }
 
-function showAllBuildingLocations(G, ctx) {
+function showAllBuildingLocations(G) {
+    let tiles = G.board.tiles.values();
+    for (let tile of tiles) {
+        tile.hideStructure = false;
+    }
 }
 
 function hideAllBuildingLocations(G, ctx) {
@@ -26,7 +30,7 @@ const Catan = {
 
     setup: () => ({
         place:[],
-        boardData: generateBoardJson(),
+        board: initializeBoardMetaData(),
     }),
 
     turn: {
@@ -47,33 +51,26 @@ const Catan = {
     },
 
     moves: {
-        buildStructure: {
-            move: (G, ctx, id) => {
-                let tile = G.boardData.tiles.get(id);
-                tile.structure = 'house';
-                tile.structureColor = 'red';
-                G.place[0] = {value: tile.value, type: tile.type};
-            }
+        buildStructure: (G, ctx, id) => {
+            let tile = G.board.tiles.get(id);
+            tile.structure = 'house';
+            tile.structureColor = 'red';
+            G.place[0] = {value: tile.value, type: tile.type};
+        }
+    },
+
+    phases: {
+        initialPiecePlacement: {
+            onBegin: (G) => showAllBuildingLocations(G),
+            onEnd: hideAllBuildingLocations,
+            // endIf: (G, ctx) => G.playerOrder.length > 0,
+            next: "distributeResources",
+            start: true
+        },
+
+        distributeResources: {
         }
     }
-
-    // phases: {
-    //     initialPiecePlacement: {
-    //         onBegin: showAllBuildingLocations,
-    //         onEnd: hideAllBuildingLocations,
-    //         moves: {
-    //             placeSettlement: placeSettlement,
-    //             placeRoad: placeRoad,
-    //         },
-    //         // endIf: (G, ctx) => G.playerOrder.length > 0,
-    //         next: "collectResources",
-    //         start: true
-    //     },
-    //
-    //     collectResources: {
-    //         endIf: G => G.points == 10
-    //     }
-    // }
 }
 
 export default Catan;

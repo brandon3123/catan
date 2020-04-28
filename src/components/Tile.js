@@ -8,11 +8,14 @@ class Tile extends React.Component {
     render() {
         return (
             <li tileId={this.props.id}
-                onClick={this.props.click}
                 className={'hex ' + this.props.type}>
                 {this.tileValue()}
                 {this.harborType()}
-                <div className={this.props.structure + ' t ' + this.props.structureColor} onClick={this.props.buildStructure}></div>
+                <div className={this.props.structure + ' t ' + this.props.structureColor}
+                     onClick={this.props.buildStructure}
+                     style={{visibility: this.props.hideStructure ? 'hidden' : 'visible'}}
+                />
+
                 {/*<div className={this.props.structure + ' t ' + this.props.structureColor} onClick={this.props.buildStructure}></div>*/}
                 {/*<div className='house tl target'></div>*/}
             </li>
