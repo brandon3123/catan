@@ -11,12 +11,8 @@ class Tile extends React.Component {
                 className={'hex ' + this.props.type}>
                 {this.tileValue()}
                 {this.harborType()}
-                <div className={this.props.structure + ' t ' + this.props.structureColor}
-                     onClick={this.props.buildStructure}
-                     style={{visibility: this.props.hideStructure ? 'hidden' : 'visible'}}
-                />
-
-                {/*<div className={this.props.structure + ' t ' + this.props.structureColor} onClick={this.props.buildStructure}></div>*/}
+                {this.topStructure()}
+                {this.leftStructure()}
                 {/*<div className='house tl target'></div>*/}
             </li>
         )
@@ -31,6 +27,24 @@ class Tile extends React.Component {
             return null;
         }
     };
+
+    topStructure() {
+        return (
+            <div className={this.props.topStructure + ' t ' + this.props.topStructureColor}
+                 onClick={this.props.buildStructure}
+                 style={{visibility: this.props.hideTopStructure ? 'hidden' : 'visible'}}
+            />
+        )
+    }
+
+    leftStructure() {
+        return (
+            <div className={this.props.leftStructure + ' tl ' + this.props.leftStructureColor}
+                 onClick={this.props.buildStructure}
+                 style={{visibility: this.props.hideLeftStructure ? 'hidden' : 'visible'}}
+            />
+        )
+    }
 
     harborType() {
         if (this.props.harborType && this.props.harborPiece) {

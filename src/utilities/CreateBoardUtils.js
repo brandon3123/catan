@@ -483,22 +483,23 @@ export const initializeBoardMetaData = () => {
                                  topLeftNeighbour,
                                  topRightNeighbour) {
 
-
-            let waterTile = {
-                id: uniqid(),
-                type: 'water',
-                value: null,
-                rowIndex: rowIndex,
-                tileIndex: tileIndex,
-                harborType: harborType,
-                harborPiece: harborPiece,
-                topRightNeighbour: topRightNeighbour,
-                topLeftNeighbour: topLeftNeighbour,
-                leftNeighbour: leftNeighbour,
-                structure: 'house',
-                structureColor: 'target',
-                hideStructure: true
-            }
+            let waterTile = tileJson(
+                rowIndex,
+                tileIndex,
+                'water',
+                null,
+                harborType,
+                harborPiece,
+                leftNeighbour,
+                topLeftNeighbour,
+                topRightNeighbour,
+                'house',
+                'target',
+                true,
+                'house',
+                'target',
+                true
+            );
 
             placeTileOnBoard(waterTile);
 
@@ -527,19 +528,23 @@ export const initializeBoardMetaData = () => {
                 }
             }
 
-            let tile = {
-                id: uniqid(),
-                type: type,
-                value: type !== 'sand' ? resolveTileValue(tiles, tileValues) : null,
-                rowIndex: rowIndex,
-                tileIndex: tileIndex,
-                topRightNeighbour: topRightNeighbour,
-                topLeftNeighbour: topLeftNeighbour,
-                leftNeighbour: leftNeighbour,
-                structure: 'house',
-                structureColor: 'target',
-                hideStructure: true
-            }
+            let tile = tileJson(
+                rowIndex,
+                tileIndex,
+                type,
+                resolveTileValue(tiles, tileValues),
+                null,
+                null,
+                leftNeighbour,
+                topLeftNeighbour,
+                topRightNeighbour,
+                'house',
+                'target',
+                true,
+                'house',
+                'target',
+                true
+            );
 
             placeTileOnBoard(tile);
 
@@ -570,6 +575,41 @@ export const initializeBoardMetaData = () => {
         function placeTileOnBoard(tile) {
             layout[tile.rowIndex][tile.tileIndex] = tile.id;
             tiles.set(tile.id, tile);
+        }
+
+        function tileJson(rowIndex,
+                          tileIndex,
+                          type,
+                          value,
+                          harborType,
+                          harborPiece,
+                          leftNeighbour,
+                          topLeftNeighbour,
+                          topRightNeighbour,
+                          topStructure,
+                          topStructureColor,
+                          hideTopStructure,
+                          leftStructure,
+                          leftStructureColor,
+                          hideLeftStructure) {
+            return {
+                id: uniqid(),
+                type: type,
+                value: type !== 'sand' ? value : null,
+                rowIndex: rowIndex,
+                tileIndex: tileIndex,
+                harborType: harborType,
+                harborPiece: harborPiece,
+                topRightNeighbour: topRightNeighbour,
+                topLeftNeighbour: topLeftNeighbour,
+                leftNeighbour: leftNeighbour,
+                topStructure: topStructure,
+                topStructureColor: topStructureColor,
+                hideTopStructure: hideTopStructure,
+                leftStructure: leftStructure,
+                leftStructureColor: leftStructureColor,
+                hideLeftStructure: hideLeftStructure
+            }
         }
 
     }

@@ -18,7 +18,8 @@ function placeRoad(G, ctx) {
 function showAllBuildingLocations(G) {
     let tiles = G.board.tiles.values();
     for (let tile of tiles) {
-        tile.hideStructure = false;
+        tile.hideTopStructure = false;
+        tile.hideLeftStructure = false;
     }
 }
 
@@ -53,8 +54,8 @@ const Catan = {
     moves: {
         buildStructure: (G, ctx, id) => {
             let tile = G.board.tiles.get(id);
-            tile.structure = 'house';
-            tile.structureColor = 'red';
+            tile.topStructure = 'house';
+            tile.topStructureColor = 'red';
             G.place[0] = {value: tile.value, type: tile.type};
         }
     },

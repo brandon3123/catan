@@ -98,10 +98,13 @@ class CatanBoard extends React.Component {
             topRightNeighbour={tileMetaData.topRightNeighbour}
             topLeftNeighbour={tileMetaData.topLeftNeighbour}
             leftNeighbour={tileMetaData.leftNeighbour}
-            structure={tileMetaData.structure}
-            structureColor={tileMetaData.structureColor}
+            topStructure={tileMetaData.topStructure}
+            topStructureColor={tileMetaData.topStructureColor}
+            hideTopStructure={tileMetaData.hideTopStructure}
+            leftStructure={tileMetaData.leftStructure}
+            leftStructureColor={tileMetaData.leftStructureColor}
+            hideLeftStructure={tileMetaData.leftStructureColor}
             buildStructure={() => this.buildStructure(tileMetaData.id)}
-            hideStructure={tileMetaData.hideStructure}
         />
     }
 }
