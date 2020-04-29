@@ -23,6 +23,20 @@ function showAllBuildingLocations(G) {
     }
 }
 
+function buildTopStructure(G, ctx, id, type){
+    let tile = G.board.tiles.get(id);
+    tile.topStructure = type;
+    tile.topStructureColor = 'red';
+    G.place[0] = {value: tile.value, type: tile.type};
+}
+
+function buildLeftStructure(G, ctx, id, type){
+    let tile = G.board.tiles.get(id);
+    tile.leftStructure = type;
+    tile.leftStructureColor = 'red';
+    G.place[0] = {value: tile.value, type: tile.type};
+}
+
 function hideAllBuildingLocations(G, ctx) {
 }
 
@@ -52,18 +66,18 @@ const Catan = {
     },
 
     moves: {
-        buildStructure: (G, ctx, id) => {
-            let tile = G.board.tiles.get(id);
-            tile.topStructure = 'house';
-            tile.topStructureColor = 'red';
-            G.place[0] = {value: tile.value, type: tile.type};
-        }
+        buildTopStructure: buildTopStructure,
+        buildLeftStructure: buildLeftStructure
     },
 
     phases: {
         initialPiecePlacement: {
             onBegin: (G) => showAllBuildingLocations(G),
             onEnd: hideAllBuildingLocations,
+            moves:{
+                buildTopStructure,
+                buildLeftStructure
+            },
             // endIf: (G, ctx) => G.playerOrder.length > 0,
             next: "distributeResources",
             start: true

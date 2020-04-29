@@ -80,8 +80,12 @@ class CatanBoard extends React.Component {
     }
 
 
-    buildStructure = (id) => {
-        this.props.moves.buildStructure(id);
+    buildLeftStructure = (id) => {
+        this.props.moves.buildLeftStructure(id, this.props.ctx.structureType);
+    };
+
+    buildTopStructure = (id) => {
+        this.props.moves.buildTopStructure(id, this.props.ctx.structureType);
     };
 
     createTileComponentFromTileMetaData(tileId) {
@@ -103,8 +107,9 @@ class CatanBoard extends React.Component {
             hideTopStructure={tileMetaData.hideTopStructure}
             leftStructure={tileMetaData.leftStructure}
             leftStructureColor={tileMetaData.leftStructureColor}
-            hideLeftStructure={tileMetaData.leftStructureColor}
-            buildStructure={() => this.buildStructure(tileMetaData.id)}
+            hideLeftStructure={tileMetaData.hideLeftStructure}
+            buildTopStructure={() => this.buildTopStructure(tileMetaData.id)}
+            buildLeftStructure={() => this.buildLeftStructure(tileMetaData.id)}
         />
     }
 }

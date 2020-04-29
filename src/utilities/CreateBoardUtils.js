@@ -56,6 +56,14 @@ export const initializeBoardMetaData = () => {
             let firstTile = createWaterTile(
                 0,
                 0,
+                'water',
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
                 null,
                 null,
                 null,
@@ -66,9 +74,17 @@ export const initializeBoardMetaData = () => {
             let secondTile = createWaterTile(
                 0,
                 1,
+                'water',
+                null,
                 'two-one wood',
                 'br',
                 firstTile,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
                 null,
                 null
             );
@@ -76,9 +92,15 @@ export const initializeBoardMetaData = () => {
             let thirdTile = createWaterTile(
                 0,
                 2,
-                null,
+                'water',
                 null,
                 secondTile,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
                 null,
                 null
             );
@@ -86,9 +108,17 @@ export const initializeBoardMetaData = () => {
             let fourthTile = createWaterTile(
                 0,
                 3,
+                'water',
+                null,
                 'three-one wood',
                 'bl',
                 thirdTile,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
                 null,
                 null
             );
@@ -106,11 +136,19 @@ export const initializeBoardMetaData = () => {
             let harborTile = createWaterTile(
                 1,
                 0,
+                'water',
+                null,
                 'three-one sheep',
                 'br',
                 null,
                 null,
-                lookupTileForId(layout[0][0]));
+                lookupTileForId(layout[0][0]),
+                null,
+                null,
+                null,
+                null,
+                null,
+                null);
 
             let firstTile = createResourceTile(
                 1,
@@ -142,11 +180,19 @@ export const initializeBoardMetaData = () => {
             let fourthTile = createWaterTile(
                 1,
                 4,
+                'water',
+                null,
                 null,
                 null,
                 null,
                 lookupTileForId(layout[0][4]),
-                thirdTile);
+                thirdTile,
+                null,
+                null,
+                null,
+                'house',
+                'target',
+                true);
 
             return <ol className="odd">
                 <Tile type={'spacer'}/>
@@ -162,11 +208,19 @@ export const initializeBoardMetaData = () => {
             let waterTile = createWaterTile(
                 2,
                 0,
+                'water',
                 null,
                 null,
                 null,
                 null,
-                lookupTileForId(layout[1][0]));
+                null,
+                lookupTileForId(layout[1][0]),
+                null,
+                null,
+                null,
+                null,
+                null,
+                null);
 
             let firstTile = createResourceTile(
                 2,
@@ -207,11 +261,19 @@ export const initializeBoardMetaData = () => {
             let harborTile = createWaterTile(
                 2,
                 5,
+                'water',
+                null,
                 'three-one brick',
                 'l',
                 fourthTile,
                 lookupTileForId(layout[1][4]),
-                null);
+                null,
+                null,
+                null,
+                null,
+                'house',
+                'target',
+                true);
 
             return <ol className="even">
                 {waterTile}
@@ -227,11 +289,19 @@ export const initializeBoardMetaData = () => {
             let harborTile = createWaterTile(
                 3,
                 0,
+                'water',
+                null,
                 'three-one sheep',
                 'r',
                 null,
                 null,
-                lookupTileForId(layout[2][0]));
+                lookupTileForId(layout[2][0]),
+                null,
+                null,
+                null,
+                null,
+                null,
+                true);
 
             let firstTile = createResourceTile(
                 3,
@@ -281,11 +351,19 @@ export const initializeBoardMetaData = () => {
             let waterTile = createWaterTile(
                 3,
                 6,
+                'water',
+                null,
                 null,
                 null,
                 fifthTile,
                 lookupTileForId(layout[2][5]),
-                null);
+                null,
+                null,
+                null,
+                null,
+                'house',
+                'target',
+                true);
 
             return (
                 <ol className="odd">
@@ -304,11 +382,19 @@ export const initializeBoardMetaData = () => {
             let waterTile = createWaterTile(
                 4,
                 0,
+                'water',
+                null,
                 null,
                 null,
                 null,
                 lookupTileForId(layout[3][0]),
-                lookupTileForId(layout[3][1]));
+                lookupTileForId(layout[3][1]),
+                'house',
+                'target',
+                true,
+                null,
+                null,
+                true);
 
             let firstTile = createResourceTile(
                 4,
@@ -349,11 +435,19 @@ export const initializeBoardMetaData = () => {
             let harborTile = createWaterTile(
                 4,
                 5,
+                'water',
+                null,
                 'three-one brick',
                 'l',
                 fourthTile,
                 lookupTileForId(layout[3][5]),
-                lookupTileForId(layout[3][6]));
+                lookupTileForId(layout[3][6]),
+                'house',
+                'target',
+                true,
+                'house',
+                'target',
+                true);
 
             return <ol className="even">
                 {waterTile}
@@ -369,11 +463,19 @@ export const initializeBoardMetaData = () => {
             let harborTile = createWaterTile(
                 5,
                 0,
+                'water',
+                null,
                 'three-one sheep',
                 'r',
                 null,
                 lookupTileForId(layout[4][0]),
-                lookupTileForId(layout[4][1]));
+                lookupTileForId(layout[4][1]),
+                'house',
+                'target',
+                true,
+                null,
+                null,
+                null);
 
             let firstTile = createResourceTile(
                 5,
@@ -405,11 +507,19 @@ export const initializeBoardMetaData = () => {
             let waterTile = createWaterTile(
                 5,
                 4,
+                'water',
+                null,
                 null,
                 null,
                 thirdTile,
                 lookupTileForId(layout[4][4]),
-                lookupTileForId(layout[4][5]));
+                lookupTileForId(layout[4][5]),
+                'house',
+                'target',
+                true,
+                'house',
+                'target',
+                true);
 
             return <ol className="odd">
                 <Tile type={'spacer'}/>
@@ -425,42 +535,70 @@ export const initializeBoardMetaData = () => {
             let firstTile = createWaterTile(
                 6,
                 0,
+                'water',
+                null,
                 null,
                 null,
                 null,
                 lookupTileForId(layout[5][0]),
-                lookupTileForId(layout[5][1])
-            );
+                lookupTileForId(layout[5][1]),
+                'house',
+                'target',
+                true,
+                null,
+                null,
+                null);
 
             let secondTile = createWaterTile(
                 6,
                 1,
+                'water',
+                null,
                 'two-one any',
                 'tr',
                 firstTile,
                 lookupTileForId(layout[5][1]),
-                lookupTileForId(layout[5][2])
-            );
+                lookupTileForId(layout[5][2]),
+                'house',
+                'target',
+                true,
+                'house',
+                'target',
+                true);
 
             let thirdTile = createWaterTile(
                 6,
                 2,
+                'water',
+                null,
                 null,
                 null,
                 secondTile,
                 lookupTileForId(layout[5][2]),
-                lookupTileForId(layout[5][3])
-            );
+                lookupTileForId(layout[5][3]),
+                'house',
+                'target',
+                true,
+                'house',
+                'target',
+                true);
 
             let fourthTile = createWaterTile(
                 6,
                 3,
+                'water',
+                null,
                 'three-one wood',
                 'tl',
                 thirdTile,
                 lookupTileForId(layout[5][3]),
-                lookupTileForId(layout[5][5])
-            );
+                lookupTileForId(layout[5][5]),
+                'house',
+                'target',
+                true,
+                'house',
+                'target',
+                true);
 
             return <ol className="even">
                 <Tile type={'spacer'}/>
@@ -477,28 +615,36 @@ export const initializeBoardMetaData = () => {
 
         function createWaterTile(rowIndex,
                                  tileIndex,
+                                 type,
+                                 value,
                                  harborType,
                                  harborPiece,
                                  leftNeighbour,
                                  topLeftNeighbour,
-                                 topRightNeighbour) {
+                                 topRightNeighbour,
+                                 topStructure,
+                                 topStructureColor,
+                                 hideTopStructure,
+                                 leftStructure,
+                                 leftStructureColor,
+                                 hideLeftStructure) {
 
             let waterTile = tileJson(
                 rowIndex,
                 tileIndex,
-                'water',
-                null,
+                type,
+                value,
                 harborType,
                 harborPiece,
                 leftNeighbour,
                 topLeftNeighbour,
                 topRightNeighbour,
-                'house',
-                'target',
-                true,
-                'house',
-                'target',
-                true
+                topStructure,
+                topStructureColor,
+                hideTopStructure,
+                leftStructure,
+                leftStructureColor,
+                hideLeftStructure
             );
 
             placeTileOnBoard(waterTile);
@@ -567,7 +713,6 @@ export const initializeBoardMetaData = () => {
                 }
             }
 
-            console.log(tileValue);
             return tileValue;
         }
 
