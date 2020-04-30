@@ -5,7 +5,8 @@ import Catan from "./CatanGame";
 const App = Client({
   game: Catan,
   board: CatanBoard,
-  numPlayers:4
+  numPlayers:4,
+  debug:false
 });
 
 export default App;
