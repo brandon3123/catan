@@ -22,6 +22,20 @@ function showAllBuildingLocations(G) {
     }
 }
 
+function showAllPlacementLocations(G) {
+    showAllBuildingLocations(G);
+    showAllRoadLocations(G);
+}
+
+function showAllRoadLocations(G) {
+    let tiles = G.board.tiles.values();
+    for (let tile of tiles) {
+        tile.hideLeftRoad = false;
+        tile.hideTopLeftRoad = false;
+        tile.hideTopRightRoad = false;
+    }
+}
+
 function buildTopStructure(G, ctx, id, type){
     let tile = getTile(G, id);
     let player = getPlayer(G, ctx);

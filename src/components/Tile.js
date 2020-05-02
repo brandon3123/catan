@@ -13,6 +13,9 @@ class Tile extends React.Component {
                 {this.harborType()}
                 {this.topStructure()}
                 {this.leftStructure()}
+                {this.leftRoad()}
+                {this.topLeftRoad()}
+                {this.topRightRoad()}
             </li>
         )
     };
@@ -45,6 +48,42 @@ class Tile extends React.Component {
                 <div className={this.props.leftStructure + ' tl ' + this.props.leftStructureColor}
                      onClick={this.props.buildLeftStructure}
                      style={{visibility: this.props.hideLeftStructure ? 'hidden' : 'visible'}}
+                />
+            )
+        }
+        return null;
+    }
+
+    topLeftRoad() {
+        if (this.props.topLeftRoadColor) {
+            return (
+                <div className={'road tl ' + this.props.topLeftRoadColor}
+                     onClick={this.props.buildTopStructure}
+                     style={{visibility: this.props.hideTopLeftRoad ? 'hidden' : 'visible'}}
+                />
+            )
+        }
+        return null;
+    }
+
+    topRightRoad() {
+        if (this.props.topRightRoadColor) {
+            return (
+                <div className={'road tr ' + this.props.topRightRoadColor}
+                     onClick={this.props.buildTopStructure}
+                     style={{visibility: this.props.hideTopRightRoad ? 'hidden' : 'visible'}}
+                />
+            )
+        }
+        return null;
+    }
+
+    leftRoad() {
+        if (this.props.leftRoadColor) {
+            return (
+                <div className={'road l ' + this.props.leftRoadColor}
+                     onClick={this.props.buildTopStructure}
+                     style={{visibility: this.props.hideLeftRoad ? 'hidden' : 'visible'}}
                 />
             )
         }
