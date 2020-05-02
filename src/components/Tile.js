@@ -13,7 +13,6 @@ class Tile extends React.Component {
                 {this.harborType()}
                 {this.topStructure()}
                 {this.leftStructure()}
-                {/*<div className='house tl target'></div>*/}
             </li>
         )
     };

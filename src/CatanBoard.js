@@ -150,16 +150,16 @@ class CatanBoard extends React.Component {
     }
 
     setStructureTypeForBuild(type){
-        this.props.G.buildType = type;
+        this.props.G.action.build.type = type;
         this.props.events.setStage('build');
     }
 
     buildLeftStructure = (id) => {
-        this.props.moves.buildLeftStructure(id, this.props.G.buildType);
+        this.props.moves.buildLeftStructure(id, this.props.G.action.build.type);
     };
 
     buildTopStructure = (id) => {
-        this.props.moves.buildTopStructure(id, this.props.G.buildType);
+        this.props.moves.buildTopStructure(id, this.props.G.action.build.type);
     };
 
     endTurn() {
@@ -168,7 +168,7 @@ class CatanBoard extends React.Component {
     }
 
     clearTurnData() {
-        this.props.G.structureType = null;
+        this.props.G.action.build.type = null;
     }
 
     createTileComponentFromTileMetaData(tileId) {

@@ -23,17 +23,39 @@ function showAllBuildingLocations(G) {
 }
 
 function buildTopStructure(G, ctx, id, type){
-    let tile = G.board.tiles.get(id);
+    let tile = getTile(G, id);
+    let player = getPlayer(G, ctx);
     tile.topStructure = type;
-    tile.topStructureColor = 'red';
-    G.place[0] = {value: tile.value, type: tile.type};
+    tile.topStructureColor = player.color;
+    addStructureToPlayerData(G, ctx, type);
 }
 
 function buildLeftStructure(G, ctx, id, type){
-    let tile = G.board.tiles.get(id);
+    let tile = getTile(G, id);
+    let player = getPlayer(G, ctx);
     tile.leftStructure = type;
-    tile.leftStructureColor = 'red';
-    G.place[0] = {value: tile.value, type: tile.type};
+    tile.leftStructureColor = player.color;
+    addStructureToPlayerData(G, ctx, type);
+}
+
+function getPlayer(G, ctx) {
+    return G.playerData[ctx.currentPlayer];
+}
+
+function getTile(G, id) {
+    return G.board.tiles.get(id);
+}
+
+function addStructureToPlayerData(G, ctx, type) {
+    let player = getPlayer(G, ctx);
+    if (type == 'house') {
+        player.victoryPoints += 1;
+        player.settlements += 1;
+    } else {
+        player.victoryPoints -= 1;
+        player.victoryPoints += 2;
+        player.cities += 1;
+    }
 }
 
 function hideAllBuildingLocations(G, ctx) {
@@ -44,6 +66,11 @@ const Catan = {
 
     setup: (ctx) => ({
         playerData: initializePlayerData(ctx.numPlayers),
+        action: {
+            build: {
+                type: null
+            }
+        },
         board: initializeBoardMetaData(),
     }),
 
@@ -83,8 +110,7 @@ const Catan = {
             onEnd: hideAllBuildingLocations,
             moves:{
                 buildTopStructure,
-                buildLeftStructure,
-                clearTurnData:clearTurnData
+                buildLeftStructure
             },
             // endIf: (G, ctx) => G.playerOrder.length > 0,
             next: "distributeResources",
