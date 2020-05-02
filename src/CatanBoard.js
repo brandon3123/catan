@@ -23,11 +23,67 @@ class CatanBoard extends React.Component {
         isMultiplayer: PropTypes.bool,
     };
 
-
-
     render() {
         return (
             <div className="container">
+                <div className="actionMenu">
+                    <div className="action1">
+                        <Card variant="outlined">
+                            <CardContent className="buildContainer">
+                                <Typography color="textSecondary" gutterBottom>
+                                    Build
+                                </Typography>
+                                <Chip
+                                    label="Settlement"
+                                    color="primary"
+                                    onClick={() => this.setStructureTypeForBuild('house')}
+                                    variant="outlined"
+                                />
+                                <Chip
+                                    label="City"
+                                    // color={red}
+                                    // onClick={handleClick}
+                                    variant="outlined"
+                                />
+                                <Chip
+                                    label="Road"
+                                    color="primary"
+                                    // onClick={handleClick}
+                                    variant="outlined"
+                                />
+
+                                <br/>
+                                <br/>
+
+                                <Typography color="textSecondary" gutterBottom>
+                                    End
+                                </Typography>
+
+                                <Chip
+                                    label="End Turn"
+                                    color="primary"
+                                    onClick={() => this.endTurn()}
+                                    variant="outlined"
+                                />
+
+                                <br/>
+                                <br/>
+
+                                <Typography className="text-center" color="textSecondary" gutterBottom>
+                                    Resources
+                                </Typography>
+                                <Chip
+                                    label="Brick"
+                                    variant="outlined"
+                                    color={red[500]}
+                                />
+                                <Chip label="Sheep" variant="outlined" />
+                                <Chip label="Ore" variant="outlined" />
+                                <Chip label="Wheat" variant="outlined" />
+                            </CardContent>
+                        </Card>
+                    </div>
+                </div>
                 <div className="board">
                     <ol className="even">
                         <Tile type={'spacer'}/>
@@ -85,79 +141,6 @@ class CatanBoard extends React.Component {
                         {this.createTileComponentFromTileMetaData(this.props.G.board.layout[6][3])}
                     </ol>
                 </div>
-                <div className="actionMenu">
-                    <div className="action1">
-                        <Card variant="outlined">
-                            <CardContent className="buildContainer">
-                                <Typography color="textSecondary" gutterBottom>
-                                    Build
-                                </Typography>
-                                <Chip
-                                    label="Settlement"
-                                    color="primary"
-                                    // onClick={handleClick}
-                                    variant="outlined"
-                                />
-                                <Chip
-                                    label="City"
-                                    // color={red}
-                                    // onClick={handleClick}
-                                    variant="outlined"
-                                />
-                                <Chip
-                                    label="Road"
-                                    color="primary"
-                                    // onClick={handleClick}
-                                    variant="outlined"
-                                />
-                            </CardContent>
-                        </Card>
-                    </div>
-                    <div className="action2">
-                        <Card variant="outlined">
-                            <CardContent className="resourceContainer">
-                                <Typography color="textSecondary" gutterBottom>
-                                    Resources
-                                </Typography>
-                                <Chip
-                                    label="Brick"
-                                    variant="outlined"
-                                    color={red[500]}
-                                />
-                                <Chip label="Sheep" variant="outlined" />
-                                <Chip label="Ore" variant="outlined" />
-                                <Chip label="Wheat" variant="outlined" />
-                            </CardContent>
-                        </Card>
-                    </div>
-                    <div className="action3">
-                        <Card variant="outlined">
-                            <CardContent className="otherContainer">
-                                <Typography color="textSecondary" gutterBottom>
-                                    Other
-                                </Typography>
-                                <Chip
-                                    label="Trade Player"
-                                    color="primary"
-                                    // onClick={handleClick}
-                                    variant="outlined"
-                                />
-                                <Chip
-                                    label="Development Card"
-                                    // color={red}
-                                    // onClick={handleClick}
-                                    variant="outlined"
-                                />
-                                <Chip
-                                    label="Trade Bank"
-                                    color="primary"
-                                    // onClick={handleClick}
-                                    variant="outlined"
-                                />
-                            </CardContent>
-                        </Card>
-                    </div>
-                </div>
             </div>
         );
     }
@@ -166,14 +149,27 @@ class CatanBoard extends React.Component {
         return this.props.G.board.tiles.get(id);
     }
 
+    setStructureTypeForBuild(type){
+        this.props.G.buildType = type;
+        this.props.events.setStage('build');
+    }
 
     buildLeftStructure = (id) => {
-        this.props.moves.buildLeftStructure(id, this.props.ctx.structureType);
+        this.props.moves.buildLeftStructure(id, this.props.G.buildType);
     };
 
     buildTopStructure = (id) => {
-        this.props.moves.buildTopStructure(id, this.props.ctx.structureType);
+        this.props.moves.buildTopStructure(id, this.props.G.buildType);
     };
+
+    endTurn() {
+        this.clearTurnData();
+        this.props.events.endTurn();
+    }
+
+    clearTurnData() {
+        this.props.G.structureType = null;
+    }
 
     createTileComponentFromTileMetaData(tileId) {
         let tileMetaData = this.lookupTileForId(tileId);

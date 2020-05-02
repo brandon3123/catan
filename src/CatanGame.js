@@ -1,6 +1,7 @@
 import {Ctx} from "boardgame.io";
 import React from 'react';
 import {initializeBoardMetaData} from "./utilities/CreateBoardUtils";
+import {initializePlayerData} from "./utilities/PlayerDataUtils";
 
 /*
  Function to randomize the player turn order
@@ -9,10 +10,8 @@ function determinePlayerOrder(ctx) {
     return ctx.playOrder.sort(() => Math.random() - 0.5);
 }
 
-function placeSettlement(G, ctx) {
-}
-
-function placeRoad(G, ctx) {
+function clearTurnData(G) {
+    G.structureType = 'asd';
 }
 
 function showAllBuildingLocations(G) {
@@ -43,12 +42,20 @@ function hideAllBuildingLocations(G, ctx) {
 const Catan = {
     name: "Catan",
 
-    setup: () => ({
-        place:[],
+    setup: (ctx) => ({
+        playerData: initializePlayerData(ctx.numPlayers),
         board: initializeBoardMetaData(),
     }),
 
     turn: {
+        stages: {
+            build: {
+                moves: {
+                    buildTopStructure,
+                    buildLeftStructure
+                }
+            }
+        },
         order: {
             // Get the initial value of playOrderPos.
             // This is called at the beginning of the phase.
@@ -76,7 +83,8 @@ const Catan = {
             onEnd: hideAllBuildingLocations,
             moves:{
                 buildTopStructure,
-                buildLeftStructure
+                buildLeftStructure,
+                clearTurnData:clearTurnData
             },
             // endIf: (G, ctx) => G.playerOrder.length > 0,
             next: "distributeResources",

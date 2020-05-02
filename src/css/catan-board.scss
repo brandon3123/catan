@@ -18,7 +18,11 @@ $number-size: 45px;
 
 .actionMenu {
   display: flex;
-  flex:4;
+  flex:1;
+}
+
+.text-center {
+  align-items: center;
 }
 
 .buildContainer {
@@ -41,20 +45,7 @@ $number-size: 45px;
 }
 
 .action1 {
-  //flex-basis: 10%;
-  flex: 1;
-  margin-top: 5%;
-  margin-right: 2%;
-}
-
-.action2 {
-  //flex-basis: 10%;
-  flex: 1;
-  margin-top: 5%;
-  margin-right: 2%;
-}
-
-.action3 {
+  align-items: center;
   //flex-basis: 10%;
   flex: 1;
   margin-top: 5%;
