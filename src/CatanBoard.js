@@ -154,11 +154,6 @@ class CatanBoard extends React.Component {
         this.props.events.setStage(stage);
     }
 
-    setStructureTypeForBuild(type){
-        this.props.G.action.build.type = type;
-        this.props.events.setStage('build');
-    }
-
     buildLeftStructure = (id) => {
         let stageName = this.stageNameForCurrentPlayer();
         switch (stageName) {
@@ -191,22 +186,8 @@ class CatanBoard extends React.Component {
         return this.props.ctx.activePlayers[this.currentPlayer()];
     }
 
-    stageForCurrentPlayer() {
-        let stages = getStages();
-        let stageName = this.stageNameForCurrentPlayer();
-        console.log(JSON.stringify(stageName, null, 2));
-
-        let stage = stages[stageName];
-        console.log(JSON.stringify(stage.moves, null, 2));
-    }
-
     endTurn() {
-        // this.clearTurnData();
         this.props.events.endTurn();
-    }
-
-    clearTurnData() {
-        this.props.G.action.build.type = '';
     }
 
     createTileComponentFromTileMetaData(tileId) {

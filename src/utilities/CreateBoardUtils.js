@@ -2,6 +2,7 @@ import Tile from "../components/Tile";
 import uniqid from "uniqid";
 import React from "react";
 import {Structure} from "../enums/Structure";
+import {Resource} from "../enums/Resource";
 
 export const initializeBoardMetaData = () => {
     return createCatanBoard();
@@ -19,12 +20,12 @@ export const initializeBoardMetaData = () => {
         let tiles = new Map();
 
         let tilesUsed = [
-            {used: 0, max: 4, type: 'sheep'},
-            {used: 0, max: 4, type: 'wood'},
-            {used: 0, max: 4, type: 'wheat'},
-            {used: 0, max: 3, type: 'coal'},
-            {used: 0, max: 3, type: 'brick'},
-            {used: 0, max: 1, type: 'sand'}
+            {used: 0, max: 4, type: Resource.SHEEP},
+            {used: 0, max: 4, type: Resource.WOOD},
+            {used: 0, max: 4, type: Resource.WHEAT},
+            {used: 0, max: 3, type: Resource.ORE},
+            {used: 0, max: 3, type: Resource.BRICK},
+            {used: 0, max: 1, type: Resource.SAND}
         ]
 
         let tileValues = [
@@ -57,7 +58,7 @@ export const initializeBoardMetaData = () => {
             let firstTile = createWaterTile(
                 0,
                 0,
-                'water',
+                Resource.WATER,
                 null,
                 null,
                 null,
@@ -81,7 +82,7 @@ export const initializeBoardMetaData = () => {
             let secondTile = createWaterTile(
                 0,
                 1,
-                'water',
+                Resource.WATER,
                 null,
                 'two-one wood',
                 'br',
@@ -105,7 +106,7 @@ export const initializeBoardMetaData = () => {
             let thirdTile = createWaterTile(
                 0,
                 2,
-                'water',
+                Resource.WATER,
                 null,
                 secondTile,
                 null,
@@ -129,7 +130,7 @@ export const initializeBoardMetaData = () => {
             let fourthTile = createWaterTile(
                 0,
                 3,
-                'water',
+                Resource.WATER,
                 null,
                 'three-one wood',
                 'bl',
@@ -163,7 +164,7 @@ export const initializeBoardMetaData = () => {
             let harborTile = createWaterTile(
                 1,
                 0,
-                'water',
+                Resource.WATER,
                 null,
                 'three-one sheep',
                 'br',
@@ -220,7 +221,7 @@ export const initializeBoardMetaData = () => {
             let fourthTile = createWaterTile(
                 1,
                 4,
-                'water',
+                Resource.WATER,
                 null,
                 null,
                 null,
@@ -254,7 +255,7 @@ export const initializeBoardMetaData = () => {
             let waterTile = createWaterTile(
                 2,
                 0,
-                'water',
+                Resource.WATER,
                 null,
                 null,
                 null,
@@ -307,7 +308,7 @@ export const initializeBoardMetaData = () => {
             let harborTile = createWaterTile(
                 2,
                 5,
-                'water',
+                Resource.WATER,
                 null,
                 'three-one brick',
                 'l',
@@ -341,7 +342,7 @@ export const initializeBoardMetaData = () => {
             let harborTile = createWaterTile(
                 3,
                 0,
-                'water',
+                Resource.WATER,
                 null,
                 'three-one sheep',
                 'r',
@@ -403,7 +404,7 @@ export const initializeBoardMetaData = () => {
             let waterTile = createWaterTile(
                 3,
                 6,
-                'water',
+                Resource.WATER,
                 null,
                 null,
                 null,
@@ -440,7 +441,7 @@ export const initializeBoardMetaData = () => {
             let waterTile = createWaterTile(
                 4,
                 0,
-                'water',
+                Resource.WATER,
                 null,
                 null,
                 null,
@@ -499,7 +500,7 @@ export const initializeBoardMetaData = () => {
             let harborTile = createWaterTile(
                 4,
                 5,
-                'water',
+                Resource.WATER,
                 null,
                 'three-one brick',
                 'l',
@@ -533,7 +534,7 @@ export const initializeBoardMetaData = () => {
             let harborTile = createWaterTile(
                 5,
                 0,
-                'water',
+                Resource.WATER,
                 null,
                 'three-one sheep',
                 'r',
@@ -583,7 +584,7 @@ export const initializeBoardMetaData = () => {
             let waterTile = createWaterTile(
                 5,
                 4,
-                'water',
+                Resource.WATER,
                 null,
                 null,
                 null,
@@ -617,7 +618,7 @@ export const initializeBoardMetaData = () => {
             let firstTile = createWaterTile(
                 6,
                 0,
-                'water',
+                Resource.WATER,
                 null,
                 null,
                 null,
@@ -640,7 +641,7 @@ export const initializeBoardMetaData = () => {
             let secondTile = createWaterTile(
                 6,
                 1,
-                'water',
+                Resource.WATER,
                 null,
                 'two-one any',
                 'tr',
@@ -663,7 +664,7 @@ export const initializeBoardMetaData = () => {
             let thirdTile = createWaterTile(
                 6,
                 2,
-                'water',
+                Resource.WATER,
                 null,
                 null,
                 null,
@@ -686,7 +687,7 @@ export const initializeBoardMetaData = () => {
             let fourthTile = createWaterTile(
                 6,
                 3,
-                'water',
+                Resource.WATER,
                 null,
                 'three-one wood',
                 'tl',
@@ -870,7 +871,7 @@ export const initializeBoardMetaData = () => {
             return {
                 id: uniqid(),
                 type: type,
-                value: type !== 'sand' ? value : null,
+                value: type !== Resource.SAND ? value : null,
                 rowIndex: rowIndex,
                 tileIndex: tileIndex,
                 harborType: harborType,
