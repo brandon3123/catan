@@ -3,6 +3,7 @@ import React from 'react';
 import {initializeBoardMetaData} from "./utilities/CreateBoardUtils";
 import {initializePlayerData} from "./utilities/PlayerDataUtils";
 import {Structure} from "./enums/Structure"
+import {Stage} from "./enums/Stage";
 
 /*
  Function to randomize the player turn order
@@ -11,8 +12,9 @@ function determinePlayerOrder(ctx) {
     return ctx.playOrder.sort(() => Math.random() - 0.5);
 }
 
-function setupInitialPhase(G) {
-    showAllBuildingLocations(G);
+function setupInitialPhase(G, ctx) {
+    showAllPlacementLocations(G);
+    ctx.events.setStage(Stage.BUILD_SETTLEMENT);
 }
 
 function showAllBuildingLocations(G) {
@@ -21,6 +23,16 @@ function showAllBuildingLocations(G) {
         tile.hideTopStructure = false;
         tile.hideLeftStructure = false;
     }
+}
+
+function initialPhaseIsCompleted(G) {
+    for (let player in G.playerData) {
+        if (player.settlements != 2 && player.roads != 2) {
+            return false;
+        }
+    }
+
+    return true;
 }
 
 function showAllPlacementLocations(G) {
@@ -58,7 +70,7 @@ function buildTopStructure(G, ctx, id, type) {
     let player = getPlayer(G, ctx);
     tile.topStructure = type;
     tile.topStructureColor = player.color;
-    addStructureToPlayerData(G, ctx, type);
+    addStructureToPlayerData(player, type);
 }
 
 function buildLeftStructure(G, ctx, id, type) {
@@ -66,7 +78,28 @@ function buildLeftStructure(G, ctx, id, type) {
     let player = getPlayer(G, ctx);
     tile.leftStructure = type;
     tile.leftStructureColor = player.color;
-    addStructureToPlayerData(G, ctx, type);
+    addStructureToPlayerData(player, type);
+}
+
+function buildLeftRoad(G, ctx, id) {
+    let tile = getTile(G, id);
+    let player = getPlayer(G, ctx);
+    tile.leftRoadColor = player.color;
+    addStructureToPlayerData(player, Structure.ROAD);
+}
+
+function buildTopLeftRoad(G, ctx, id) {
+    let tile = getTile(G, id);
+    let player = getPlayer(G, ctx);
+    tile.topLeftRoadColor = player.color;
+    addStructureToPlayerData(player, Structure.ROAD);
+}
+
+function buildTopRightRoad(G, ctx, id) {
+    let tile = getTile(G, id);
+    let player = getPlayer(G, ctx);
+    tile.topRightRoadColor = player.color;
+    addStructureToPlayerData(player, Structure.ROAD);
 }
 
 function getPlayer(G, ctx) {
@@ -77,8 +110,7 @@ function getTile(G, id) {
     return G.board.tiles.get(id);
 }
 
-function addStructureToPlayerData(G, ctx, type) {
-    let player = getPlayer(G, ctx);
+function addStructureToPlayerData(player, type) {
     switch (type) {
         case Structure.SETTLEMENT:
             player.victoryPoints += 1;
@@ -88,10 +120,35 @@ function addStructureToPlayerData(G, ctx, type) {
             player.victoryPoints += 2;
             player.cities += 1;
             break;
+        case Structure.ROAD:
+            player.roads += 1;
+            break;
     }
 }
 
-function hideAllBuildingLocations(G, ctx) {
+function hideAllTargetLocations(G) {
+    let tiles = G.board.tiles.values();
+    for (let tile of tiles) {
+        if (tile.topStructureColor == 'target') {
+            tile.hideTopStructure = true;
+        }
+
+        if (tile.leftStructureColor == 'target') {
+            tile.hideLeftStructure = true;
+        }
+
+        if (tile.leftRoadColor == 'target') {
+            tile.hideLeftRoad = true;
+        }
+
+        if (tile.topLeftRoadColor == 'target') {
+            tile.hideTopLeftRoad = true;
+        }
+
+        if (tile.topRightRoadColor == 'target') {
+            tile.hideTopRightRoad = true;
+        }
+    }
 }
 
 const Catan = {
@@ -99,11 +156,6 @@ const Catan = {
 
     setup: (ctx) => ({
         playerData: initializePlayerData(ctx.numPlayers),
-        action: {
-            build: {
-                type: null
-            }
-        },
         board: initializeBoardMetaData(),
     }),
 
@@ -119,6 +171,13 @@ const Catan = {
                 moves: {
                     buildTopCity,
                     buildLeftCity
+                }
+            },
+            buildRoad: {
+                moves: {
+                    buildLeftRoad,
+                    buildTopLeftRoad,
+                    buildTopRightRoad
                 }
             }
         },
@@ -142,23 +201,27 @@ const Catan = {
         buildTopHouse: buildTopHouse,
         buildLeftHouse: buildLeftHouse,
         buildTopCity: buildTopCity,
-        buildLeftCity: buildLeftCity
+        buildLeftCity: buildLeftCity,
+        buildLeftRoad,
+        buildTopLeftRoad,
+        buildTopRightRoad
     },
 
     phases: {
         initialPiecePlacement: {
-            onBegin: (G) => setupInitialPhase(G),
-            onEnd: hideAllBuildingLocations,
+            onBegin: (G, ctx) => setupInitialPhase(G, ctx),
+            onEnd: (G) => hideAllTargetLocations(G),
             moves: {
-                buildTopStructure,
-                buildLeftStructure
+                buildTopHouse,
+                buildLeftHouse,
+                buildLeftRoad,
+                buildTopLeftRoad,
+                buildTopRightRoad
             },
-            // endIf: (G, ctx) => G.playerOrder.length > 0,
-            next: "distributeResources",
+            endIf: (G) => initialPhaseIsCompleted(G),
+            // next: "distributeResources",
             start: true
-        },
-
-        distributeResources: {}
+        }
     }
 }
 

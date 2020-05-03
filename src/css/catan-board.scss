@@ -167,6 +167,7 @@ ol.odd {
 
 .road {
   border-radius: 3px;
+  border: 3px solid black;
   background-color: red;
   position: absolute;
   width: 9px;
@@ -571,6 +572,8 @@ ol.odd {
 .red { background: linear-gradient(to bottom, #ff3019 0%,#cf0404 100%); }
 .white { background: linear-gradient(to bottom, #fcfff4 0%,#dfe5d7 40%,#b3bead 100%); }
 .blue { background: linear-gradient(to bottom, #49c0f0 0%,#2cafe3 100%); }
+.orange { background: linear-gradient(to bottom, #ff6600 0%,#FF6600 100%); }
+.purple { background: linear-gradient(to bottom, #800080 0%,#800080 100%);}
 
 .action-prompt {
   position: absolute;

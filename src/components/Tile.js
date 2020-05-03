@@ -59,7 +59,7 @@ class Tile extends React.Component {
         if (this.props.topLeftRoadColor) {
             return (
                 <div className={Structure.ROAD + ' tl ' + this.props.topLeftRoadColor}
-                     onClick={this.props.buildTopStructure}
+                     onClick={this.props.buildTopLeftRoad}
                      style={{visibility: this.props.hideTopLeftRoad ? 'hidden' : 'visible'}}
                 />
             )
@@ -71,7 +71,7 @@ class Tile extends React.Component {
         if (this.props.topRightRoadColor) {
             return (
                 <div className={Structure.ROAD + ' tr ' + this.props.topRightRoadColor}
-                     onClick={this.props.buildTopStructure}
+                     onClick={this.props.buildTopRightRoad}
                      style={{visibility: this.props.hideTopRightRoad ? 'hidden' : 'visible'}}
                 />
             )
@@ -83,7 +83,7 @@ class Tile extends React.Component {
         if (this.props.leftRoadColor) {
             return (
                 <div className={Structure.ROAD + ' l ' + this.props.leftRoadColor}
-                     onClick={this.props.buildTopStructure}
+                     onClick={this.props.buildLeftRoad}
                      style={{visibility: this.props.hideLeftRoad ? 'hidden' : 'visible'}}
                 />
             )

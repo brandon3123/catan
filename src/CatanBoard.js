@@ -44,12 +44,12 @@ class CatanBoard extends React.Component {
                                 <Chip
                                     label="City"
                                     // color={red}
-                                    onClick={() => this.setBuildingStage(Stage.BUILD_CITY)}                                    variant="outlined"
+                                    onClick={() => this.setBuildingStage(Stage.BUILD_CITY)}
                                 />
                                 <Chip
                                     label="Road"
                                     color="primary"
-                                    // onClick={handleClick}
+                                    onClick={() => this.setBuildingStage(Stage.BUILD_ROAD)}
                                     variant="outlined"
                                 />
 
@@ -166,6 +166,18 @@ class CatanBoard extends React.Component {
         }
     }
 
+    buildLeftRoad = (id) => {
+        this.props.moves.buildLeftRoad(id);
+    }
+
+    buildTopLeftRoad = (id) => {
+        this.props.moves.buildTopLeftRoad(id);
+    }
+
+    buildTopRightRoad = (id) => {
+        this.props.moves.buildTopRightRoad(id);
+    }
+
     buildTopStructure = (id) => {
         let stageName = this.stageNameForCurrentPlayer();
         switch (stageName) {
@@ -214,10 +226,13 @@ class CatanBoard extends React.Component {
             buildLeftStructure={() => this.buildLeftStructure(tileMetaData.id)}
             leftRoadColor={tileMetaData.leftRoadColor}
             hideLeftRoad={tileMetaData.hideLeftRoad}
+            buildLeftRoad={() => this.buildLeftRoad(tileMetaData.id)}
             topLeftRoadColor={tileMetaData.topLeftRoadColor}
             hideTopLeftRoad={tileMetaData.hideTopLeftRoad}
+            buildTopLeftRoad={() => this.buildTopLeftRoad(tileMetaData.id)}
             topRightRoadColor={tileMetaData.topRightRoadColor}
             hideTopRightRoad={tileMetaData.hideTopRightRoad}
+            buildTopRightRoad={() => this.buildTopRightRoad(tileMetaData.id)}
         />
     }
 }
