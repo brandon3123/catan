@@ -11,6 +11,8 @@ import Typography from '@material-ui/core/Typography';
 import { ButtonGroup } from '@material-ui/core';
 import Chip from '@material-ui/core/Chip';
 import red from '@material-ui/core/colors/red';
+import {getStages, buildSettlementStageName} from "./utilities/GameDataUtils";
+import {Stage} from "./enums/Stage";
 
 
 class CatanBoard extends React.Component {
@@ -36,14 +38,13 @@ class CatanBoard extends React.Component {
                                 <Chip
                                     label="Settlement"
                                     color="primary"
-                                    onClick={() => this.setStructureTypeForBuild('house')}
+                                    onClick={() => this.setBuildingStage(Stage.BUILD_SETTLEMENT)}
                                     variant="outlined"
                                 />
                                 <Chip
                                     label="City"
                                     // color={red}
-                                    // onClick={handleClick}
-                                    variant="outlined"
+                                    onClick={() => this.setBuildingStage(Stage.BUILD_CITY)}                                    variant="outlined"
                                 />
                                 <Chip
                                     label="Road"
@@ -149,26 +150,63 @@ class CatanBoard extends React.Component {
         return this.props.G.board.tiles.get(id);
     }
 
+    setBuildingStage(stage) {
+        this.props.events.setStage(stage);
+    }
+
     setStructureTypeForBuild(type){
         this.props.G.action.build.type = type;
         this.props.events.setStage('build');
     }
 
     buildLeftStructure = (id) => {
-        this.props.moves.buildLeftStructure(id, this.props.G.action.build.type);
-    };
+        let stageName = this.stageNameForCurrentPlayer();
+        switch (stageName) {
+            case Stage.BUILD_SETTLEMENT:
+                this.props.moves.buildLeftHouse(id);
+                break;
+            case Stage.BUILD_CITY:
+                this.props.moves.buildLeftCity(id);
+                break;
+        }
+    }
 
     buildTopStructure = (id) => {
-        this.props.moves.buildTopStructure(id, this.props.G.action.build.type);
+        let stageName = this.stageNameForCurrentPlayer();
+        switch (stageName) {
+            case Stage.BUILD_SETTLEMENT:
+                this.props.moves.buildTopHouse(id);
+                break;
+            case Stage.BUILD_CITY:
+                this.props.moves.buildTopCity(id);
+                break;
+        }
     };
 
+    currentPlayer() {
+        return this.props.ctx.currentPlayer;
+    }
+
+    stageNameForCurrentPlayer() {
+        return this.props.ctx.activePlayers[this.currentPlayer()];
+    }
+
+    stageForCurrentPlayer() {
+        let stages = getStages();
+        let stageName = this.stageNameForCurrentPlayer();
+        console.log(JSON.stringify(stageName, null, 2));
+
+        let stage = stages[stageName];
+        console.log(JSON.stringify(stage.moves, null, 2));
+    }
+
     endTurn() {
-        this.clearTurnData();
+        // this.clearTurnData();
         this.props.events.endTurn();
     }
 
     clearTurnData() {
-        this.props.G.action.build.type = null;
+        this.props.G.action.build.type = '';
     }
 
     createTileComponentFromTileMetaData(tileId) {

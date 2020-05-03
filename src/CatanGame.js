@@ -2,6 +2,7 @@ import {Ctx} from "boardgame.io";
 import React from 'react';
 import {initializeBoardMetaData} from "./utilities/CreateBoardUtils";
 import {initializePlayerData} from "./utilities/PlayerDataUtils";
+import {Structure} from "./enums/Structure"
 
 /*
  Function to randomize the player turn order
@@ -10,8 +11,8 @@ function determinePlayerOrder(ctx) {
     return ctx.playOrder.sort(() => Math.random() - 0.5);
 }
 
-function clearTurnData(G) {
-    G.structureType = 'asd';
+function setupInitialPhase(G) {
+    showAllBuildingLocations(G);
 }
 
 function showAllBuildingLocations(G) {
@@ -36,7 +37,23 @@ function showAllRoadLocations(G) {
     }
 }
 
-function buildTopStructure(G, ctx, id, type){
+function buildTopCity(G, ctx, id) {
+    buildTopStructure(G, ctx, id, Structure.CITY);
+}
+
+function buildLeftCity(G, ctx, id) {
+    buildLeftStructure(G, ctx, id, Structure.CITY);
+}
+
+function buildTopHouse(G, ctx, id) {
+    buildTopStructure(G, ctx, id, Structure.SETTLEMENT);
+}
+
+function buildLeftHouse(G, ctx, id) {
+    buildLeftStructure(G, ctx, id, Structure.SETTLEMENT);
+}
+
+function buildTopStructure(G, ctx, id, type) {
     let tile = getTile(G, id);
     let player = getPlayer(G, ctx);
     tile.topStructure = type;
@@ -44,7 +61,7 @@ function buildTopStructure(G, ctx, id, type){
     addStructureToPlayerData(G, ctx, type);
 }
 
-function buildLeftStructure(G, ctx, id, type){
+function buildLeftStructure(G, ctx, id, type) {
     let tile = getTile(G, id);
     let player = getPlayer(G, ctx);
     tile.leftStructure = type;
@@ -62,13 +79,15 @@ function getTile(G, id) {
 
 function addStructureToPlayerData(G, ctx, type) {
     let player = getPlayer(G, ctx);
-    if (type == 'house') {
-        player.victoryPoints += 1;
-        player.settlements += 1;
-    } else {
-        player.victoryPoints -= 1;
-        player.victoryPoints += 2;
-        player.cities += 1;
+    switch (type) {
+        case Structure.SETTLEMENT:
+            player.victoryPoints += 1;
+            player.settlements += 1;
+            break;
+        case Structure.CITY:
+            player.victoryPoints += 2;
+            player.cities += 1;
+            break;
     }
 }
 
@@ -90,10 +109,16 @@ const Catan = {
 
     turn: {
         stages: {
-            build: {
+            buildSettlement: {
                 moves: {
-                    buildTopStructure,
-                    buildLeftStructure
+                    buildTopHouse,
+                    buildLeftHouse
+                }
+            },
+            buildCity: {
+                moves: {
+                    buildTopCity,
+                    buildLeftCity
                 }
             }
         },
@@ -114,15 +139,17 @@ const Catan = {
     },
 
     moves: {
-        buildTopStructure: buildTopStructure,
-        buildLeftStructure: buildLeftStructure
+        buildTopHouse: buildTopHouse,
+        buildLeftHouse: buildLeftHouse,
+        buildTopCity: buildTopCity,
+        buildLeftCity: buildLeftCity
     },
 
     phases: {
         initialPiecePlacement: {
-            onBegin: (G) => showAllBuildingLocations(G),
+            onBegin: (G) => setupInitialPhase(G),
             onEnd: hideAllBuildingLocations,
-            moves:{
+            moves: {
                 buildTopStructure,
                 buildLeftStructure
             },
@@ -131,8 +158,7 @@ const Catan = {
             start: true
         },
 
-        distributeResources: {
-        }
+        distributeResources: {}
     }
 }
 

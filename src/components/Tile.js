@@ -1,4 +1,5 @@
 import React, {useCallback} from 'react';
+import {Structure} from "../enums/Structure";
 
 class Tile extends React.Component {
     constructor(props) {
@@ -57,7 +58,7 @@ class Tile extends React.Component {
     topLeftRoad() {
         if (this.props.topLeftRoadColor) {
             return (
-                <div className={'road tl ' + this.props.topLeftRoadColor}
+                <div className={Structure.ROAD + ' tl ' + this.props.topLeftRoadColor}
                      onClick={this.props.buildTopStructure}
                      style={{visibility: this.props.hideTopLeftRoad ? 'hidden' : 'visible'}}
                 />
@@ -69,7 +70,7 @@ class Tile extends React.Component {
     topRightRoad() {
         if (this.props.topRightRoadColor) {
             return (
-                <div className={'road tr ' + this.props.topRightRoadColor}
+                <div className={Structure.ROAD + ' tr ' + this.props.topRightRoadColor}
                      onClick={this.props.buildTopStructure}
                      style={{visibility: this.props.hideTopRightRoad ? 'hidden' : 'visible'}}
                 />
@@ -81,7 +82,7 @@ class Tile extends React.Component {
     leftRoad() {
         if (this.props.leftRoadColor) {
             return (
-                <div className={'road l ' + this.props.leftRoadColor}
+                <div className={Structure.ROAD + ' l ' + this.props.leftRoadColor}
                      onClick={this.props.buildTopStructure}
                      style={{visibility: this.props.hideLeftRoad ? 'hidden' : 'visible'}}
                 />
@@ -93,7 +94,7 @@ class Tile extends React.Component {
     harborType() {
         if (this.props.harborType && this.props.harborPiece) {
             return (
-                <div className={'harbor ' + this.props.harborType}>
+                <div className={Structure.HARBOR + ' ' + this.props.harborType}>
                     <div className={'harbor-piece ' + this.props.harborPiece}></div>
                 </div>
             );

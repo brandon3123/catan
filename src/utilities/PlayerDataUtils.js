@@ -24,7 +24,13 @@ export const initializePlayerData = (numPlayers) => {
         roads: 0,
         longestRoad: false,
         largestArmy: false,
-        color: getColor()
+        color: getColor(),
+        resources:[
+            {"sheep": 0},
+            {"wood": 0},
+            {"brick": 0},
+            {"coal": 0}
+        ]
     }
   }
 
