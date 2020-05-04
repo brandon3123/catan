@@ -13,7 +13,7 @@ function determinePlayerOrder(ctx) {
 }
 
 function setupInitialPhase(G, ctx) {
-    showAllPlacementLocations(G);
+    showAllBuildingLocations(G);
     ctx.events.setStage(Stage.BUILD_SETTLEMENT);
 }
 
@@ -25,9 +25,9 @@ function showAllBuildingLocations(G) {
     }
 }
 
-function initialPhaseIsCompleted(G) {
+function initialPhaseIsCompleted(G, buildCount) {
     for (let player in G.playerData) {
-        if (player.settlements != 2 && player.roads != 2) {
+        if (player.settlements != buildCount && player.roads != buildCount) {
             return false;
         }
     }
@@ -47,6 +47,10 @@ function showAllRoadLocations(G) {
         tile.hideTopLeftRoad = false;
         tile.hideTopRightRoad = false;
     }
+}
+
+function showAllAvailableTargetLocationsForStage(G, ctx) {
+
 }
 
 function buildTopCity(G, ctx, id) {
@@ -71,6 +75,12 @@ function buildTopStructure(G, ctx, id, type) {
     tile.topStructure = type;
     tile.topStructureColor = player.color;
     addStructureToPlayerData(player, type);
+    endCurrentStage(G, ctx);
+}
+
+function endCurrentStage(G, ctx) {
+    hideAllTargetLocations(G);
+    ctx.events.endStage();
 }
 
 function buildLeftStructure(G, ctx, id, type) {
@@ -79,6 +89,7 @@ function buildLeftStructure(G, ctx, id, type) {
     tile.leftStructure = type;
     tile.leftStructureColor = player.color;
     addStructureToPlayerData(player, type);
+    endCurrentStage(G, ctx);
 }
 
 function buildLeftRoad(G, ctx, id) {
@@ -218,10 +229,39 @@ const Catan = {
                 buildTopLeftRoad,
                 buildTopRightRoad
             },
-            endIf: (G) => initialPhaseIsCompleted(G),
-            // next: "distributeResources",
+            endIf: (G) => initialPhaseIsCompleted(G, 1),
+            // next: "initialPiecePlacementReverse",
             start: true
-        }
+        },
+        //
+        // initialPiecePlacementReverse: {
+        //     onBegin: (G, ctx) => setupInitialPhase(G, ctx),
+        //     onEnd: (G) => hideAllTargetLocations(G),
+        //     moves: {
+        //         buildTopHouse,
+        //         buildLeftHouse,
+        //         buildLeftRoad,
+        //         buildTopLeftRoad,
+        //         buildTopRightRoad
+        //     },
+        //     endIf: (G) => initialPhaseIsCompleted(G, 2),
+        //     turn: {
+        //         order: {
+        //             // Get the initial value of playOrderPos.
+        //             // This is called at the beginning of the phase.
+        //             first: (G, ctx) => ctx.currentPlayer,
+        //
+        //             // Get the next value of playOrderPos.
+        //             // This is called at the end of each turn.
+        //             // The phase ends if this returns undefined.
+        //             next: (G, ctx) => (ctx.playOrderPos + 1) % ctx.numPlayers,
+        //
+        //             // Override the initial value of playOrder.
+        //             // This is called at the beginning of the game / phase.
+        //             playOrder: (G, ctx) => ctx.playOrder.reverse(),
+        //         }
+        //     }
+        // }
     }
 }
 

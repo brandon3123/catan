@@ -152,6 +152,26 @@ class CatanBoard extends React.Component {
 
     setBuildingStage(stage) {
         this.props.events.setStage(stage);
+        this.showTargetLocationsForStage(stage);
+    }
+
+    showTargetLocationsForStage(stage) {
+        switch (stage) {
+            case Stage.BUILD_SETTLEMENT:
+                this.showAllBuildingLocations();
+                break;
+            // case Stage.BUILD_CITY:
+            //     this.props.moves.buildLeftCity(id);
+            //     break;
+        }
+    }
+
+    showAllBuildingLocations() {
+        let tiles = this.props.G.board.tiles.values();
+        for (let tile of tiles) {
+            tile.hideTopStructure = false;
+            tile.hideLeftStructure = false;
+        }
     }
 
     buildLeftStructure = (id) => {
