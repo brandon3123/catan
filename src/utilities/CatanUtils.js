@@ -40,6 +40,12 @@ export const showAllRoadLocations = (G) => {
     }
 }
 
+export const showTargetLocationsForPlayerAndStage = (G, ctx) => {
+    let player = getPlayer(G, ctx);
+
+
+}
+
 export const getAllTiles = (G) => {
    return G.board.tiles.values();
 }

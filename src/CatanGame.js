@@ -1,15 +1,24 @@
 import React from 'react';
 import {initializeBoardMetaData} from "./utilities/CreateBoardUtils";
 import {initializePlayerData} from "./utilities/PlayerDataUtils";
+
 import {
     getStages,
     buildSettlementStageName,
     currentPlayer,
-    stageForCurrentPlayer } from "./utilities/GameDataUtils";
+    stageForCurrentPlayer
+} from "./utilities/GameDataUtils";
+
 import {
     getPlayer,
     getTile,
-    hideAllTargetLocations} from "./utilities/CatanUtils";
+    hideAllTargetLocations
+} from "./utilities/CatanUtils";
+
+import {
+    addStructureToPlayer
+} from "./utilities/PlayerUtils";
+
 import {Structure} from "./enums/Structure"
 import {Stage} from "./enums/Stage";
 
@@ -39,13 +48,7 @@ function initialPhaseIsCompleted(G, buildCount) {
             return false;
         }
     }
-
     return true;
-}
-
-
-function showAllAvailableTargetLocationsForStage(G, ctx) {
-
 }
 
 function buildTopCity(G, ctx, id) {
@@ -69,7 +72,7 @@ function buildTopStructure(G, ctx, id, type) {
     let player = getPlayer(G, ctx);
     tile.topStructure = type;
     tile.topStructureColor = player.color;
-    addStructureToPlayerData(player, type);
+    addStructureToPlayer(player, type, id);
     endCurrentStage(G, ctx);
 }
 
@@ -83,7 +86,7 @@ function buildLeftStructure(G, ctx, id, type) {
     let player = getPlayer(G, ctx);
     tile.leftStructure = type;
     tile.leftStructureColor = player.color;
-    addStructureToPlayerData(player, type);
+    addStructureToPlayer(player, type, id);
     endCurrentStage(G, ctx);
 }
 
@@ -91,40 +94,22 @@ function buildLeftRoad(G, ctx, id) {
     let tile = getTile(G, id);
     let player = getPlayer(G, ctx);
     tile.leftRoadColor = player.color;
-    addStructureToPlayerData(player, Structure.ROAD);
+    player.roads += 1;
 }
 
 function buildTopLeftRoad(G, ctx, id) {
     let tile = getTile(G, id);
     let player = getPlayer(G, ctx);
     tile.topLeftRoadColor = player.color;
-    addStructureToPlayerData(player, Structure.ROAD);
+    player.roads += 1;
 }
 
 function buildTopRightRoad(G, ctx, id) {
     let tile = getTile(G, id);
     let player = getPlayer(G, ctx);
     tile.topRightRoadColor = player.color;
-    addStructureToPlayerData(player, Structure.ROAD);
+    player.roads += 1;
 }
-
-function addStructureToPlayerData(player, type) {
-    switch (type) {
-        case Structure.SETTLEMENT:
-            player.victoryPoints += 1;
-            player.settlements += 1;
-            break;
-        case Structure.CITY:
-            player.victoryPoints += 2;
-            player.cities += 1;
-            break;
-        case Structure.ROAD:
-            player.roads += 1;
-            break;
-    }
-}
-
-
 
 const Catan = {
     name: "Catan",

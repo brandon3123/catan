@@ -19,8 +19,8 @@ export const initializePlayerData = (numPlayers) => {
     return {
         playerId: playerId,
         victoryPoints: 0,
-        settlements: 0,
-        cities: 0,
+        settlements: [],
+        cities: [],
         roads: 0,
         longestRoad: false,
         largestArmy: false,
