@@ -1,7 +1,15 @@
-import {Ctx} from "boardgame.io";
 import React from 'react';
 import {initializeBoardMetaData} from "./utilities/CreateBoardUtils";
 import {initializePlayerData} from "./utilities/PlayerDataUtils";
+import {
+    getStages,
+    buildSettlementStageName,
+    currentPlayer,
+    stageForCurrentPlayer } from "./utilities/GameDataUtils";
+import {
+    getPlayer,
+    getTile,
+    hideAllTargetLocations} from "./utilities/CatanUtils";
 import {Structure} from "./enums/Structure"
 import {Stage} from "./enums/Stage";
 
@@ -35,19 +43,6 @@ function initialPhaseIsCompleted(G, buildCount) {
     return true;
 }
 
-function showAllPlacementLocations(G) {
-    showAllBuildingLocations(G);
-    showAllRoadLocations(G);
-}
-
-function showAllRoadLocations(G) {
-    let tiles = G.board.tiles.values();
-    for (let tile of tiles) {
-        tile.hideLeftRoad = false;
-        tile.hideTopLeftRoad = false;
-        tile.hideTopRightRoad = false;
-    }
-}
 
 function showAllAvailableTargetLocationsForStage(G, ctx) {
 
@@ -113,14 +108,6 @@ function buildTopRightRoad(G, ctx, id) {
     addStructureToPlayerData(player, Structure.ROAD);
 }
 
-function getPlayer(G, ctx) {
-    return G.playerData[ctx.currentPlayer];
-}
-
-function getTile(G, id) {
-    return G.board.tiles.get(id);
-}
-
 function addStructureToPlayerData(player, type) {
     switch (type) {
         case Structure.SETTLEMENT:
@@ -137,30 +124,7 @@ function addStructureToPlayerData(player, type) {
     }
 }
 
-function hideAllTargetLocations(G) {
-    let tiles = G.board.tiles.values();
-    for (let tile of tiles) {
-        if (tile.topStructureColor == 'target') {
-            tile.hideTopStructure = true;
-        }
 
-        if (tile.leftStructureColor == 'target') {
-            tile.hideLeftStructure = true;
-        }
-
-        if (tile.leftRoadColor == 'target') {
-            tile.hideLeftRoad = true;
-        }
-
-        if (tile.topLeftRoadColor == 'target') {
-            tile.hideTopLeftRoad = true;
-        }
-
-        if (tile.topRightRoadColor == 'target') {
-            tile.hideTopRightRoad = true;
-        }
-    }
-}
 
 const Catan = {
     name: "Catan",
