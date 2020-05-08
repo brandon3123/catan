@@ -10,6 +10,7 @@ import {
 } from "./utilities/GameDataUtils";
 
 import {
+    getAllTiles,
     getPlayer,
     getTile,
     hideAllTargetLocations
@@ -72,6 +73,7 @@ function buildTopStructure(G, ctx, id, type) {
     let player = getPlayer(G, ctx);
     tile.topStructure = type;
     tile.topStructureColor = player.color;
+    // console.log(JSON.stringify(tile, null, 2));
     addStructureToPlayer(player, type, id);
     endCurrentStage(G, ctx);
 }
@@ -95,6 +97,7 @@ function buildLeftRoad(G, ctx, id) {
     let player = getPlayer(G, ctx);
     tile.leftRoadColor = player.color;
     player.roads += 1;
+    endCurrentStage(G, ctx);
 }
 
 function buildTopLeftRoad(G, ctx, id) {
@@ -102,6 +105,7 @@ function buildTopLeftRoad(G, ctx, id) {
     let player = getPlayer(G, ctx);
     tile.topLeftRoadColor = player.color;
     player.roads += 1;
+    endCurrentStage(G, ctx);
 }
 
 function buildTopRightRoad(G, ctx, id) {
@@ -109,6 +113,7 @@ function buildTopRightRoad(G, ctx, id) {
     let player = getPlayer(G, ctx);
     tile.topRightRoadColor = player.color;
     player.roads += 1;
+    endCurrentStage(G, ctx);
 }
 
 const Catan = {

@@ -185,20 +185,24 @@ export const initializeBoardMetaData = () => {
                 false
                 );
 
+            let firstTopLeftNeighbour = lookupTileForId(layout[0][0]);
+            let firstTopRightNeighbour = lookupTileForId(layout[0][1]);
+
             let firstTile = createResourceTile(
                 1,
                 1,
                 tiles,
                 tileValues,
                 harborTile,
-                lookupTileForId(layout[0][0]),
-                lookupTileForId(layout[0][1]),
-                'target',
-                true,
-                'target',
-                true,
-                'target',
-                true);
+                firstTopLeftNeighbour,
+                firstTopRightNeighbour);
+
+            firstTopLeftNeighbour.bottomLeftNeighbour = harborTile;
+            firstTopLeftNeighbour.bottomRightNeighbour = firstTile;
+            firstTopRightNeighbour.bottomLeftNeighbour = firstTile
+
+            let secondTopLeftNeighbour = lookupTileForId(layout[0][1]);
+            let secondTopRightNeighbour = lookupTileForId(layout[0][2]);
 
             let secondTile = createResourceTile(
                 1,
@@ -206,8 +210,14 @@ export const initializeBoardMetaData = () => {
                 tiles,
                 tileValues,
                 firstTile,
-                lookupTileForId(layout[0][1]),
-                lookupTileForId(layout[0][2]));
+                secondTopLeftNeighbour,
+                secondTopRightNeighbour);
+
+            secondTopLeftNeighbour.bottomRightNeighbour = secondTile;
+            secondTopRightNeighbour.bottomLeftNeighbour = secondTile;
+
+            let thirdTopLeftNeighbour = lookupTileForId(layout[0][2]);
+            let thirdTopRightNeighbour = lookupTileForId(layout[0][3]);
 
             let thirdTile = createResourceTile(
                 1,
@@ -215,8 +225,13 @@ export const initializeBoardMetaData = () => {
                 tiles,
                 tileValues,
                 secondTile,
-                lookupTileForId(layout[0][3]),
-                lookupTileForId(layout[0][4]));
+                thirdTopLeftNeighbour,
+                thirdTopRightNeighbour);
+
+            thirdTopLeftNeighbour.bottomRightNeighbour = thirdTile;
+            thirdTopRightNeighbour.bottomLeftNeighbour = thirdTile;
+
+            let fourthTopLeftNeighbour = lookupTileForId(layout[0][3]);
 
             let fourthTile = createWaterTile(
                 1,
@@ -226,10 +241,8 @@ export const initializeBoardMetaData = () => {
                 null,
                 null,
                 null,
-                lookupTileForId(layout[0][4]),
+                fourthTopLeftNeighbour,
                 thirdTile,
-                null,
-                null,
                 null,
                 Structure.SETTLEMENT,
                 'target',
@@ -240,6 +253,8 @@ export const initializeBoardMetaData = () => {
                 null,
                 null,
                 null);
+
+            fourthTopLeftNeighbour.bottomRightNeighbour = fourthTile;
 
             return <ol className="odd">
                 <Tile type={'spacer'}/>

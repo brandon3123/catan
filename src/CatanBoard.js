@@ -15,7 +15,11 @@ import {getStages, buildSettlementStageName} from "./utilities/GameDataUtils";
 import {Stage} from "./enums/Stage";
 import {currentPlayer,
     stageNameForCurrentPlayer} from "./utilities/GameUtils";
-import {getTile} from "./utilities/CatanUtils";
+import {
+    getTile,
+    getAllTiles,
+    showTargetLocationsForPlayerAndStage
+} from "./utilities/CatanUtils";
 
 
 class CatanBoard extends React.Component {
@@ -151,7 +155,7 @@ class CatanBoard extends React.Component {
 
     setBuildingStage(stage) {
         this.props.events.setStage(stage);
-        this.showTargetLocationsForStage(stage);
+        showTargetLocationsForPlayerAndStage(this.props.G, this.props.ctx, stage);
     }
 
     showTargetLocationsForStage(stage) {

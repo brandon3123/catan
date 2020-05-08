@@ -1,4 +1,5 @@
 import {Structure} from "../enums/Structure";
+import {getTile} from "./CatanUtils";
 
 export const addStructureToPlayer = (player, type, id) => {
     switch (type) {
@@ -10,6 +11,15 @@ export const addStructureToPlayer = (player, type, id) => {
             break;
     }
     player.victoryPoints = calculateVictoryPoints(player);
+}
+
+export const getTilesForPlayer = (G, player) => {
+    let playersTiles = [];
+    for (let tileId of player.settlements) {
+        let tile = getTile(G, tileId);
+        playersTiles.push(tile);
+    }
+    return playersTiles;
 }
 
 export const calculateVictoryPoints = (player) => {
