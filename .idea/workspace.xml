@@ -25,10 +25,8 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cfa065f6-d89e-401e-8d38-19c6f6ccb826" name="Default Changelist" comment="All bottom neighbours added">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="cfa065f6-d89e-401e-8d38-19c6f6ccb826" name="Default Changelist" comment="road placement working for each player. woo!">
       <change beforePath="$PROJECT_DIR$/src/utilities/CatanUtils.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utilities/CatanUtils.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utilities/CreateBoardUtils.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utilities/CreateBoardUtils.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -258,7 +256,14 @@
       <option name="project" value="LOCAL" />
       <updated>1588961753999</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="road placement working for each player. woo!">
+      <created>1588978636973</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1588978636973</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -308,7 +313,8 @@
     <MESSAGE value="adding utility classes for common board game io functions and catan game functions." />
     <MESSAGE value="Tinkering...." />
     <MESSAGE value="Got road placement locations working pretty well. Need to add bottom neighbours for tiles so I can complete the placement locations." />
-    <option name="LAST_COMMIT_MESSAGE" value="Got road placement locations working pretty well. Need to add bottom neighbours for tiles so I can complete the placement locations." />
+    <MESSAGE value="road placement working for each player. woo!" />
+    <option name="LAST_COMMIT_MESSAGE" value="road placement working for each player. woo!" />
   </component>
   <component name="WindowStateProjectService">
     <state x="2217" y="241" key="#catan" timestamp="1586712210648">
@@ -324,12 +330,12 @@
       <screen x="1680" y="23" width="1680" height="1027" />
     </state>
     <state width="306" height="442" key="Diff.GoToChangePopup/3360.23.1920.1057/0.23.1680.958/1680.23.1680.1027@1680.23.1680.1027" timestamp="1588720008573" />
-    <state x="1780" y="123" width="1480" height="827" key="DiffContextDialog" timestamp="1588978589448">
+    <state x="1780" y="123" width="1480" height="827" key="DiffContextDialog" timestamp="1588978673202">
       <screen x="1680" y="23" width="1680" height="1027" />
     </state>
     <state x="1780" y="123" width="1480" height="827" key="DiffContextDialog/3360.23.1920.1057/0.23.1680.954/1680.23.1680.1027@1680.23.1680.1027" timestamp="1588115451163" />
     <state x="1780" y="123" width="1480" height="827" key="DiffContextDialog/3360.23.1920.1057/0.23.1680.956/1680.23.1680.1027@1680.23.1680.1027" timestamp="1588203483403" />
-    <state x="1780" y="123" width="1480" height="827" key="DiffContextDialog/3360.23.1920.1057/0.23.1680.958/1680.23.1680.1027@1680.23.1680.1027" timestamp="1588978589448" />
+    <state x="1780" y="123" width="1480" height="827" key="DiffContextDialog/3360.23.1920.1057/0.23.1680.958/1680.23.1680.1027@1680.23.1680.1027" timestamp="1588978673202" />
     <state width="1659" height="150" key="GridCell.Tab.0.bottom" timestamp="1588961592649">
       <screen x="1680" y="23" width="1680" height="1027" />
     </state>
@@ -447,13 +453,13 @@
       <screen x="1680" y="23" width="1680" height="1027" />
     </state>
     <state x="1680" y="457" key="VCS.ChangelistChooser/3360.23.1920.1057/0.23.1680.954/1680.23.1680.1027@1680.23.1680.1027" timestamp="1588108222018" />
-    <state x="2120" y="276" key="Vcs.Push.Dialog.v2" timestamp="1588961756549">
+    <state x="2120" y="276" key="Vcs.Push.Dialog.v2" timestamp="1588978637980">
       <screen x="1680" y="23" width="1680" height="1027" />
     </state>
     <state x="2120" y="276" key="Vcs.Push.Dialog.v2/3360.23.1920.1057/0.23.1680.950/1680.23.1680.1027@1680.23.1680.1027" timestamp="1586713017631" />
     <state x="2120" y="276" key="Vcs.Push.Dialog.v2/3360.23.1920.1057/0.23.1680.954/1680.23.1680.1027@1680.23.1680.1027" timestamp="1588115485754" />
     <state x="2120" y="276" key="Vcs.Push.Dialog.v2/3360.23.1920.1057/0.23.1680.956/1680.23.1680.1027@1680.23.1680.1027" timestamp="1588208266860" />
-    <state x="2120" y="276" key="Vcs.Push.Dialog.v2/3360.23.1920.1057/0.23.1680.958/1680.23.1680.1027@1680.23.1680.1027" timestamp="1588961756549" />
+    <state x="2120" y="276" key="Vcs.Push.Dialog.v2/3360.23.1920.1057/0.23.1680.958/1680.23.1680.1027@1680.23.1680.1027" timestamp="1588978637980" />
     <state x="2120" y="276" key="Vcs.Push.Dialog.v2/3360.23.1920.1057/0.23.1680.960/1680.23.1680.1027@1680.23.1680.1027" timestamp="1588634374004" />
     <state x="2311" y="457" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1586993811771">
       <screen x="1680" y="23" width="1680" height="1027" />

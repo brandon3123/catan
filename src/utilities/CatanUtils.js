@@ -64,8 +64,7 @@ export const showTargetLocationsForPlayerAndStage = (G, ctx, stage) => {
 
 export const showRoadPlacementsForTileAndPlayer = (tile, player) => {
     if (tileHasNoBuiltRoads(tile)) {
-        if (tileHasNoBuiltStructures(tile)) {
-        } else if (tileHasOnlyTopStructure(tile)) {
+        if (tileHasOnlyTopStructure(tile)) {
             showTopLeftRoadTargetForTile(tile);
             showTopRightRoadTargetForTile(tile);
             showLeftRoadTargetForTile(tile.topRightNeighbour);
