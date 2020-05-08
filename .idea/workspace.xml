@@ -25,8 +25,9 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cfa065f6-d89e-401e-8d38-19c6f6ccb826" name="Default Changelist" comment="Got road placement locations working pretty well. Need to add bottom neighbours for tiles so I can complete the placement locations.">
+    <list default="true" id="cfa065f6-d89e-401e-8d38-19c6f6ccb826" name="Default Changelist" comment="All bottom neighbours added">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utilities/CatanUtils.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utilities/CatanUtils.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/utilities/CreateBoardUtils.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utilities/CreateBoardUtils.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -323,12 +324,12 @@
       <screen x="1680" y="23" width="1680" height="1027" />
     </state>
     <state width="306" height="442" key="Diff.GoToChangePopup/3360.23.1920.1057/0.23.1680.958/1680.23.1680.1027@1680.23.1680.1027" timestamp="1588720008573" />
-    <state x="1780" y="123" width="1480" height="827" key="DiffContextDialog" timestamp="1588961661456">
+    <state x="1780" y="123" width="1480" height="827" key="DiffContextDialog" timestamp="1588978589448">
       <screen x="1680" y="23" width="1680" height="1027" />
     </state>
     <state x="1780" y="123" width="1480" height="827" key="DiffContextDialog/3360.23.1920.1057/0.23.1680.954/1680.23.1680.1027@1680.23.1680.1027" timestamp="1588115451163" />
     <state x="1780" y="123" width="1480" height="827" key="DiffContextDialog/3360.23.1920.1057/0.23.1680.956/1680.23.1680.1027@1680.23.1680.1027" timestamp="1588203483403" />
-    <state x="1780" y="123" width="1480" height="827" key="DiffContextDialog/3360.23.1920.1057/0.23.1680.958/1680.23.1680.1027@1680.23.1680.1027" timestamp="1588961661456" />
+    <state x="1780" y="123" width="1480" height="827" key="DiffContextDialog/3360.23.1920.1057/0.23.1680.958/1680.23.1680.1027@1680.23.1680.1027" timestamp="1588978589448" />
     <state width="1659" height="150" key="GridCell.Tab.0.bottom" timestamp="1588961592649">
       <screen x="1680" y="23" width="1680" height="1027" />
     </state>
@@ -462,19 +463,19 @@
       <screen x="1680" y="23" width="1680" height="1027" />
     </state>
     <state x="2188" y="23" width="1172" height="1027" maximized="true" key="dock-window-1/3360.23.1920.1057/0.23.1680.960/1680.23.1680.1027@3360.23.1920.1057" timestamp="1587853933333" />
-    <state x="2220" y="133" width="600" height="807" key="find.popup" timestamp="1588956782777">
+    <state x="2220" y="133" width="600" height="807" key="find.popup" timestamp="1588975727288">
       <screen x="1680" y="23" width="1680" height="1027" />
     </state>
     <state x="2220" y="133" width="601" height="808" key="find.popup/3360.23.1920.1057/0.23.1680.954/1680.23.1680.1027@1680.23.1680.1027" timestamp="1588115034945" />
     <state x="2220" y="133" width="600" height="807" key="find.popup/3360.23.1920.1057/0.23.1680.956/1680.23.1680.1027@1680.23.1680.1027" timestamp="1588205017821" />
     <state x="3977" y="136" width="686" height="831" key="find.popup/3360.23.1920.1057/0.23.1680.956/1680.23.1680.1027@3360.23.1920.1057" timestamp="1587846827074" />
-    <state x="2220" y="133" width="600" height="807" key="find.popup/3360.23.1920.1057/0.23.1680.958/1680.23.1680.1027@1680.23.1680.1027" timestamp="1588956782777" />
+    <state x="2220" y="133" width="600" height="807" key="find.popup/3360.23.1920.1057/0.23.1680.958/1680.23.1680.1027@1680.23.1680.1027" timestamp="1588975727288" />
     <state x="2220" y="133" width="600" height="807" key="find.popup/3360.23.1920.1057/0.23.1680.960/1680.23.1680.1027@1680.23.1680.1027" timestamp="1588634158039" />
-    <state x="2183" y="248" width="672" height="678" key="search.everywhere.popup" timestamp="1588960038190">
+    <state x="2183" y="248" width="672" height="678" key="search.everywhere.popup" timestamp="1588975471383">
       <screen x="1680" y="23" width="1680" height="1027" />
     </state>
     <state x="2183" y="248" width="672" height="678" key="search.everywhere.popup/3360.23.1920.1057/0.23.1680.956/1680.23.1680.1027@1680.23.1680.1027" timestamp="1587757543394" />
-    <state x="2183" y="248" width="672" height="678" key="search.everywhere.popup/3360.23.1920.1057/0.23.1680.958/1680.23.1680.1027@1680.23.1680.1027" timestamp="1588960038190" />
+    <state x="2183" y="248" width="672" height="678" key="search.everywhere.popup/3360.23.1920.1057/0.23.1680.958/1680.23.1680.1027@1680.23.1680.1027" timestamp="1588975471383" />
     <state x="3935" y="255" width="768" height="698" key="search.everywhere.popup/3360.23.1920.1057/0.23.1680.958/1680.23.1680.1027@3360.23.1920.1057" timestamp="1587853017506" />
     <state x="3935" y="255" width="768" height="698" key="search.everywhere.popup/3360.23.1920.1057/0.23.1680.960/1680.23.1680.1027@3360.23.1920.1057" timestamp="1587853924249" />
   </component>
