@@ -267,6 +267,7 @@ export const initializeBoardMetaData = () => {
         }
 
         function renderThirdRow(tiles, tileValues) {
+            let waterTopRightNeighbour = lookupTileForId(layout[1][0]);
             let waterTile = createWaterTile(
                 2,
                 0,
@@ -276,7 +277,7 @@ export const initializeBoardMetaData = () => {
                 null,
                 null,
                 null,
-                lookupTileForId(layout[1][0]),
+                waterTopRightNeighbour,
                 null,
                 null,
                 null,
@@ -284,14 +285,25 @@ export const initializeBoardMetaData = () => {
                 null,
                 null);
 
+            waterTopRightNeighbour.bottomLeftNeighbour = waterTile;
+
+            let firstTopLeftNeighbour = lookupTileForId(layout[1][0]);
+            let firstTopRightNeighbour = lookupTileForId(layout[1][1]);
+
             let firstTile = createResourceTile(
                 2,
                 1,
                 tiles,
                 tileValues,
                 waterTile,
-                lookupTileForId(layout[1][0]),
-                lookupTileForId(layout[1][1]));
+                firstTopLeftNeighbour,
+                firstTopRightNeighbour);
+
+            firstTopLeftNeighbour.bottomRightNeighbour = firstTile;
+            firstTopRightNeighbour.bottomLeftNeighbour = firstTile;
+
+            let secondTopLeftNeighbour = lookupTileForId(layout[1][1]);
+            let secondTopRightNeighbour = lookupTileForId(layout[1][2]);
 
             let secondTile = createResourceTile(
                 2,
@@ -299,8 +311,14 @@ export const initializeBoardMetaData = () => {
                 tiles,
                 tileValues,
                 firstTile,
-                lookupTileForId(layout[1][1]),
-                lookupTileForId(layout[1][2]));
+                secondTopLeftNeighbour,
+                secondTopRightNeighbour);
+
+            secondTopLeftNeighbour.bottomRightNeighbour = secondTile;
+            secondTopRightNeighbour.bottomLeftNeighbour = secondTile;
+
+            let thirdTopLeftNeighbour = lookupTileForId(layout[1][2]);
+            let thirdTopRightNeighbour = lookupTileForId(layout[1][3]);
 
             let thirdTile = createResourceTile(
                 2,
@@ -308,8 +326,14 @@ export const initializeBoardMetaData = () => {
                 tiles,
                 tileValues,
                 secondTile,
-                lookupTileForId(layout[1][2]),
-                lookupTileForId(layout[1][3]));
+                thirdTopLeftNeighbour,
+                thirdTopRightNeighbour);
+
+            thirdTopLeftNeighbour.bottomRightNeighbour = thirdTile;
+            thirdTopRightNeighbour.bottomLeftNeighbour = thirdTile;
+
+            let fourthTopLeftNeighbour = lookupTileForId(layout[1][3]);
+            let fourthTopRightNeighbour = lookupTileForId(layout[1][4]);
 
             let fourthTile = createResourceTile(
                 2,
@@ -317,8 +341,13 @@ export const initializeBoardMetaData = () => {
                 tiles,
                 tileValues,
                 thirdTile,
-                lookupTileForId(layout[1][3]),
-                lookupTileForId(layout[1][4]));
+                fourthTopLeftNeighbour,
+                fourthTopRightNeighbour);
+
+            fourthTopLeftNeighbour.bottomRightNeighbour = fourthTile;
+            fourthTopRightNeighbour.bottomLeftNeighbour = fourthTile;
+
+            let harborTopLeftNeighbour = lookupTileForId(layout[1][4]);
 
             let harborTile = createWaterTile(
                 2,
@@ -328,7 +357,7 @@ export const initializeBoardMetaData = () => {
                 'three-one brick',
                 'l',
                 fourthTile,
-                lookupTileForId(layout[1][4]),
+                harborTopLeftNeighbour,
                 null,
                 null,
                 null,
@@ -342,6 +371,8 @@ export const initializeBoardMetaData = () => {
                 null,
                 null,
                 null);
+
+            harborTopLeftNeighbour.bottomRightNeighbour = harborTile;
 
             return <ol className="even">
                 {waterTile}
@@ -354,6 +385,8 @@ export const initializeBoardMetaData = () => {
         }
 
         function renderMiddleRow(tiles, tileValues) {
+            let harborTopRightNeighbour = lookupTileForId(layout[2][0]);
+
             let harborTile = createWaterTile(
                 3,
                 0,
@@ -363,7 +396,7 @@ export const initializeBoardMetaData = () => {
                 'r',
                 null,
                 null,
-                lookupTileForId(layout[2][0]),
+                harborTopRightNeighbour,
                 null,
                 null,
                 null,
@@ -371,14 +404,25 @@ export const initializeBoardMetaData = () => {
                 null,
                 true);
 
+            harborTopRightNeighbour.bottomLeftNeighbour = harborTile;
+
+            let firstTopLeftNeighbour = lookupTileForId(layout[2][0]);
+            let firstTopRightNeighbour = lookupTileForId(layout[2][1]);
+
             let firstTile = createResourceTile(
                 3,
                 1,
                 tiles,
                 tileValues,
                 harborTile,
-                lookupTileForId(layout[2][0]),
-                lookupTileForId(layout[2][1]));
+                firstTopLeftNeighbour,
+                firstTopLeftNeighbour);
+
+            firstTopLeftNeighbour.bottomRightNeighbour = firstTile;
+            firstTopRightNeighbour.bottomLeftNeighbour = firstTile;
+
+            let secondTopLeftNeighbour = lookupTileForId(layout[2][1]);
+            let secondTopRightNeighbour = lookupTileForId(layout[2][2]);
 
             let secondTile = createResourceTile(
                 3,
@@ -386,8 +430,14 @@ export const initializeBoardMetaData = () => {
                 tiles,
                 tileValues,
                 firstTile,
-                lookupTileForId(layout[2][1]),
-                lookupTileForId(layout[2][2]));
+                secondTopLeftNeighbour,
+                secondTopRightNeighbour);
+
+            secondTopLeftNeighbour.bottomRightNeighbour = secondTile;
+            secondTopRightNeighbour.bottomLeftNeighbour = secondTile;
+
+            let thirdTopLeftNeighbour = lookupTileForId(layout[2][2]);
+            let thirdTopRightNeighbour = lookupTileForId(layout[2][3]);
 
             let thirdTile = createResourceTile(
                 3,
@@ -395,8 +445,14 @@ export const initializeBoardMetaData = () => {
                 tiles,
                 tileValues,
                 secondTile,
-                lookupTileForId(layout[2][2]),
-                lookupTileForId(layout[2][3]));
+                thirdTopLeftNeighbour,
+                thirdTopRightNeighbour);
+
+            thirdTopLeftNeighbour.bottomRightNeighbour = thirdTile;
+            thirdTopRightNeighbour.bottomLeftNeighbour = thirdTile;
+
+            let fourthTopLeftNeighbour = lookupTileForId(layout[2][3]);
+            let fourthTopRightNeighbour = lookupTileForId(layout[2][4]);
 
             let fourthTile = createResourceTile(
                 3,
@@ -404,8 +460,14 @@ export const initializeBoardMetaData = () => {
                 tiles,
                 tileValues,
                 thirdTile,
-                lookupTileForId(layout[2][3]),
-                lookupTileForId(layout[2][4]));
+                fourthTopLeftNeighbour,
+                fourthTopRightNeighbour);
+
+            fourthTopLeftNeighbour.bottomRightNeighbour = fourthTile;
+            fourthTopRightNeighbour.bottomLeftNeighbour = fourthTile;
+
+            let fifthTopLeftNeighbour = lookupTileForId(layout[2][4]);
+            let fifthTopRightNeighbour = lookupTileForId(layout[2][5]);
 
             let fifthTile = createResourceTile(
                 3,
@@ -413,8 +475,13 @@ export const initializeBoardMetaData = () => {
                 tiles,
                 tileValues,
                 fourthTile,
-                lookupTileForId(layout[2][4]),
-                lookupTileForId(layout[2][5]));
+                fifthTopLeftNeighbour,
+                fifthTopRightNeighbour);
+
+            fifthTopLeftNeighbour.bottomRightNeighbour = fifthTile;
+            fifthTopRightNeighbour.bottomLeftNeighbour = fifthTile;
+
+            let waterTopLeftNeighbour = lookupTileForId(layout[2][5]);
 
             let waterTile = createWaterTile(
                 3,
@@ -424,7 +491,7 @@ export const initializeBoardMetaData = () => {
                 null,
                 null,
                 fifthTile,
-                lookupTileForId(layout[2][5]),
+                waterTopLeftNeighbour,
                 null,
                 null,
                 null,
@@ -438,6 +505,8 @@ export const initializeBoardMetaData = () => {
                 null,
                 null,
                 null);
+
+            waterTopLeftNeighbour.bottomRightNeighbour = waterTile;
 
             return (
                 <ol className="odd">
@@ -453,6 +522,9 @@ export const initializeBoardMetaData = () => {
         }
 
         function renderFifthRow(tiles, tileValues) {
+            let waterTopLeftNeighbour = lookupTileForId(layout[3][0]);
+            let waterTopRightNeighbour = lookupTileForId(layout[3][1]);
+
             let waterTile = createWaterTile(
                 4,
                 0,
@@ -461,8 +533,8 @@ export const initializeBoardMetaData = () => {
                 null,
                 null,
                 null,
-                lookupTileForId(layout[3][0]),
-                lookupTileForId(layout[3][1]),
+                waterTopLeftNeighbour,
+                waterTopRightNeighbour,
                 Structure.SETTLEMENT,
                 'target',
                 true,
@@ -476,14 +548,26 @@ export const initializeBoardMetaData = () => {
                 'target',
                 true);
 
+            waterTopLeftNeighbour.bottomRightNeighbour = waterTile;
+            waterTopRightNeighbour.bottomLeftNeighbour = waterTile;
+
+            let firstTopLeftNeighbour = lookupTileForId(layout[3][1]);
+            let firstTopRightNeighbour = lookupTileForId(layout[3][2]);
+
             let firstTile = createResourceTile(
                 4,
                 1,
                 tiles,
                 tileValues,
                 waterTile,
-                lookupTileForId(layout[3][1]),
-                lookupTileForId(layout[3][2]));
+                firstTopLeftNeighbour,
+                firstTopRightNeighbour);
+
+            firstTopLeftNeighbour.bottomRightNeighbour = firstTile;
+            firstTopRightNeighbour.bottomLeftNeighbour = firstTile;
+
+            let secondTopLeftNeighbour = lookupTileForId(layout[3][2]);
+            let secondTopRightNeighbour = lookupTileForId(layout[3][3]);
 
             let secondTile = createResourceTile(
                 4,
@@ -491,8 +575,14 @@ export const initializeBoardMetaData = () => {
                 tiles,
                 tileValues,
                 firstTile,
-                lookupTileForId(layout[3][2]),
-                lookupTileForId(layout[3][3]));
+                secondTopLeftNeighbour,
+                secondTopRightNeighbour);
+
+            secondTopLeftNeighbour.bottomRightNeighbour = secondTile;
+            secondTopRightNeighbour.bottomLeftNeighbour = secondTile;
+
+            let thirdTopLeftNeighbour = lookupTileForId(layout[3][3]);
+            let thirdTopRightNeighbour = lookupTileForId(layout[3][4]);
 
             let thirdTile = createResourceTile(
                 4,
@@ -500,8 +590,14 @@ export const initializeBoardMetaData = () => {
                 tiles,
                 tileValues,
                 secondTile,
-                lookupTileForId(layout[3][3]),
-                lookupTileForId(layout[1][4]));
+                thirdTopLeftNeighbour,
+                thirdTopRightNeighbour);
+
+            thirdTopLeftNeighbour.bottomRightNeighbour = thirdTile;
+            thirdTopRightNeighbour.bottomLeftNeighbour = thirdTile;
+
+            let fourthTopLeftNeighbour = lookupTileForId(layout[3][4]);
+            let fourthTopRightNeighbour = lookupTileForId(layout[3][5]);
 
             let fourthTile = createResourceTile(
                 4,
@@ -509,8 +605,14 @@ export const initializeBoardMetaData = () => {
                 tiles,
                 tileValues,
                 thirdTile,
-                lookupTileForId(layout[3][4]),
-                lookupTileForId(layout[3][5]));
+                fourthTopLeftNeighbour,
+                fourthTopRightNeighbour);
+
+            fourthTopLeftNeighbour.bottomRightNeighbour = fourthTile;
+            fourthTopRightNeighbour.bottomLeftNeighbour = fourthTile;
+
+            let harborTopLeftNeighbour = lookupTileForId(layout[3][5]);
+            let harborTopRightNeighbour = lookupTileForId(layout[3][6]);
 
             let harborTile = createWaterTile(
                 4,
@@ -520,8 +622,8 @@ export const initializeBoardMetaData = () => {
                 'three-one brick',
                 'l',
                 fourthTile,
-                lookupTileForId(layout[3][5]),
-                lookupTileForId(layout[3][6]),
+                harborTopLeftNeighbour,
+                harborTopRightNeighbour,
                 Structure.SETTLEMENT,
                 'target',
                 true,
@@ -534,6 +636,9 @@ export const initializeBoardMetaData = () => {
                 true,
                 null,
                 null);
+
+            harborTopLeftNeighbour.bottomRightNeighbour = harborTile;
+            harborTopRightNeighbour.bottomLeftNeighbour = harborTile;
 
             return <ol className="even">
                 {waterTile}
@@ -546,6 +651,9 @@ export const initializeBoardMetaData = () => {
         }
 
         function renderSixthRow(tiles, tileValues) {
+            let harborTopLeftNeighbour = lookupTileForId(layout[4][0]);
+            let harborTopRightNeighbour = lookupTileForId(layout[4][1]);
+
             let harborTile = createWaterTile(
                 5,
                 0,
@@ -554,8 +662,8 @@ export const initializeBoardMetaData = () => {
                 'three-one sheep',
                 'r',
                 null,
-                lookupTileForId(layout[4][0]),
-                lookupTileForId(layout[4][1]),
+                harborTopLeftNeighbour,
+                harborTopRightNeighbour,
                 Structure.SETTLEMENT,
                 'target',
                 true,
@@ -569,14 +677,26 @@ export const initializeBoardMetaData = () => {
                 'target',
                 true);
 
+            harborTopLeftNeighbour.bottomRightNeighbour = harborTile;
+            harborTopRightNeighbour.bottomLeftNeighbour = harborTile;
+
+            let firstTopLeftNeighbour = lookupTileForId(layout[4][1]);
+            let firstTopRightNeighbour = lookupTileForId(layout[4][2]);
+
             let firstTile = createResourceTile(
                 5,
                 1,
                 tiles,
                 tileValues,
                 harborTile,
-                lookupTileForId(layout[4][1]),
-                lookupTileForId(layout[4][2]));
+                firstTopLeftNeighbour,
+                firstTopRightNeighbour);
+
+            firstTopLeftNeighbour.bottomRightNeighbour = firstTile;
+            firstTopRightNeighbour.bottomLeftNeighbour = firstTile;
+
+            let secondTopLeftNeighbour = lookupTileForId(layout[4][2]);
+            let secondTopRightNeighbour = lookupTileForId(layout[4][3]);
 
             let secondTile = createResourceTile(
                 5,
@@ -584,8 +704,14 @@ export const initializeBoardMetaData = () => {
                 tiles,
                 tileValues,
                 firstTile,
-                lookupTileForId(layout[4][2]),
-                lookupTileForId(layout[4][3]));
+                secondTopLeftNeighbour,
+                secondTopRightNeighbour);
+
+            secondTopLeftNeighbour.bottomRightNeighbour = secondTile;
+            secondTopRightNeighbour.bottomLeftNeighbour = secondTile;
+
+            let thirdTopLeftNeighbour = lookupTileForId(layout[4][3]);
+            let thirdTopRightNeighbour = lookupTileForId(layout[4][4]);
 
             let thirdTile = createResourceTile(
                 5,
@@ -593,8 +719,14 @@ export const initializeBoardMetaData = () => {
                 tiles,
                 tileValues,
                 secondTile,
-                lookupTileForId(layout[4][3]),
-                lookupTileForId(layout[4][4]));
+                thirdTopLeftNeighbour,
+                thirdTopRightNeighbour);
+
+            thirdTopLeftNeighbour.bottomRightNeighbour = thirdTile;
+            thirdTopRightNeighbour.bottomLeftNeighbour = thirdTile;
+
+            let waterTopLeftNeighbour = lookupTileForId(layout[4][4]);
+            let waterTopRightNeighbour = lookupTileForId(layout[4][5]);
 
             let waterTile = createWaterTile(
                 5,
@@ -604,8 +736,8 @@ export const initializeBoardMetaData = () => {
                 null,
                 null,
                 thirdTile,
-                lookupTileForId(layout[4][4]),
-                lookupTileForId(layout[4][5]),
+                waterTopLeftNeighbour,
+                waterTopRightNeighbour,
                 Structure.SETTLEMENT,
                 'target',
                 true,
@@ -618,6 +750,9 @@ export const initializeBoardMetaData = () => {
                 true,
                 null,
                 null);
+
+            waterTopLeftNeighbour.bottomRightNeighbour = waterTile;
+            waterTopRightNeighbour.bottomLeftNeighbour = waterTile;
 
             return <ol className="odd">
                 <Tile type={'spacer'}/>
