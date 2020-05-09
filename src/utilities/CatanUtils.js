@@ -1,5 +1,6 @@
 import {Stage} from "../enums/Stage";
 import {getTilesForPlayer} from "./PlayerUtils";
+import {Structure} from "../enums/Structure";
 
 export const getPlayer = (G, ctx) => {
     return G.playerData[ctx.currentPlayer];
@@ -12,23 +13,23 @@ export const getTile = (G, id) => {
 export const hideAllTargetLocations = (G) => {
     let tiles = G.board.tiles.values();
     for (let tile of tiles) {
-        if (tile.topStructureColor == 'target') {
+        if (tile.topStructureColor == Structure.TARGET) {
             tile.hideTopStructure = true;
         }
 
-        if (tile.leftStructureColor == 'target') {
+        if (tile.leftStructureColor == Structure.TARGET) {
             tile.hideLeftStructure = true;
         }
 
-        if (tile.leftRoadColor == 'target') {
+        if (tile.leftRoadColor == Structure.TARGET) {
             tile.hideLeftRoad = true;
         }
 
-        if (tile.topLeftRoadColor == 'target') {
+        if (tile.topLeftRoadColor == Structure.TARGET) {
             tile.hideTopLeftRoad = true;
         }
 
-        if (tile.topRightRoadColor == 'target') {
+        if (tile.topRightRoadColor == Structure.TARGET) {
             tile.hideTopRightRoad = true;
         }
     }
@@ -43,32 +44,58 @@ export const showAllRoadLocations = (G) => {
     }
 }
 
+export const showAllStructureBuildingLocations = (G) => {
+    let tiles = G.board.tiles.values();
+    for (let tile of tiles) {
+        tile.hideTopStructure = false;
+        tile.hideLeftStructure = false;
+    }
+}
+
 export const showTargetLocationsForPlayerAndStage = (G, ctx, stage) => {
     let player = getPlayer(G, ctx);
-    let playersTiles = getAllTiles(G);
     switch (stage) {
         case Stage.BUILD_SETTLEMENT:
-            if (player.roads < 2) {
-
-            } else {
-
-            }
+            showAllStructureBuildingLocations(G);
+            // showRoadPlacementsForTileAndPlayer(G, player);
             break;
         case Stage.BUILD_ROAD:
-            for(let tile of playersTiles) {
+            for(let tile of getAllTiles(G)) {
                 showRoadPlacementsForTileAndPlayer(tile, player);
             }
             break;
     }
 }
 
+export const isLeftRoadAvailable = (tile) => {
+    console.log(tile && tile.leftRoadColor == Structure.TARGET);
+    return tile && tile.leftRoadColor == Structure.TARGET;
+}
+
+export const isTopLeftRoadAvailable = (tile) => {
+    return tile && tile.topLeftRoadColor === Structure.TARGET;
+}
+
+export const isTopRightRoadAvailable = (tile) => {
+    return tile && tile.topRightRoadColor === Structure.TARGET;
+}
+
+export const showSettlementPlacementsForTileAndPlayer = (G, player) => {
+    for(let tile of getTilesForPlayer(G, player)) {
+
+    }
+}
+//top strc top road
+//
+
+
 export const showRoadPlacementsForTileAndPlayer = (tile, player) => {
     if (tileHasNoBuiltRoads(tile)) {
-        if (tileHasOnlyTopStructure(tile)) {
+        if (playerOnlyHasTopStructure(tile, player)) {
             showTopLeftRoadTargetForTile(tile);
             showTopRightRoadTargetForTile(tile);
             showLeftRoadTargetForTile(tile.topRightNeighbour);
-        } else if (tileHasOnlyLeftStructure(tile)) {
+        } else if (playerOnlyHasLeftStructure(tile, player)) {
             showTopLeftRoadTargetForTile(tile);
             showLeftRoadTargetForTile(tile);
             showTopRightRoadTargetForTile(tile.leftNeighbour);
@@ -95,6 +122,10 @@ export const showRoadPlacementsForTileAndPlayer = (tile, player) => {
             showLeftRoadTargetForTile(tile.topRightNeighbour.bottomRightNeighbour);
         }
     }
+}
+
+export const tileHasNoStructures = (tile, player) => {
+    return tile.leftRoadColor === player.color;
 }
 
 export const playerLeftRoadOnTile = (tile, player) => {
@@ -128,24 +159,24 @@ export const showLeftRoadTargetForTile = (tile) => {
 }
 
 export const tileHasNoBuiltRoads = (tile) => {
-    return (tile.topLeftRoadColor === 'target' || tile.topLeftRoadColor == null)
-    && (tile.topRightRoadColor === 'target' || tile.topRightRoadColor == null)
-    && (tile.leftRoadColor === 'target' || tile.leftRoadColor == null)
+    return (tile.topLeftRoadColor === Structure.TARGET || tile.topLeftRoadColor == null)
+    && (tile.topRightRoadColor === Structure.TARGET || tile.topRightRoadColor == null)
+    && (tile.leftRoadColor === Structure.TARGET || tile.leftRoadColor == null)
 }
 
 export const tileHasNoBuiltStructures = (tile) => {
-    return tile.leftStructureColor === 'target'
-        && tile.topStructureColor === 'target';
+    return tile.leftStructureColor === Structure.TARGET
+        && tile.topStructureColor === Structure.TARGET;
 }
 
-export const tileHasOnlyTopStructure = (tile) => {
-    return (tile.topStructureColor && tile.topStructureColor !== 'target')
-        && (!tile.leftStructureColor || tile.leftStructureColor === 'target');
+export const playerOnlyHasTopStructure = (tile, player) => {
+    return (tile.topStructureColor && tile.topStructureColor === player.color)
+        && (!tile.leftStructureColor || tile.leftStructureColor === Structure.TARGET);
 }
 
-export const tileHasOnlyLeftStructure = (tile) => {
-    return (tile.leftStructureColor && tile.leftStructureColor !== 'target')
-        && (!tile.topStructureColor || tile.topStructureColor === 'target');
+export const playerOnlyHasLeftStructure = (tile, player) => {
+    return (tile.leftStructureColor && tile.leftStructureColor === player.color)
+        && (!tile.topStructureColor || tile.topStructureColor === Structure.TARGET);
 }
 
 export const getAllTiles = (G) => {

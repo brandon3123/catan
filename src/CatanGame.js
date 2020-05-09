@@ -13,7 +13,11 @@ import {
     getAllTiles,
     getPlayer,
     getTile,
-    hideAllTargetLocations
+    hideAllTargetLocations,
+    showAllStructureBuildingLocations,
+    isLeftRoadAvailable,
+    isTopLeftRoadAvailable,
+    isTopRightRoadAvailable
 } from "./utilities/CatanUtils";
 
 import {
@@ -31,16 +35,8 @@ function determinePlayerOrder(ctx) {
 }
 
 function setupInitialPhase(G, ctx) {
-    showAllBuildingLocations(G);
+    showAllStructureBuildingLocations(G);
     ctx.events.setStage(Stage.BUILD_SETTLEMENT);
-}
-
-function showAllBuildingLocations(G) {
-    let tiles = G.board.tiles.values();
-    for (let tile of tiles) {
-        tile.hideTopStructure = false;
-        tile.hideLeftStructure = false;
-    }
 }
 
 function initialPhaseIsCompleted(G, buildCount) {
@@ -94,26 +90,32 @@ function buildLeftStructure(G, ctx, id, type) {
 
 function buildLeftRoad(G, ctx, id) {
     let tile = getTile(G, id);
-    let player = getPlayer(G, ctx);
-    tile.leftRoadColor = player.color;
-    player.roads += 1;
-    endCurrentStage(G, ctx);
+    if (isLeftRoadAvailable(tile)) {
+        let player = getPlayer(G, ctx);
+        tile.leftRoadColor = player.color;
+        player.roads += 1;
+        endCurrentStage(G, ctx);
+    }
 }
 
 function buildTopLeftRoad(G, ctx, id) {
     let tile = getTile(G, id);
-    let player = getPlayer(G, ctx);
-    tile.topLeftRoadColor = player.color;
-    player.roads += 1;
-    endCurrentStage(G, ctx);
+    if (isTopLeftRoadAvailable(tile)) {
+        let player = getPlayer(G, ctx);
+        tile.topLeftRoadColor = player.color;
+        player.roads += 1;
+        endCurrentStage(G, ctx);
+    }
 }
 
 function buildTopRightRoad(G, ctx, id) {
     let tile = getTile(G, id);
-    let player = getPlayer(G, ctx);
-    tile.topRightRoadColor = player.color;
-    player.roads += 1;
-    endCurrentStage(G, ctx);
+    if (isTopRightRoadAvailable(tile)) {
+        let player = getPlayer(G, ctx);
+        tile.topRightRoadColor = player.color;
+        player.roads += 1;
+        endCurrentStage(G, ctx);
+    }
 }
 
 const Catan = {

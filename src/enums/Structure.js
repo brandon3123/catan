@@ -2,5 +2,6 @@ export const Structure = {
     SETTLEMENT: "house",
     CITY: "city",
     ROAD: "road",
-    HARBOR: "harbor"
+    HARBOR: "harbor",
+    TARGET: "target"
 }
