@@ -11,16 +11,16 @@ import Typography from '@material-ui/core/Typography';
 import { ButtonGroup } from '@material-ui/core';
 import Chip from '@material-ui/core/Chip';
 import red from '@material-ui/core/colors/red';
-import {getStages, buildSettlementStageName} from "./utilities/GameDataUtils";
 import {Stage} from "./enums/Stage";
-import {currentPlayer,
-    stageNameForCurrentPlayer} from "./utilities/GameUtils";
+
+import {
+    stageNameForCurrentPlayer
+} from "./utilities/GameUtils";
+
 import {
     getTile,
-    getAllTiles,
     showTargetLocationsForPlayerAndStage
 } from "./utilities/CatanUtils";
-
 
 class CatanBoard extends React.Component {
     static propTypes = {
@@ -156,14 +156,6 @@ class CatanBoard extends React.Component {
     setBuildingStage(stage) {
         this.props.events.setStage(stage);
         showTargetLocationsForPlayerAndStage(this.props.G, this.props.ctx, stage);
-    }
-
-    showAllBuildingLocations() {
-        let tiles = this.props.G.board.tiles.values();
-        for (let tile of tiles) {
-            tile.hideTopStructure = false;
-            tile.hideLeftStructure = false;
-        }
     }
 
     buildLeftStructure = (id) => {

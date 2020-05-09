@@ -22,6 +22,10 @@ export const getTilesForPlayer = (G, player) => {
     return playersTiles;
 }
 
+export const currentPlayer = (G, ctx) => {
+    return G.playerData[ctx.currentPlayer];
+}
+
 export const calculateVictoryPoints = (player) => {
     let victoryPoints = 0;
     victoryPoints += player.settlements.length;
