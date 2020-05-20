@@ -58,6 +58,9 @@ export const showTargetLocationsForPlayerAndStage = (G, ctx, stage) => {
                 showRoadPlacementsForTileAndPlayer(tile, player);
             }
             break;
+        case Stage.BUILD_CITY:
+
+            break;
     }
 }
 
@@ -109,8 +112,11 @@ export const showPotentialStructureTargetsForClaimedLeftStructure = (tile, playe
         let leftNeighbour = tile.leftNeighbour;
         if (leftNeighbour) {
             if (playerHasTopLeftRoadOnTile(leftNeighbour, player)
-                && playerHasTopRightRoadOnTile(leftNeighbour, player)) {
+                && playerHasTopRightRoadOnTile(leftNeighbour, player)
+                && isTopStructureAvailable(leftNeighbour)) {
                 leftNeighbour.hideLeftStructure = false;
+            } else {
+                showPotentialStructureTargetsForClaimedTopStructure(leftNeighbour, player);
             }
         }
     }
@@ -172,6 +178,8 @@ export const showPotentialStructureTargetsForClaimedLeftStructure = (tile, playe
                 let tRBottomNeighbour = topRightNeighbour.bottomRightNeighbour;
                 if (tRBottomNeighbour) {
                     tRBottomNeighbour.hideLeftStructure = false;
+                    showPotentialStructureTargetsForClaimedTopStructure(tile, player);
+                    showPotentialStructureTargetsForClaimedLeftStructure(tRBottomNeighbour, player);
                 }
             } else if (bottomRightNeighbour) {
                 let tRRightNeighbour = bottomRightNeighbour.topRightNeighbour;
