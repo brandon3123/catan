@@ -54,7 +54,7 @@ export const showTargetLocationsForPlayerAndStage = (G, ctx, stage) => {
             showSettlementPlacementsForTileAndPlayer(G, player);
             break;
         case Stage.BUILD_ROAD:
-            for(let tile of getAllTiles(G)) {
+            for (let tile of getAllTiles(G)) {
                 showRoadPlacementsForTileAndPlayer(tile, player);
             }
             break;
@@ -86,19 +86,69 @@ export const isLeftStructureAvailable = (tile) => {
 }
 
 export const showSettlementPlacementsForTileAndPlayer = (G, player) => {
-    let playersTiles = getTilesForPlayer(G, player);
-    if (playersTiles && playersTiles.length > 0) {
-        for (let tile of playersTiles) {
-            if (playerHasTopStructure(tile, player)) {
-                showPotentialStructureTargetsForClaimedTopStructure(tile, player);
-            } else if (playerHasLeftStructure(tile, player)) {
-                showPotentialStructureTargetsForClaimedLeftStructure(tile, player);
-            }
-        }
-    } else {
-        showAllStructureBuildingLocations(G);
+    for (let tile of getAllTiles(G)) {
+        showTargetLocationForTopStructureAndPlayer(tile, player);
     }
 }
+
+export const showTargetLocationForTopStructureAndPlayer = (tile, player) => {
+    if (canPlaceTopStructureForTile(tile)) {
+        if (tileHasNoBuiltRoads(tile)) {
+            if (playerHasLeftRoadOnTile(tile.topRightNeighbour, player)
+                || playerHasTopLeftRoadOnTile(tile, player)
+                || playerHasTopRightRoadOnTile(tile, player)) {
+                tile.hideTopStructure = false;
+            }
+        } else {
+            if (playerHasTopLeftRoadOnTile(tile, player)) {
+                if (playerHasLeftRoadOnTile(tile, player)
+                    || playerHasTopRightRoadOnTile(tile.leftNeighbour, player)
+                    || playerHasTopLeftRoadOnTile(tile.topRightNeighbour, player)) {
+                    tile.hideTopStructure = false;
+                }
+            } else if (playerHasTopRightRoadOnTile(tile, player)) {
+                if (playerHasTopLeftRoadOnTile(tile, player)
+                    || playerHasLeftRoadOnTile(tile.topRightNeighbour, player)
+                    || playerHasTopLeftRoadOnTile(rightNeighbourForTile(tile), player)
+                    || playerHasLeftRoadOnTile(rightNeighbourForTile(tile), player)) {
+                    tile.hideTopStructure = false;
+                }
+            }
+        }
+    }
+}
+
+export const canPlaceTopStructureForTile = (tile) => {
+    if (tile) {
+        let topRightNeighbour = tile.topRightNeighbour;
+        let rightNeighbour = rightNeighbourForTile(tile);
+
+        return isLeftStructureAvailable(tile)
+            && isLeftStructureAvailable(topRightNeighbour)
+            && isLeftStructureAvailable(rightNeighbour);
+    }
+    return false;
+}
+
+export const rightNeighbourForTile = (tile) => {
+    let topRightNeighbour = tile.topRightNeighbour;
+    if (topRightNeighbour) {
+        let trBrNeighbour = topRightNeighbour.bottomRightNeighbour;
+        if (trBrNeighbour) {
+            return topRightNeighbour;
+        }
+    } else {
+        let bottomRightNeighbour = tile.bottomRightNeighbour;
+        if (bottomRightNeighbour) {
+            let bRtRNeighbour = bottomRightNeighbour.topRightNeighbour;
+            if (bRtRNeighbour) {
+                return bRtRNeighbour;
+            }
+        }
+    }
+    return null;
+}
+
 
 export const showPotentialStructureTargetsForClaimedLeftStructure = (tile, player) => {
     showPotentialLeftNeighbourStructureForLeftStructure(tile, player);
@@ -305,27 +355,27 @@ export const showRoadPlacementsForTileAndPlayer = (tile, player) => {
 }
 
 export const tileHasNoStructures = (tile, player) => {
-    return tile.leftRoadColor === player.color;
+    return tile && tile.leftRoadColor === player.color;
 }
 
 export const playerHasLeftRoadOnTile = (tile, player) => {
-    return tile.leftRoadColor === player.color;
+    return tile && tile.leftRoadColor === player.color;
 }
 
 export const playerHasTopLeftRoadOnTile = (tile, player) => {
-    return tile.topLeftRoadColor === player.color;
+    return tile && tile.topLeftRoadColor === player.color;
 }
 
 export const playerHasTopRightRoadOnTile = (tile, player) => {
-    return tile.topRightRoadColor === player.color;
+    return tile && tile.topRightRoadColor === player.color;
 }
 
 export const playerHasTopStructure = (tile, player) => {
-    return tile.topStructureColor === player.color;
+    return tile && tile.topStructureColor === player.color;
 }
 
 export const playerHasLeftStructure = (tile, player) => {
-    return tile.leftStructureColor === player.color;
+    return tile && tile.leftStructureColor === player.color;
 }
 
 export const showTopLeftRoadTargetForTile = (tile) => {
@@ -348,8 +398,8 @@ export const showLeftRoadTargetForTile = (tile) => {
 
 export const tileHasNoBuiltRoads = (tile) => {
     return (tile.topLeftRoadColor === Structure.TARGET || tile.topLeftRoadColor == null)
-    && (tile.topRightRoadColor === Structure.TARGET || tile.topRightRoadColor == null)
-    && (tile.leftRoadColor === Structure.TARGET || tile.leftRoadColor == null)
+        && (tile.topRightRoadColor === Structure.TARGET || tile.topRightRoadColor == null)
+        && (tile.leftRoadColor === Structure.TARGET || tile.leftRoadColor == null)
 }
 
 export const tileHasNoBuiltStructures = (tile) => {
