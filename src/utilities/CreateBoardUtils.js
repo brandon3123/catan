@@ -635,7 +635,7 @@ export const initializeBoardMetaData = () => {
                 'target',
                 true,
                 null,
-                null);
+                true);
 
             harborTopLeftNeighbour.bottomRightNeighbour = harborTile;
             harborTopRightNeighbour.bottomLeftNeighbour = harborTile;

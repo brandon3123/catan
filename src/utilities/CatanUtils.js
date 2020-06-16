@@ -65,35 +65,37 @@ export const showTargetLocationsForPlayerAndStage = (G, ctx, stage) => {
 }
 
 export const isLeftRoadAvailable = (tile) => {
-    console.log(tile && tile.leftRoadColor == Structure.TARGET);
-    return tile && tile.leftRoadColor == Structure.TARGET;
+    return tile && (!tile.leftRoadColor || tile.leftRoadColor === Structure.TARGET);
 }
 
 export const isTopLeftRoadAvailable = (tile) => {
-    return tile && tile.topLeftRoadColor === Structure.TARGET;
+    return tile && (!tile.topLeftRoadColor || tile.topLeftRoadColor === Structure.TARGET);
 }
 
 export const isTopRightRoadAvailable = (tile) => {
-    return tile && tile.topRightRoadColor === Structure.TARGET;
+    return tile && (!tile.topRightRoadColor || tile.topRightRoadColor === Structure.TARGET);
 }
 
 export const isTopStructureAvailable = (tile) => {
-    return tile && tile.topStructureColor === Structure.TARGET;
+    return tile && (!tile.topStructureColor || tile.topStructureColor === Structure.TARGET);
 }
 
 export const isLeftStructureAvailable = (tile) => {
-    return tile && tile.leftStructureColor === Structure.TARGET;
+    return tile && (!tile.leftStructureColor || tile.leftStructureColor === Structure.TARGET);
 }
 
 export const showSettlementPlacementsForTileAndPlayer = (G, player) => {
     for (let tile of getAllTiles(G)) {
         showTargetLocationForTopStructureAndPlayer(tile, player);
+        showTargetLocationForLeftStructureAndPlayer(tile, player);
     }
 }
 
 export const showTargetLocationForTopStructureAndPlayer = (tile, player) => {
     if (canPlaceTopStructureForTile(tile)) {
+        console.log("top");
         if (tileHasNoBuiltRoads(tile)) {
+            console.log(tile.harborType);
             if (playerHasLeftRoadOnTile(tile.topRightNeighbour, player)
                 || playerHasTopLeftRoadOnTile(tile, player)
                 || playerHasTopRightRoadOnTile(tile, player)) {
@@ -106,12 +108,42 @@ export const showTargetLocationForTopStructureAndPlayer = (tile, player) => {
                     || playerHasTopLeftRoadOnTile(tile.topRightNeighbour, player)) {
                     tile.hideTopStructure = false;
                 }
-            } else if (playerHasTopRightRoadOnTile(tile, player)) {
+            }
+
+            if (playerHasTopRightRoadOnTile(tile, player)) {
                 if (playerHasTopLeftRoadOnTile(tile, player)
                     || playerHasLeftRoadOnTile(tile.topRightNeighbour, player)
                     || playerHasTopLeftRoadOnTile(rightNeighbourForTile(tile), player)
                     || playerHasLeftRoadOnTile(rightNeighbourForTile(tile), player)) {
                     tile.hideTopStructure = false;
+                }
+            }
+        }
+    }
+}
+
+export const showTargetLocationForLeftStructureAndPlayer = (tile, player) => {
+    if (canPlaceLeftStructureForTile(tile)) {
+        if (tileHasNoBuiltRoads(tile)) {
+            if (playerHasLeftRoadOnTile(tile, player)
+                || playerHasTopLeftRoadOnTile(tile, player)
+                || playerHasTopRightRoadOnTile(tile.leftNeighbour, player)) {
+                tile.hideLeftStructure = false;
+            }
+        } else {
+            if (playerHasLeftRoadOnTile(tile, player)) {
+                if (playerHasTopLeftRoadOnTile(tile, player)
+                    || playerHasTopRightRoadOnTile(tile.leftNeighbour, player)
+                    || playerHasTopLeftRoadOnTile(tile.bottomLeftNeighbour, player)
+                    || playerHasTopRightRoadOnTile(tile.bottomLeftNeighbour, player)) {
+                    tile.hideLeftStructure = false;
+                }
+            } else if (playerHasTopLeftRoadOnTile(tile, player)) {
+                if (playerHasLeftRoadOnTile(tile, player)
+                    || playerHasTopRightRoadOnTile(tile, player)
+                    || playerHasTopRightRoadOnTile(tile.leftNeighbour, player)
+                    || playerHasLeftRoadOnTile(tile.topRightNeighbour, player)) {
+                    tile.hideLeftStructure = false;
                 }
             }
         }
@@ -125,7 +157,19 @@ export const canPlaceTopStructureForTile = (tile) => {
 
         return isLeftStructureAvailable(tile)
             && isLeftStructureAvailable(topRightNeighbour)
-            && isLeftStructureAvailable(rightNeighbour);
+            && !rightNeighbour || isLeftStructureAvailable(rightNeighbour);
+    }
+    return false;
+}
+
+export const canPlaceLeftStructureForTile = (tile) => {
+    if (tile) {
+        let leftNeighbour = tile.leftNeighbour;
+        let bottomLeftNeighbour = tile.bottomLeftNeighbour;
+
+        return isTopStructureAvailable(tile)
+            && isTopStructureAvailable(leftNeighbour)
+            && isTopStructureAvailable(bottomLeftNeighbour);
     }
     return false;
 }
@@ -135,188 +179,19 @@ export const rightNeighbourForTile = (tile) => {
     if (topRightNeighbour) {
         let trBrNeighbour = topRightNeighbour.bottomRightNeighbour;
         if (trBrNeighbour) {
-            return topRightNeighbour;
-        }
-    } else {
-        let bottomRightNeighbour = tile.bottomRightNeighbour;
-        if (bottomRightNeighbour) {
-            let bRtRNeighbour = bottomRightNeighbour.topRightNeighbour;
-            if (bRtRNeighbour) {
-                return bRtRNeighbour;
-            }
+            return trBrNeighbour;
         }
     }
+
+    let bottomRightNeighbour = tile.bottomRightNeighbour;
+    if (bottomRightNeighbour) {
+        let bRtRNeighbour = bottomRightNeighbour.topRightNeighbour;
+        if (bRtRNeighbour) {
+            return bRtRNeighbour;
+        }
+    }
+
     return null;
-}
-
-
-export const showPotentialStructureTargetsForClaimedLeftStructure = (tile, player) => {
-    showPotentialLeftNeighbourStructureForLeftStructure(tile, player);
-    showPotentialRightNeighbourStructureForLeftStructure(tile, player);
-    showPotentialBottomLeftNeighbourForLeftStructure(tile, player);
-    showPotentialBottomRightNeighbourForLeftStructure(tile, player);
-    showPotentialTopLeftNeighbourForLeftStructure(tile, player);
-    showPotentialTopRightNeighbourForLeftStructure(tile, player);
-
-    function showPotentialLeftNeighbourStructureForLeftStructure(tile, player) {
-        let leftNeighbour = tile.leftNeighbour;
-        if (leftNeighbour) {
-            if (playerHasTopLeftRoadOnTile(leftNeighbour, player)
-                && playerHasTopRightRoadOnTile(leftNeighbour, player)
-                && isTopStructureAvailable(leftNeighbour)) {
-                leftNeighbour.hideLeftStructure = false;
-            } else {
-                showPotentialStructureTargetsForClaimedTopStructure(leftNeighbour, player);
-            }
-        }
-    }
-
-    function showPotentialBottomLeftNeighbourForLeftStructure(tile, player) {
-        let bottomLeftNeighbour = tile.bottomLeftNeighbour;
-        if (bottomLeftNeighbour) {
-            if (playerHasTopLeftRoadOnTile(bottomLeftNeighbour, player)
-                && playerHasLeftRoadOnTile(tile, player)) {
-                bottomLeftNeighbour.hideLeftStructure = false;
-            }
-        }
-    }
-
-    function showPotentialBottomRightNeighbourForLeftStructure(tile, player) {
-        let bottomRightNeighbour = tile.bottomRightNeighbour;
-        if (bottomRightNeighbour) {
-            if (playerHasLeftRoadOnTile(tile, player)) {
-                let bRNLeftNeighbour = bottomRightNeighbour.leftNeighbour;
-                if (bRNLeftNeighbour) {
-                    if (playerHasTopRightRoadOnTile(bRNLeftNeighbour, player)) {
-                        bottomRightNeighbour.hideLeftStructure = false;
-                    }
-                }
-            }
-        }
-    }
-
-    function showPotentialTopLeftNeighbourForLeftStructure(tile, player) {
-        let leftNeighbour = tile.leftNeighbour;
-        if (leftNeighbour) {
-            if (playerHasTopRightRoadOnTile(leftNeighbour, player)) {
-                let topLeftNeighbour = tile.topLeftNeighbour;
-                if (playerHasLeftRoadOnTile(topLeftNeighbour, player)) {
-                    topLeftNeighbour.hideLeftStructure = false;
-                }
-            }
-        }
-    }
-
-    function showPotentialTopRightNeighbourForLeftStructure(tile, player) {
-        if (playerHasTopLeftRoadOnTile(tile, player)) {
-            let topRightNeighbour = tile.topRightNeighbour;
-            if (topRightNeighbour) {
-                if (playerHasLeftRoadOnTile(topRightNeighbour, player)) {
-                    topRightNeighbour.hideLeftStructure = false;
-                }
-            }
-        }
-    }
-
-    function showPotentialRightNeighbourStructureForLeftStructure(tile, player) {
-        if (playerHasTopLeftRoadOnTile(tile, player)
-            && playerHasTopRightRoadOnTile(tile, player)) {
-            let topRightNeighbour = tile.topRightNeighbour;
-            let bottomRightNeighbour = tile.bottomRightNeighbour;
-
-            if (topRightNeighbour) {
-                let tRBottomNeighbour = topRightNeighbour.bottomRightNeighbour;
-                if (tRBottomNeighbour) {
-                    tRBottomNeighbour.hideLeftStructure = false;
-                    showPotentialStructureTargetsForClaimedTopStructure(tile, player);
-                    showPotentialStructureTargetsForClaimedLeftStructure(tRBottomNeighbour, player);
-                }
-            } else if (bottomRightNeighbour) {
-                let tRRightNeighbour = bottomRightNeighbour.topRightNeighbour;
-                if (tRRightNeighbour) {
-                    tRRightNeighbour.hideLeftStructure = false;
-                }
-            }
-        }
-    }
-}
-
-export const showPotentialStructureTargetsForClaimedTopStructure = (tile, player) => {
-    showPotentialRightNeighbourStructureForTopStructure(tile, player);
-    showPotentialLeftNeighbourStructureForTopStructure(tile, player);
-    showPotentialBottomLeftNeighbourForTopStructure(tile, player);
-    showPotentialBottomRightNeighbourForTopStructure(tile, player);
-    showPotentialTopLeftNeighbourForTopStructure(tile, player);
-    showPotentialTopRightNeighbourForTopStructure(tile, player);
-
-    function showPotentialLeftNeighbourStructureForTopStructure(tile, player) {
-        let leftNeighbour = tile.leftNeighbour;
-        if (leftNeighbour) {
-            if (playerHasTopLeftRoadOnTile(tile, player)
-                && playerHasTopRightRoadOnTile(leftNeighbour, player)) {
-                leftNeighbour.hideTopStructure = false;
-            }
-        }
-    }
-
-    function showPotentialBottomLeftNeighbourForTopStructure(tile, player) {
-        let bottomLeftNeighbour = tile.bottomLeftNeighbour;
-        if (bottomLeftNeighbour) {
-            if (playerHasTopLeftRoadOnTile(tile, player)
-                && playerHasLeftRoadOnTile(tile, player)) {
-                bottomLeftNeighbour.hideTopStructure = false;
-            }
-        }
-    }
-
-    function showPotentialBottomRightNeighbourForTopStructure(tile, player) {
-        let bottomRightNeighbour = tile.bottomRightNeighbour;
-        if (bottomRightNeighbour) {
-            if (playerHasTopRightRoadOnTile(tile, player)) {
-                let bNTopRightNeighbour = bottomRightNeighbour.topRightNeighbour;
-                if (bNTopRightNeighbour) {
-                    if (playerHasLeftRoadOnTile(bNTopRightNeighbour, player)) {
-                        bottomRightNeighbour.hideTopStructure = false;
-                    }
-                }
-            }
-        }
-    }
-
-    function showPotentialTopLeftNeighbourForTopStructure(tile, player) {
-        let topLeftNeighbour = tile.topLeftNeighbour;
-        if (topLeftNeighbour) {
-            let topRightNeighbour = tile.topRightNeighbour;
-            if (topRightNeighbour) {
-                if (playerHasLeftRoadOnTile(topRightNeighbour, player)
-                    && playerHasTopRightRoadOnTile(topLeftNeighbour, player)) {
-                    topLeftNeighbour.hideTopStructure = false;
-                }
-            }
-        }
-    }
-
-    function showPotentialTopRightNeighbourForTopStructure(tile, player) {
-        let topRightNeighbour = tile.topRightNeighbour;
-        if (topRightNeighbour) {
-            if (playerHasLeftRoadOnTile(topRightNeighbour, player)
-                && playerHasTopLeftRoadOnTile(topRightNeighbour, player)) {
-                topRightNeighbour.hideTopStructure = false;
-            }
-        }
-    }
-
-    function showPotentialRightNeighbourStructureForTopStructure(tile, player) {
-        if (playerHasTopRightRoadOnTile(tile, player)) {
-            let topRightNeighbour = tile.topRightNeighbour;
-            if (topRightNeighbour) {
-                let rightNeighbour = topRightNeighbour.bottomRightNeighbour;
-                if (playerHasTopLeftRoadOnTile(rightNeighbour, player)) {
-                    rightNeighbour.hideTopStructure = false;
-                }
-            }
-        }
-    }
 }
 
 export const showRoadPlacementsForTileAndPlayer = (tile, player) => {
@@ -397,9 +272,17 @@ export const showLeftRoadTargetForTile = (tile) => {
 }
 
 export const tileHasNoBuiltRoads = (tile) => {
-    return (tile.topLeftRoadColor === Structure.TARGET || tile.topLeftRoadColor == null)
-        && (tile.topRightRoadColor === Structure.TARGET || tile.topRightRoadColor == null)
-        && (tile.leftRoadColor === Structure.TARGET || tile.leftRoadColor == null)
+    let tl = (!tile.topLeftRoadColor || tile.topLeftRoadColor === Structure.TARGET);
+        let tr = (!tile.topRightRoadColor || tile.topRightRoadColor === Structure.TARGET);
+        let left = (!tile.leftRoadColor || tile.leftRoadColor === Structure.TARGET);
+
+    console.log(tile.harborType);
+    console.log(tl);
+    console.log(tr);
+    console.log(left);
+
+
+    return tl && tr && left;
 }
 
 export const tileHasNoBuiltStructures = (tile) => {
