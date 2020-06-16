@@ -3,21 +3,19 @@ import {initializeBoardMetaData} from "./utilities/CreateBoardUtils";
 import {initializePlayerData} from "./utilities/PlayerDataUtils";
 
 import {
-    getStages,
-    buildSettlementStageName,
-    currentPlayer,
-    stageForCurrentPlayer
-} from "./utilities/GameDataUtils";
-
-import {
-    getAllTiles,
-    getPlayer,
     getTile,
-    hideAllTargetLocations
+    hideAllTargetLocations,
+    showAllStructureBuildingLocations,
+    isLeftRoadAvailable,
+    isTopLeftRoadAvailable,
+    isTopRightRoadAvailable,
+    isTopStructureAvailable,
+    isLeftStructureAvailable
 } from "./utilities/CatanUtils";
 
 import {
-    addStructureToPlayer
+    addStructureToPlayer,
+    currentPlayer
 } from "./utilities/PlayerUtils";
 
 import {Structure} from "./enums/Structure"
@@ -31,16 +29,8 @@ function determinePlayerOrder(ctx) {
 }
 
 function setupInitialPhase(G, ctx) {
-    showAllBuildingLocations(G);
+    showAllStructureBuildingLocations(G);
     ctx.events.setStage(Stage.BUILD_SETTLEMENT);
-}
-
-function showAllBuildingLocations(G) {
-    let tiles = G.board.tiles.values();
-    for (let tile of tiles) {
-        tile.hideTopStructure = false;
-        tile.hideLeftStructure = false;
-    }
 }
 
 function initialPhaseIsCompleted(G, buildCount) {
@@ -70,12 +60,13 @@ function buildLeftHouse(G, ctx, id) {
 
 function buildTopStructure(G, ctx, id, type) {
     let tile = getTile(G, id);
-    let player = getPlayer(G, ctx);
-    tile.topStructure = type;
-    tile.topStructureColor = player.color;
-    // console.log(JSON.stringify(tile, null, 2));
-    addStructureToPlayer(player, type, id);
-    endCurrentStage(G, ctx);
+    if (isTopStructureAvailable(tile)) {
+        let player = currentPlayer(G, ctx);
+        tile.topStructure = type;
+        tile.topStructureColor = player.color;
+        addStructureToPlayer(player, type, id);
+        endCurrentStage(G, ctx);
+    }
 }
 
 function endCurrentStage(G, ctx) {
@@ -85,35 +76,43 @@ function endCurrentStage(G, ctx) {
 
 function buildLeftStructure(G, ctx, id, type) {
     let tile = getTile(G, id);
-    let player = getPlayer(G, ctx);
-    tile.leftStructure = type;
-    tile.leftStructureColor = player.color;
-    addStructureToPlayer(player, type, id);
-    endCurrentStage(G, ctx);
+    if (isLeftStructureAvailable(tile)) {
+        let player = currentPlayer(G, ctx);
+        tile.leftStructure = type;
+        tile.leftStructureColor = player.color;
+        addStructureToPlayer(player, type, id);
+        endCurrentStage(G, ctx);
+    }
 }
 
 function buildLeftRoad(G, ctx, id) {
     let tile = getTile(G, id);
-    let player = getPlayer(G, ctx);
-    tile.leftRoadColor = player.color;
-    player.roads += 1;
-    endCurrentStage(G, ctx);
+    if (isLeftRoadAvailable(tile)) {
+        let player = currentPlayer(G, ctx);
+        tile.leftRoadColor = player.color;
+        player.roads += 1;
+        endCurrentStage(G, ctx);
+    }
 }
 
 function buildTopLeftRoad(G, ctx, id) {
     let tile = getTile(G, id);
-    let player = getPlayer(G, ctx);
-    tile.topLeftRoadColor = player.color;
-    player.roads += 1;
-    endCurrentStage(G, ctx);
+    if (isTopLeftRoadAvailable(tile)) {
+        let player = currentPlayer(G, ctx);
+        tile.topLeftRoadColor = player.color;
+        player.roads += 1;
+        endCurrentStage(G, ctx);
+    }
 }
 
 function buildTopRightRoad(G, ctx, id) {
     let tile = getTile(G, id);
-    let player = getPlayer(G, ctx);
-    tile.topRightRoadColor = player.color;
-    player.roads += 1;
-    endCurrentStage(G, ctx);
+    if (isTopRightRoadAvailable(tile)) {
+        let player = currentPlayer(G, ctx);
+        tile.topRightRoadColor = player.color;
+        player.roads += 1;
+        endCurrentStage(G, ctx);
+    }
 }
 
 const Catan = {
