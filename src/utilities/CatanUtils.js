@@ -93,9 +93,7 @@ export const showSettlementPlacementsForTileAndPlayer = (G, player) => {
 
 export const showTargetLocationForTopStructureAndPlayer = (tile, player) => {
     if (canPlaceTopStructureForTile(tile)) {
-        console.log("top");
         if (tileHasNoBuiltRoads(tile)) {
-            console.log(tile.harborType);
             if (playerHasLeftRoadOnTile(tile.topRightNeighbour, player)
                 || playerHasTopLeftRoadOnTile(tile, player)
                 || playerHasTopRightRoadOnTile(tile, player)) {
@@ -155,9 +153,12 @@ export const canPlaceTopStructureForTile = (tile) => {
         let topRightNeighbour = tile.topRightNeighbour;
         let rightNeighbour = rightNeighbourForTile(tile);
 
+        let rightNeighbourConditionSatisfied = !rightNeighbour || isLeftStructureAvailable(rightNeighbour);
+        let topRightNeighbourConditionSatisfied = !topRightNeighbour || isLeftStructureAvailable(topRightNeighbour);
+
         return isLeftStructureAvailable(tile)
-            && isLeftStructureAvailable(topRightNeighbour)
-            && !rightNeighbour || isLeftStructureAvailable(rightNeighbour);
+            && rightNeighbourConditionSatisfied
+            && topRightNeighbourConditionSatisfied;
     }
     return false;
 }
@@ -167,9 +168,12 @@ export const canPlaceLeftStructureForTile = (tile) => {
         let leftNeighbour = tile.leftNeighbour;
         let bottomLeftNeighbour = tile.bottomLeftNeighbour;
 
+        let leftNeighbourConditionSatisfied = !leftNeighbour || isTopStructureAvailable(leftNeighbour);
+        let bottomLeftNeighbourConditionSatisfied = !bottomLeftNeighbour || isTopStructureAvailable(bottomLeftNeighbour);
+
         return isTopStructureAvailable(tile)
-            && isTopStructureAvailable(leftNeighbour)
-            && isTopStructureAvailable(bottomLeftNeighbour);
+            && leftNeighbourConditionSatisfied
+            && bottomLeftNeighbourConditionSatisfied;
     }
     return false;
 }
@@ -273,15 +277,8 @@ export const showLeftRoadTargetForTile = (tile) => {
 
 export const tileHasNoBuiltRoads = (tile) => {
     let tl = (!tile.topLeftRoadColor || tile.topLeftRoadColor === Structure.TARGET);
-        let tr = (!tile.topRightRoadColor || tile.topRightRoadColor === Structure.TARGET);
-        let left = (!tile.leftRoadColor || tile.leftRoadColor === Structure.TARGET);
-
-    console.log(tile.harborType);
-    console.log(tl);
-    console.log(tr);
-    console.log(left);
-
-
+    let tr = (!tile.topRightRoadColor || tile.topRightRoadColor === Structure.TARGET);
+    let left = (!tile.leftRoadColor || tile.leftRoadColor === Structure.TARGET);
     return tl && tr && left;
 }
 
