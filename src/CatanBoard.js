@@ -18,7 +18,7 @@ import {
 } from "./utilities/GameUtils";
 
 import {
-    getTile,
+    getTile, hideAllTargetLocations,
     showTargetLocationsForPlayerAndStage
 } from "./utilities/CatanUtils";
 
@@ -154,6 +154,7 @@ class CatanBoard extends React.Component {
     }
 
     setBuildingStage(stage) {
+        hideAllTargetLocations(this.props.G);
         this.props.events.setStage(stage);
         showTargetLocationsForPlayerAndStage(this.props.G, this.props.ctx, stage);
     }
