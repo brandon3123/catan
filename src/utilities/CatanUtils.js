@@ -59,7 +59,7 @@ export const showTargetLocationsForPlayerAndStage = (G, ctx, stage) => {
             }
             break;
         case Stage.BUILD_CITY:
-
+            showCityPlacementsForPlayer(G, player);
             break;
     }
 }
@@ -82,6 +82,19 @@ export const isTopStructureAvailable = (tile) => {
 
 export const isLeftStructureAvailable = (tile) => {
     return tile && (!tile.leftStructureColor || tile.leftStructureColor === Structure.TARGET);
+}
+
+export const showCityPlacementsForPlayer = (G, player) => {
+    let tilesForPlayer = getTilesForPlayer(G, player);
+    for (let tile of tilesForPlayer) {
+        if (playerHasTopStructure(tile, player) && isTopStructureASettlement(tile)) {
+            tile.topStructureColor = Structure.TARGET;
+        }
+
+        if (playerHasLeftStructure(tile, player) && isLeftStructureASettlement(tile)) {
+            tile.leftStructureColor = Structure.TARGET;
+        }
+    }
 }
 
 export const showSettlementPlacementsForTileAndPlayer = (G, player) => {
@@ -255,6 +268,14 @@ export const playerHasTopStructure = (tile, player) => {
 
 export const playerHasLeftStructure = (tile, player) => {
     return tile && tile.leftStructureColor === player.color;
+}
+
+export const isLeftStructureASettlement = (tile) => {
+    return tile && tile.leftStructure === Structure.SETTLEMENT;
+}
+
+export const isTopStructureASettlement = (tile) => {
+    return tile && tile.topStructure === Structure.SETTLEMENT;
 }
 
 export const showTopLeftRoadTargetForTile = (tile) => {
