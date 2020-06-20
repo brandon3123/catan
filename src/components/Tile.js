@@ -35,7 +35,7 @@ class Tile extends React.Component {
         if (this.props.topStructure) {
             let className =
                 this.props.isTopStructureAvailable
-                    ? 'build t target2'
+                    ? 'build t available'
                     : this.props.topStructure + ' t ' + this.props.topStructureColor;
                 return (
                     <div className={className}
@@ -52,7 +52,7 @@ class Tile extends React.Component {
         if (this.props.leftStructure) {
             let className =
                 this.props.isLeftStructureAvailable
-                ? 'build tl target2'
+                ? 'build tl available'
                 : this.props.leftStructure + ' tl ' + this.props.leftStructureColor;
                 return (
                     <div className={className}
