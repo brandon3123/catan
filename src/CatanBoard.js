@@ -12,9 +12,11 @@ import { ButtonGroup } from '@material-ui/core';
 import Chip from '@material-ui/core/Chip';
 import red from '@material-ui/core/colors/red';
 import {Stage} from "./enums/Stage";
+import {Phase} from "./enums/Phase";
 
 import {
-    stageNameForCurrentPlayer
+    stageNameForCurrentPlayer,
+    currentPhase
 } from "./utilities/GameUtils";
 
 import {
@@ -46,17 +48,22 @@ class CatanBoard extends React.Component {
                                     label="Settlement"
                                     color="primary"
                                     onClick={() => this.setBuildingStage(Stage.BUILD_SETTLEMENT)}
+                                    disabled={this.isStageEnabledForPhase(Stage.BUILD_SETTLEMENT)}
                                     variant="outlined"
                                 />
                                 <Chip
                                     label="City"
+                                    color="primary"
                                     // color={red}
                                     onClick={() => this.setBuildingStage(Stage.BUILD_CITY)}
+                                    disabled={this.isStageEnabledForPhase(Stage.BUILD_CITY)}
+                                    variant="outlined"
                                 />
                                 <Chip
                                     label="Road"
                                     color="primary"
                                     onClick={() => this.setBuildingStage(Stage.BUILD_ROAD)}
+                                    disabled={this.isStageEnabledForPhase(Stage.BUILD_ROAD)}
                                     variant="outlined"
                                 />
 
@@ -157,6 +164,20 @@ class CatanBoard extends React.Component {
         hideAllTargetLocations(this.props.G);
         this.props.events.setStage(stage);
         showTargetLocationsForPlayerAndStage(this.props.G, this.props.ctx, stage);
+    }
+
+    isStageEnabledForPhase(stage) {
+        let currentPhaseName = currentPhase(this.props.ctx);
+
+        switch (currentPhaseName) {
+            case Phase.INITIAL_PLACEMENT:
+                switch (stage) {
+                    case Stage.BUILD_CITY:
+                        return true;
+                }
+        }
+
+        return false;
     }
 
     buildLeftStructure = (id) => {

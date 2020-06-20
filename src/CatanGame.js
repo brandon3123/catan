@@ -34,7 +34,7 @@ function setupInitialPhase(G, ctx) {
 }
 
 function initialPhaseIsCompleted(G, buildCount) {
-    for (let player in G.playerData) {
+    for (let player of G.playerData) {
         if (player.settlements != buildCount && player.roads != buildCount) {
             return false;
         }
@@ -168,9 +168,9 @@ const Catan = {
         buildLeftHouse: buildLeftHouse,
         buildTopCity: buildTopCity,
         buildLeftCity: buildLeftCity,
-        buildLeftRoad,
-        buildTopLeftRoad,
-        buildTopRightRoad
+        buildLeftRoad: buildLeftRoad,
+        buildTopLeftRoad: buildTopLeftRoad,
+        buildTopRightRoad: buildTopRightRoad
     },
 
     phases: {
