@@ -124,20 +124,21 @@ export const showSettlementPlacementsForTileAndPlayer = (G, player) => {
 
 export const showTargetLocationForTopStructureAndPlayer = (tile, player) => {
     if (canPlaceTopStructureForTile(tile)) {
-        console.log(tile.type + " " + tile.harborType);
         if (tileHasNoBuiltRoads(tile)) {
-            console.log(tile.type + " " + tile.value + " " + tile.harborType);
             if (playerHasLeftRoadOnTile(tile.topRightNeighbour, player)
                 || playerHasTopLeftRoadOnTile(tile, player)
                 || playerHasTopRightRoadOnTile(tile, player)) {
                 tile.isTopStructureAvailable = true;
+                tile.hideTopStructure = false;
             }
         } else {
             if (playerHasTopLeftRoadOnTile(tile, player)) {
+                console.log(tile.type + " " + tile.value + " " + tile.harborType);
                 if (playerHasLeftRoadOnTile(tile, player)
                     || playerHasTopRightRoadOnTile(tile.leftNeighbour, player)
-                    || playerHasTopLeftRoadOnTile(tile.topRightNeighbour, player)) {
+                    || playerHasLeftRoadOnTile(tile.topRightNeighbour, player)) {
                     tile.isTopStructureAvailable = true;
+                    tile.hideTopStructure = false;
                 }
             }
 
@@ -147,6 +148,7 @@ export const showTargetLocationForTopStructureAndPlayer = (tile, player) => {
                     || playerHasTopLeftRoadOnTile(rightNeighbourForTile(tile), player)
                     || playerHasLeftRoadOnTile(rightNeighbourForTile(tile), player)) {
                     tile.isTopStructureAvailable = true;
+                    tile.hideTopStructure = false;
                 }
             }
         }
@@ -160,6 +162,7 @@ export const showTargetLocationForLeftStructureAndPlayer = (tile, player) => {
                 || playerHasTopLeftRoadOnTile(tile, player)
                 || playerHasTopRightRoadOnTile(tile.leftNeighbour, player)) {
                 tile.hideLeftStructure = false;
+                tile.isLeftStructureAvailable = true;
             }
         } else {
             if (playerHasLeftRoadOnTile(tile, player)) {
@@ -168,6 +171,7 @@ export const showTargetLocationForLeftStructureAndPlayer = (tile, player) => {
                     || playerHasTopLeftRoadOnTile(tile.bottomLeftNeighbour, player)
                     || playerHasTopRightRoadOnTile(tile.bottomLeftNeighbour, player)) {
                     tile.hideLeftStructure = false;
+                    tile.isLeftStructureAvailable = true;
                 }
             } else if (playerHasTopLeftRoadOnTile(tile, player)) {
                 if (playerHasLeftRoadOnTile(tile, player)
@@ -175,6 +179,7 @@ export const showTargetLocationForLeftStructureAndPlayer = (tile, player) => {
                     || playerHasTopRightRoadOnTile(tile.leftNeighbour, player)
                     || playerHasLeftRoadOnTile(tile.topRightNeighbour, player)) {
                     tile.hideLeftStructure = false;
+                    tile.isLeftStructureAvailable = true;
                 }
             }
         }

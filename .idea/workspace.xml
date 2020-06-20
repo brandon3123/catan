@@ -25,14 +25,9 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cfa065f6-d89e-401e-8d38-19c6f6ccb826" name="Default Changelist" comment="Initial city placement working decently. I'll have to factor in resetting the structure type/color etc if someone selects a different stage before placing their city. I think the gameboard io framework has something to revert state to how it was previously when a stage was selected.....that's probably the easiest way to accomplish it. Otherwise I'm going to need some memory in this thing.">
+    <list default="true" id="cfa065f6-d89e-401e-8d38-19c6f6ccb826" name="Default Changelist" comment="Working through city issues. I need to re-think how the placement is done.....it's sort of working, just need to tweek my original pathing now. Proving a bit complicated.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/CatanBoard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/CatanBoard.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/CatanGame.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/CatanGame.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Tile.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Tile.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/css/catan-board.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/css/catan-board.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/utilities/CatanUtils.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utilities/CatanUtils.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utilities/CreateBoardUtils.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utilities/CreateBoardUtils.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -328,7 +323,14 @@
       <option name="project" value="LOCAL" />
       <updated>1592414266016</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="Working through city issues. I need to re-think how the placement is done.....it's sort of working, just need to tweek my original pathing now. Proving a bit complicated.">
+      <created>1592677487113</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1592677487113</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -386,7 +388,8 @@
     <MESSAGE value="Settlement pathing almost completed, working through the small issues." />
     <MESSAGE value="ReadME" />
     <MESSAGE value="Initial city placement working decently. I'll have to factor in resetting the structure type/color etc if someone selects a different stage before placing their city. I think the gameboard io framework has something to revert state to how it was previously when a stage was selected.....that's probably the easiest way to accomplish it. Otherwise I'm going to need some memory in this thing." />
-    <option name="LAST_COMMIT_MESSAGE" value="Initial city placement working decently. I'll have to factor in resetting the structure type/color etc if someone selects a different stage before placing their city. I think the gameboard io framework has something to revert state to how it was previously when a stage was selected.....that's probably the easiest way to accomplish it. Otherwise I'm going to need some memory in this thing." />
+    <MESSAGE value="Working through city issues. I need to re-think how the placement is done.....it's sort of working, just need to tweek my original pathing now. Proving a bit complicated." />
+    <option name="LAST_COMMIT_MESSAGE" value="Working through city issues. I need to re-think how the placement is done.....it's sort of working, just need to tweek my original pathing now. Proving a bit complicated." />
   </component>
   <component name="WindowStateProjectService">
     <state x="2217" y="241" key="#catan" timestamp="1586712210648">
@@ -546,15 +549,15 @@
       <screen x="1680" y="23" width="1680" height="1027" />
     </state>
     <state x="1680" y="457" key="VCS.ChangelistChooser/3360.23.1920.1057/0.23.1680.954/1680.23.1680.1027@1680.23.1680.1027" timestamp="1588108222018" />
-    <state x="503" y="264" key="Vcs.Push.Dialog.v2" timestamp="1592414267542">
-      <screen x="0" y="23" width="1920" height="980" />
+    <state x="2120" y="276" key="Vcs.Push.Dialog.v2" timestamp="1592677488249">
+      <screen x="1680" y="23" width="1680" height="1027" />
     </state>
     <state x="503" y="283" key="Vcs.Push.Dialog.v2/0.23.1920.1057/-1680.23.1680.960/1920.23.1680.1027@0.23.1920.1057" timestamp="1592330589388" />
     <state x="503" y="264" key="Vcs.Push.Dialog.v2/0.23.1920.980/-1680.23.1680.1027/1920.23.1680.1027@0.23.1920.980" timestamp="1592414267542" />
     <state x="2120" y="276" key="Vcs.Push.Dialog.v2/3360.23.1920.1057/0.23.1680.950/1680.23.1680.1027@1680.23.1680.1027" timestamp="1586713017631" />
     <state x="2120" y="276" key="Vcs.Push.Dialog.v2/3360.23.1920.1057/0.23.1680.954/1680.23.1680.1027@1680.23.1680.1027" timestamp="1588115485754" />
     <state x="2120" y="276" key="Vcs.Push.Dialog.v2/3360.23.1920.1057/0.23.1680.956/1680.23.1680.1027@1680.23.1680.1027" timestamp="1588208266860" />
-    <state x="2120" y="276" key="Vcs.Push.Dialog.v2/3360.23.1920.1057/0.23.1680.958/1680.23.1680.1027@1680.23.1680.1027" timestamp="1589062893495" />
+    <state x="2120" y="276" key="Vcs.Push.Dialog.v2/3360.23.1920.1057/0.23.1680.958/1680.23.1680.1027@1680.23.1680.1027" timestamp="1592677488249" />
     <state x="2120" y="276" key="Vcs.Push.Dialog.v2/3360.23.1920.1057/0.23.1680.960/1680.23.1680.1027@1680.23.1680.1027" timestamp="1588634374004" />
     <state x="2311" y="457" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1586993811771">
       <screen x="1680" y="23" width="1680" height="1027" />
