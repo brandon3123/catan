@@ -64,6 +64,7 @@ function buildTopStructure(G, ctx, id, type) {
         let player = currentPlayer(G, ctx);
         tile.topStructure = type;
         tile.topStructureColor = player.color;
+        tile.isTopStructureAvailable = false;
         addStructureToPlayer(player, type, id);
         endCurrentStage(G, ctx);
     }
@@ -80,6 +81,7 @@ function buildLeftStructure(G, ctx, id, type) {
         let player = currentPlayer(G, ctx);
         tile.leftStructure = type;
         tile.leftStructureColor = player.color;
+        tile.isLeftStructureAvailable = false;
         addStructureToPlayer(player, type, id);
         endCurrentStage(G, ctx);
     }

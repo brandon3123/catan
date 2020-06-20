@@ -33,24 +33,34 @@ class Tile extends React.Component {
 
     topStructure() {
         if (this.props.topStructure) {
-            return (
-                <div className={this.props.topStructure + ' t ' + this.props.topStructureColor}
-                     onClick={this.props.buildTopStructure}
-                     style={{visibility: this.props.hideTopStructure ? 'hidden' : 'visible'}}
-                />
-            )
+            let className =
+                this.props.isTopStructureAvailable
+                    ? 'build t target2'
+                    : this.props.topStructure + ' t ' + this.props.topStructureColor;
+                return (
+                    <div className={className}
+                         onClick={this.props.buildTopStructure}
+                         style={{visibility: this.props.hideTopStructure ? 'hidden' : 'visible'}}
+                    />
+                )
+
         }
         return null;
     }
 
     leftStructure() {
         if (this.props.leftStructure) {
-            return (
-                <div className={this.props.leftStructure + ' tl ' + this.props.leftStructureColor}
-                     onClick={this.props.buildLeftStructure}
-                     style={{visibility: this.props.hideLeftStructure ? 'hidden' : 'visible'}}
-                />
-            )
+            let className =
+                this.props.isLeftStructureAvailable
+                ? 'build tl target2'
+                : this.props.leftStructure + ' tl ' + this.props.leftStructureColor;
+                return (
+                    <div className={className}
+                         onClick={this.props.buildLeftStructure}
+                         style={{visibility: this.props.hideLeftStructure ? 'hidden' : 'visible'}}
+                    />
+                )
+
         }
         return null;
     }
