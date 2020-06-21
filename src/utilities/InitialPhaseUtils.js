@@ -16,17 +16,15 @@ export const beginInitialPhase = (G, ctx) => {
 }
 
 export const buildTopStructureAndGoToRoadStageIfPermitted = (G, ctx, id, type) => {
-    if (numberOfSettlementsForCurrentPlayer(G, ctx) < 2) {
-        buildTopStructureAndSetNextStage(G, ctx, id, type, Stage.BUILD_ROAD);
-    } else {
+    buildTopStructureAndSetNextStage(G, ctx, id, type, Stage.BUILD_ROAD);
+    if (numberOfSettlementsForCurrentPlayer(G, ctx) == 2) {
         ctx.events.endTurn();
     }
 }
 
 export const buildLeftStructureAndGoToRoadStageIfPermitted = (G, ctx, id, type) => {
-    if (numberOfSettlementsForCurrentPlayer(G, ctx) < 2) {
-        buildLeftStructureAndSetNextStage(G, ctx, id, type, Stage.BUILD_ROAD);
-    } else {
+    buildLeftStructureAndSetNextStage(G, ctx, id, type, Stage.BUILD_ROAD);
+    if (numberOfSettlementsForCurrentPlayer(G, ctx) == 2) {
         ctx.events.endTurn();
     }
 }
