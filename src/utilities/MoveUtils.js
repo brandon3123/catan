@@ -25,6 +25,21 @@ export const buildLeftHouse = (G, ctx, id) => {
     buildLeftStructure(G, ctx, id, Structure.SETTLEMENT);
 }
 
+export const buildTopLeftRoadAndSetNextStage = (G, ctx, id, nextStage) => {
+    buildTopLeftRoad(G, ctx, id);
+    setNextStage(ctx, nextStage);
+}
+
+export const buildLeftRoadAndSetNextStage = (G, ctx, id, nextStage) => {
+    buildLeftRoad(G, ctx, id);
+    setNextStage(ctx, nextStage);
+}
+
+export const buildTopRightRoadAndSetNextStage = (G, ctx, id, nextStage) => {
+    buildTopRightRoad(G, ctx, id);
+    setNextStage(ctx, nextStage);
+}
+
 export const buildTopStructureAndSetNextStage = (G, ctx, id, type, nextStage) => {
     buildTopStructure(G, ctx, id, type);
     setNextStage(ctx, nextStage);

@@ -40,3 +40,7 @@ export const numberOfSettlementsForCurrentPlayer = (G, ctx) => {
 export const numberOfSettlementsForSelectedPlayer = (player) => {
     return player.settlements.length;
 }
+
+export const numberOfRoadsForSelectedPlayer = (player) => {
+    return player.roads;
+}

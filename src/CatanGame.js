@@ -23,7 +23,10 @@ import {Stage} from "./enums/Stage";
 import {
     beginInitialPhase,
     buildLeftStructureAndGoToRoadStageIfPermitted,
-    buildTopStructureAndGoToRoadStageIfPermitted
+    buildTopStructureAndGoToRoadStageIfPermitted,
+    buildLeftRoadAndGoToSettlementStage,
+    buildTopLeftRoadAndGoToSettlementStage,
+    buildTopRightRoadAndGoToSettlementStage
 } from "./utilities/InitialPhaseUtils";
 import {
     buildLeftRoadAndEndStage,
@@ -76,7 +79,10 @@ const Catan = {
                 moves: {
                     buildLeftRoadAndEndStage,
                     buildTopLeftRoadAndEndStage,
-                    buildTopRightRoadAndEndStage
+                    buildTopRightRoadAndEndStage,
+                    buildTopLeftRoadAndGoToSettlementStage,
+                    buildLeftRoadAndGoToSettlementStage,
+                    buildTopRightRoadAndGoToSettlementStage
                 }
             }
         },
@@ -109,13 +115,13 @@ const Catan = {
             onBegin: (G, ctx) => (beginInitialPhase(G, ctx)),
             onEnd: (G) => hideAllTargetLocations(G),
             moves: {
-                buildTopStructureAndGoToRoadStageIfPermitted: buildTopStructureAndGoToRoadStageIfPermitted,
-                buildLeftStructureAndGoToRoadStageIfPermitted: buildLeftStructureAndGoToRoadStageIfPermitted,
-                buildLeftRoadAndEndStage,
-                buildTopLeftRoadAndEndStage,
-                buildTopRightRoadAndEndStage
+                buildTopStructureAndGoToRoadStageIfPermitted,
+                buildLeftStructureAndGoToRoadStageIfPermitted,
+                buildTopLeftRoadAndGoToSettlementStage,
+                buildLeftRoadAndGoToSettlementStage,
+                buildTopRightRoadAndGoToSettlementStage
             },
-            endIf: (G) => initialPhaseIsCompleted(G, 1),
+            endIf: (G) => initialPhaseIsCompleted(G, 2),
             // next: "initialPiecePlacementReverse",
             start: true
         },

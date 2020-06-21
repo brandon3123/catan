@@ -204,19 +204,20 @@ class CatanBoard extends React.Component {
     }
 
     buildLeftRoad = (id) => {
-        this.props.moves.buildLeftRoadAndEndStage(id);
+        this.props.moves.buildLeftRoadAndGoToSettlementStage(id);
     }
 
     buildTopLeftRoad = (id) => {
-        this.props.moves.buildTopLeftRoadAndEndStage(id);
+        this.props.moves.buildTopLeftRoadAndGoToSettlementStage(id);
     }
 
     buildTopRightRoad = (id) => {
-        this.props.moves.buildTopRightRoadAndEndStage(id);
+        this.props.moves.buildTopRightRoadAndGoToSettlementStage(id);
     }
 
     buildTopStructure = (id) => {
         let stageName = stageNameForCurrentPlayer(this.props.ctx);
+        console.log(stageName);
         switch (stageName) {
             case Stage.BUILD_SETTLEMENT:
                 this.props.moves.buildTopStructureAndGoToRoadStageIfPermitted(id, Structure.SETTLEMENT);

@@ -5,6 +5,7 @@ import {
     currentPlayer,
     getTilesForPlayer
 } from "./PlayerUtils";
+import {currentPhase} from "./GameUtils";
 
 export const getTile = (G, id) => {
     return G.board.tiles.get(id);
@@ -61,12 +62,10 @@ export const showTargetLocationsForPlayerAndStage = (G, ctx, stage) => {
     let player = currentPlayer(G, ctx);
     switch (stage) {
         case Stage.BUILD_SETTLEMENT:
-            showSettlementPlacementsForTileAndPlayer(G, player);
+            showSettlementPlacementsForPlayer(G, player);
             break;
         case Stage.BUILD_ROAD:
-            for (let tile of getAllTiles(G)) {
-                showRoadPlacementsForTileAndPlayer(tile, player);
-            }
+            showRoadPlacementsForPlayer(G, player);
             break;
         case Stage.BUILD_CITY:
             showCityPlacementsForPlayer(G, player);
@@ -115,7 +114,7 @@ export const showCityPlacementsForPlayer = (G, player) => {
     }
 }
 
-export const showSettlementPlacementsForTileAndPlayer = (G, player) => {
+export const showSettlementPlacementsForPlayer = (G, player) => {
     for (let tile of getAllTiles(G)) {
         showTargetLocationForTopStructureAndPlayer(tile, player);
         showTargetLocationForLeftStructureAndPlayer(tile, player);
@@ -133,7 +132,6 @@ export const showTargetLocationForTopStructureAndPlayer = (tile, player) => {
             }
         } else {
             if (playerHasTopLeftRoadOnTile(tile, player)) {
-                console.log(tile.type + " " + tile.value + " " + tile.harborType);
                 if (playerHasLeftRoadOnTile(tile, player)
                     || playerHasTopRightRoadOnTile(tile.leftNeighbour, player)
                     || playerHasLeftRoadOnTile(tile.topRightNeighbour, player)) {
@@ -141,7 +139,6 @@ export const showTargetLocationForTopStructureAndPlayer = (tile, player) => {
                     tile.hideTopStructure = false;
                 }
             }
-
             if (playerHasTopRightRoadOnTile(tile, player)) {
                 if (playerHasTopLeftRoadOnTile(tile, player)
                     || playerHasLeftRoadOnTile(tile.topRightNeighbour, player)
@@ -234,6 +231,12 @@ export const rightNeighbourForTile = (tile) => {
     }
 
     return null;
+}
+
+export const showRoadPlacementsForPlayer = (G, player) => {
+    for (let tile of getAllTiles(G)) {
+        showRoadPlacementsForTileAndPlayer(tile, player);
+    }
 }
 
 export const showRoadPlacementsForTileAndPlayer = (tile, player) => {
