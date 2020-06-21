@@ -23,6 +23,7 @@ import {
     getTile, hideAllTargetLocations,
     showTargetLocationsForPlayerAndStage
 } from "./utilities/CatanUtils";
+import {currentPlayer, numberOfSettlementsCurrentForPlayer} from "./utilities/PlayerUtils";
 
 class CatanBoard extends React.Component {
     static propTypes = {
@@ -174,6 +175,15 @@ class CatanBoard extends React.Component {
                 switch (stage) {
                     case Stage.BUILD_CITY:
                         return true;
+                    case Stage.BUILD_ROAD:{
+                        let numOfPlayerSettlements = numberOfSettlementsCurrentForPlayer(this.props.G, this.props.ctx);
+                        if (numOfPlayerSettlements == 0 || numOfPlayerSettlements == 2) {
+                            return true
+                        }
+                    }
+                    case Stage.BUILD_SETTLEMENT: {
+                        return numberOfSettlementsCurrentForPlayer(this.props.G, this.props.ctx) == 2;
+                    }
                 }
         }
 

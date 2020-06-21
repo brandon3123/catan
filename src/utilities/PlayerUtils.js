@@ -32,3 +32,11 @@ export const calculateVictoryPoints = (player) => {
     victoryPoints += (player.cities.length * 2);
     return victoryPoints;
 }
+
+export const numberOfSettlementsCurrentForPlayer = (G, ctx) => {
+    return currentPlayer(G, ctx).settlements.length;
+}
+
+export const numberOfSettlementsForSelectedPlayer = (player) => {
+    return player.settlements.length;
+}
