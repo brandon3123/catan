@@ -20,17 +20,19 @@ import {
 
 import {Structure} from "./enums/Structure"
 import {Stage} from "./enums/Stage";
+import {beginInitialPhase} from "./utilities/InitialPhaseUtils";
+import {
+    buildLeftRoadAndEndStage,
+    buildLeftStructureAndEndStage, buildTopLeftRoadAndEndStage, buildTopRightRoadAndEndStage,
+    buildTopStructureAndEndStage
+} from "./utilities/MoveUtils";
+import {endCurrentStage} from "./utilities/StageUtils";
 
 /*
  Function to randomize the player turn order
  */
 function determinePlayerOrder(ctx) {
     return ctx.playOrder.sort(() => Math.random() - 0.5);
-}
-
-function setupInitialPhase(G, ctx) {
-    showAllStructureBuildingLocations(G);
-    ctx.events.setStage(Stage.BUILD_SETTLEMENT);
 }
 
 function initialPhaseIsCompleted(G, buildCount) {
@@ -40,81 +42,6 @@ function initialPhaseIsCompleted(G, buildCount) {
         }
     }
     return true;
-}
-
-function buildTopCity(G, ctx, id) {
-    buildTopStructure(G, ctx, id, Structure.CITY);
-}
-
-function buildLeftCity(G, ctx, id) {
-    buildLeftStructure(G, ctx, id, Structure.CITY);
-}
-
-function buildTopHouse(G, ctx, id) {
-    buildTopStructure(G, ctx, id, Structure.SETTLEMENT);
-}
-
-function buildLeftHouse(G, ctx, id) {
-    buildLeftStructure(G, ctx, id, Structure.SETTLEMENT);
-}
-
-function buildTopStructure(G, ctx, id, type) {
-    let tile = getTile(G, id);
-    if (isTopStructureAvailable(tile)) {
-        let player = currentPlayer(G, ctx);
-        tile.topStructure = type;
-        tile.topStructureColor = player.color;
-        tile.isTopStructureAvailable = false;
-        addStructureToPlayer(player, type, id);
-        endCurrentStage(G, ctx);
-    }
-}
-
-function endCurrentStage(G, ctx) {
-    hideAllTargetLocations(G);
-    ctx.events.endStage();
-}
-
-function buildLeftStructure(G, ctx, id, type) {
-    let tile = getTile(G, id);
-    if (isLeftStructureAvailable(tile)) {
-        let player = currentPlayer(G, ctx);
-        tile.leftStructure = type;
-        tile.leftStructureColor = player.color;
-        tile.isLeftStructureAvailable = false;
-        addStructureToPlayer(player, type, id);
-        endCurrentStage(G, ctx);
-    }
-}
-
-function buildLeftRoad(G, ctx, id) {
-    let tile = getTile(G, id);
-    if (isLeftRoadAvailable(tile)) {
-        let player = currentPlayer(G, ctx);
-        tile.leftRoadColor = player.color;
-        player.roads += 1;
-        endCurrentStage(G, ctx);
-    }
-}
-
-function buildTopLeftRoad(G, ctx, id) {
-    let tile = getTile(G, id);
-    if (isTopLeftRoadAvailable(tile)) {
-        let player = currentPlayer(G, ctx);
-        tile.topLeftRoadColor = player.color;
-        player.roads += 1;
-        endCurrentStage(G, ctx);
-    }
-}
-
-function buildTopRightRoad(G, ctx, id) {
-    let tile = getTile(G, id);
-    if (isTopRightRoadAvailable(tile)) {
-        let player = currentPlayer(G, ctx);
-        tile.topRightRoadColor = player.color;
-        player.roads += 1;
-        endCurrentStage(G, ctx);
-    }
 }
 
 const Catan = {
@@ -129,21 +56,21 @@ const Catan = {
         stages: {
             buildSettlement: {
                 moves: {
-                    buildTopHouse,
-                    buildLeftHouse
+                    buildTopStructureAndEndStage,
+                    buildLeftStructureAndEndStage
                 }
             },
             buildCity: {
                 moves: {
-                    buildTopCity,
-                    buildLeftCity
+                    buildTopStructureAndEndStage,
+                    buildLeftStructureAndEndStage
                 }
             },
             buildRoad: {
                 moves: {
-                    buildLeftRoad,
-                    buildTopLeftRoad,
-                    buildTopRightRoad
+                    buildLeftRoadAndEndStage,
+                    buildTopLeftRoadAndEndStage,
+                    buildTopRightRoadAndEndStage
                 }
             }
         },
@@ -164,25 +91,23 @@ const Catan = {
     },
 
     moves: {
-        buildTopHouse: buildTopHouse,
-        buildLeftHouse: buildLeftHouse,
-        buildTopCity: buildTopCity,
-        buildLeftCity: buildLeftCity,
-        buildLeftRoad: buildLeftRoad,
-        buildTopLeftRoad: buildTopLeftRoad,
-        buildTopRightRoad: buildTopRightRoad
+        buildTopStructureAndEndTurn: buildTopStructureAndEndStage,
+        buildLeftStructureAndEndTurn: buildLeftStructureAndEndStage,
+        buildLeftRoadAndEndStage: buildLeftRoadAndEndStage,
+        buildTopLeftRoadAndEndStage: buildTopLeftRoadAndEndStage,
+        buildTopRightRoadAndEndStage: buildTopRightRoadAndEndStage
     },
 
     phases: {
         initialPiecePlacement: {
-            onBegin: (G, ctx) => setupInitialPhase(G, ctx),
+            onBegin: (G, ctx) => (beginInitialPhase(G, ctx)),
             onEnd: (G) => hideAllTargetLocations(G),
             moves: {
-                buildTopHouse,
-                buildLeftHouse,
-                buildLeftRoad,
-                buildTopLeftRoad,
-                buildTopRightRoad
+                buildTopStructureAndEndTurn: buildTopStructureAndEndStage,
+                buildLeftStructureAndEndTurn: buildLeftStructureAndEndStage,
+                buildLeftRoadAndEndStage,
+                buildTopLeftRoadAndEndStage,
+                buildTopRightRoadAndEndStage
             },
             endIf: (G) => initialPhaseIsCompleted(G, 1),
             // next: "initialPiecePlacementReverse",

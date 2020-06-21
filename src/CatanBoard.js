@@ -24,6 +24,7 @@ import {
     showTargetLocationsForPlayerAndStage
 } from "./utilities/CatanUtils";
 import {currentPlayer, numberOfSettlementsCurrentForPlayer} from "./utilities/PlayerUtils";
+import {Structure} from "./enums/Structure";
 
 class CatanBoard extends React.Component {
     static propTypes = {
@@ -194,34 +195,34 @@ class CatanBoard extends React.Component {
         let stageName = stageNameForCurrentPlayer(this.props.ctx);
         switch (stageName) {
             case Stage.BUILD_SETTLEMENT:
-                this.props.moves.buildLeftHouse(id);
+                this.props.moves.buildLeftStructureAndEndStage(id, Structure.SETTLEMENT);
                 break;
             case Stage.BUILD_CITY:
-                this.props.moves.buildLeftCity(id);
+                this.props.moves.buildLeftStructureAndEndStage(id, Structure.CITY);
                 break;
         }
     }
 
     buildLeftRoad = (id) => {
-        this.props.moves.buildLeftRoad(id);
+        this.props.moves.buildLeftRoadAndEndStage(id);
     }
 
     buildTopLeftRoad = (id) => {
-        this.props.moves.buildTopLeftRoad(id);
+        this.props.moves.buildTopLeftRoadAndEndStage(id);
     }
 
     buildTopRightRoad = (id) => {
-        this.props.moves.buildTopRightRoad(id);
+        this.props.moves.buildTopRightRoadAndEndStage(id);
     }
 
     buildTopStructure = (id) => {
         let stageName = stageNameForCurrentPlayer(this.props.ctx);
         switch (stageName) {
             case Stage.BUILD_SETTLEMENT:
-                this.props.moves.buildTopHouse(id);
+                this.props.moves.buildTopStructureAndEndStage(id, Structure.SETTLEMENT);
                 break;
             case Stage.BUILD_CITY:
-                this.props.moves.buildTopCity(id);
+                this.props.moves.buildTopStructureAndEndStage(id, Structure.CITY);
                 break;
         }
     };
@@ -232,6 +233,7 @@ class CatanBoard extends React.Component {
 
     createTileComponent(tileId) {
         let tileMetaData = getTile(this.props.G, tileId);
+        let buildTopStructureMove = () => this.buildTopStructure(tileMetaData.id);
 
         return <Tile
             id={tileMetaData.id}
@@ -252,7 +254,7 @@ class CatanBoard extends React.Component {
             leftStructureColor={tileMetaData.leftStructureColor}
             isLeftStructureAvailable={tileMetaData.isLeftStructureAvailable}
             hideLeftStructure={tileMetaData.hideLeftStructure}
-            buildTopStructure={() => this.buildTopStructure(tileMetaData.id)}
+            buildTopStructure={buildTopStructureMove}
             buildLeftStructure={() => this.buildLeftStructure(tileMetaData.id)}
             leftRoadColor={tileMetaData.leftRoadColor}
             hideLeftRoad={tileMetaData.hideLeftRoad}

@@ -20,3 +20,7 @@ export const currentPhase = (ctx) => {
             return null;
     }
 }
+
+export const isFirstTurn = (ctx) => {
+    return ctx.turn === 0;
+}
