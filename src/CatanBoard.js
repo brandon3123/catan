@@ -23,7 +23,7 @@ import {
     getTile, hideAllTargetLocations,
     showTargetLocationsForPlayerAndStage
 } from "./utilities/CatanUtils";
-import {currentPlayer, numberOfSettlementsCurrentForPlayer} from "./utilities/PlayerUtils";
+import {currentPlayer, numberOfSettlementsForCurrentPlayer} from "./utilities/PlayerUtils";
 import {Structure} from "./enums/Structure";
 
 class CatanBoard extends React.Component {
@@ -177,13 +177,13 @@ class CatanBoard extends React.Component {
                     case Stage.BUILD_CITY:
                         return true;
                     case Stage.BUILD_ROAD:{
-                        let numOfPlayerSettlements = numberOfSettlementsCurrentForPlayer(this.props.G, this.props.ctx);
+                        let numOfPlayerSettlements = numberOfSettlementsForCurrentPlayer(this.props.G, this.props.ctx);
                         if (numOfPlayerSettlements == 0 || numOfPlayerSettlements == 2) {
                             return true
                         }
                     }
                     case Stage.BUILD_SETTLEMENT: {
-                        return numberOfSettlementsCurrentForPlayer(this.props.G, this.props.ctx) == 2;
+                        return numberOfSettlementsForCurrentPlayer(this.props.G, this.props.ctx) == 2;
                     }
                 }
         }
@@ -195,10 +195,10 @@ class CatanBoard extends React.Component {
         let stageName = stageNameForCurrentPlayer(this.props.ctx);
         switch (stageName) {
             case Stage.BUILD_SETTLEMENT:
-                this.props.moves.buildLeftStructureAndEndStage(id, Structure.SETTLEMENT);
+                this.props.moves.buildLeftStructureAndGoToRoadStageIfPermitted(id, Structure.SETTLEMENT);
                 break;
             case Stage.BUILD_CITY:
-                this.props.moves.buildLeftStructureAndEndStage(id, Structure.CITY);
+                this.props.moves.buildLeftStructureAndGoToRoadStageIfPermitted(id, Structure.CITY);
                 break;
         }
     }

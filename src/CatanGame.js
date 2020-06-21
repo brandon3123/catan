@@ -20,7 +20,11 @@ import {
 
 import {Structure} from "./enums/Structure"
 import {Stage} from "./enums/Stage";
-import {beginInitialPhase} from "./utilities/InitialPhaseUtils";
+import {
+    beginInitialPhase,
+    buildLeftStructureAndGoToRoadStageIfPermitted,
+    buildTopStructureAndGoToRoadStageIfPermitted
+} from "./utilities/InitialPhaseUtils";
 import {
     buildLeftRoadAndEndStage,
     buildLeftStructureAndEndStage, buildTopLeftRoadAndEndStage, buildTopRightRoadAndEndStage,
@@ -57,7 +61,9 @@ const Catan = {
             buildSettlement: {
                 moves: {
                     buildTopStructureAndEndStage,
-                    buildLeftStructureAndEndStage
+                    buildLeftStructureAndEndStage,
+                    buildTopStructureAndGoToRoadStageIfPermitted: buildTopStructureAndGoToRoadStageIfPermitted,
+                    buildLeftStructureAndGoToRoadStageIfPermitted: buildLeftStructureAndGoToRoadStageIfPermitted
                 }
             },
             buildCity: {
@@ -103,8 +109,8 @@ const Catan = {
             onBegin: (G, ctx) => (beginInitialPhase(G, ctx)),
             onEnd: (G) => hideAllTargetLocations(G),
             moves: {
-                buildTopStructureAndEndTurn: buildTopStructureAndEndStage,
-                buildLeftStructureAndEndTurn: buildLeftStructureAndEndStage,
+                buildTopStructureAndGoToRoadStageIfPermitted: buildTopStructureAndGoToRoadStageIfPermitted,
+                buildLeftStructureAndGoToRoadStageIfPermitted: buildLeftStructureAndGoToRoadStageIfPermitted,
                 buildLeftRoadAndEndStage,
                 buildTopLeftRoadAndEndStage,
                 buildTopRightRoadAndEndStage

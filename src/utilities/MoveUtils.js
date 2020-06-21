@@ -7,7 +7,7 @@ import {
 } from "./CatanUtils";
 import {addStructureToPlayer, currentPlayer} from "./PlayerUtils";
 import {Structure} from "../enums/Structure";
-import {endCurrentStage} from "./StageUtils";
+import {endCurrentStage, setNextStage} from "./StageUtils";
 
 export const buildTopCity = (G, ctx, id) => {
     buildTopStructure(G, ctx, id, Structure.CITY);
@@ -23,6 +23,16 @@ export const buildTopHouse = (G, ctx, id) => {
 
 export const buildLeftHouse = (G, ctx, id) => {
     buildLeftStructure(G, ctx, id, Structure.SETTLEMENT);
+}
+
+export const buildTopStructureAndSetNextStage = (G, ctx, id, type, nextStage) => {
+    buildTopStructure(G, ctx, id, type);
+    setNextStage(ctx, nextStage);
+}
+
+export const buildLeftStructureAndSetNextStage = (G, ctx, id, type, nextStage) => {
+    buildLeftStructure(G, ctx, id, type);
+    setNextStage(ctx, nextStage);
 }
 
 export const buildTopStructureAndEndStage = (G, ctx, id, type) => {
