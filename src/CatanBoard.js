@@ -48,7 +48,7 @@ class CatanBoard extends React.Component {
                                     label="Settlement"
                                     color="primary"
                                     onClick={() => this.setBuildingStage(Stage.BUILD_SETTLEMENT)}
-                                    disabled={this.isStageEnabledForPhase(Stage.BUILD_SETTLEMENT)}
+                                    disabled={this.isStageDisabledForPhase(Stage.BUILD_SETTLEMENT)}
                                     variant="outlined"
                                 />
                                 <Chip
@@ -56,14 +56,14 @@ class CatanBoard extends React.Component {
                                     color="primary"
                                     // color={red}
                                     onClick={() => this.setBuildingStage(Stage.BUILD_CITY)}
-                                    disabled={this.isStageEnabledForPhase(Stage.BUILD_CITY)}
+                                    disabled={this.isStageDisabledForPhase(Stage.BUILD_CITY)}
                                     variant="outlined"
                                 />
                                 <Chip
                                     label="Road"
                                     color="primary"
                                     onClick={() => this.setBuildingStage(Stage.BUILD_ROAD)}
-                                    disabled={this.isStageEnabledForPhase(Stage.BUILD_ROAD)}
+                                    disabled={this.isStageDisabledForPhase(Stage.BUILD_ROAD)}
                                     variant="outlined"
                                 />
 
@@ -166,7 +166,7 @@ class CatanBoard extends React.Component {
         showTargetLocationsForPlayerAndStage(this.props.G, this.props.ctx, stage);
     }
 
-    isStageEnabledForPhase(stage) {
+    isStageDisabledForPhase(stage) {
         let currentPhaseName = currentPhase(this.props.ctx);
 
         switch (currentPhaseName) {
