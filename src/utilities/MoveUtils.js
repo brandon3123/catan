@@ -7,7 +7,7 @@ import {
 } from "./CatanUtils";
 import {addStructureToPlayer, currentPlayer} from "./PlayerUtils";
 import {Structure} from "../enums/Structure";
-import {endCurrentStage, setNextStage} from "./StageUtils";
+import {endCurrentStage, setStage} from "./StageUtils";
 
 export const buildTopCity = (G, ctx, id) => {
     buildTopStructure(G, ctx, id, Structure.CITY);
@@ -27,27 +27,27 @@ export const buildLeftHouse = (G, ctx, id) => {
 
 export const buildTopLeftRoadAndSetNextStage = (G, ctx, id, nextStage) => {
     buildTopLeftRoad(G, ctx, id);
-    setNextStage(ctx, nextStage);
+    setStage(ctx, nextStage);
 }
 
 export const buildLeftRoadAndSetNextStage = (G, ctx, id, nextStage) => {
     buildLeftRoad(G, ctx, id);
-    setNextStage(ctx, nextStage);
+    setStage(ctx, nextStage);
 }
 
 export const buildTopRightRoadAndSetNextStage = (G, ctx, id, nextStage) => {
     buildTopRightRoad(G, ctx, id);
-    setNextStage(ctx, nextStage);
+    setStage(ctx, nextStage);
 }
 
 export const buildTopStructureAndSetNextStage = (G, ctx, id, type, nextStage) => {
     buildTopStructure(G, ctx, id, type);
-    setNextStage(ctx, nextStage);
+    setStage(ctx, nextStage);
 }
 
 export const buildLeftStructureAndSetNextStage = (G, ctx, id, type, nextStage) => {
     buildLeftStructure(G, ctx, id, type);
-    setNextStage(ctx, nextStage);
+    setStage(ctx, nextStage);
 }
 
 export const buildTopStructureAndEndStage = (G, ctx, id, type) => {

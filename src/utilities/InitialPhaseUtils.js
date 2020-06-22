@@ -6,7 +6,7 @@ import {
     showAllStructureBuildingLocations, showRoadPlacementsForPlayer, showRoadPlacementsForTileAndPlayer
 } from "./CatanUtils";
 import {Stage} from "../enums/Stage";
-import {setNextStage} from "./StageUtils";
+import {setStage} from "./StageUtils";
 import {
     buildTopStructureAndSetNextStage,
     buildLeftStructureAndSetNextStage,
@@ -20,10 +20,24 @@ import {
     numberOfSettlementsForCurrentPlayer,
     numberOfSettlementsForSelectedPlayer
 } from "./PlayerUtils";
+import {nextUpPlayerPosition} from "./GameUtils";
 
 export const beginInitialPhase = (G, ctx) => {
     showAllStructureBuildingLocations(G);
-    setNextStage(ctx, Stage.BUILD_SETTLEMENT);
+    setStage(ctx, Stage.BUILD_SETTLEMENT);
+}
+
+export const isInitialPhaseCompleted = (G) => {
+    return doAllPlayersHaveRoadAndSettlementCount(G, 1);
+}
+
+export const isInitialPhaseReversedCompleted = (G) => {
+    return doAllPlayersHaveRoadAndSettlementCount(G, 2);
+}
+
+export const beginInitialPhaseReversed = (G, ctx) => {
+    showAvailableStructureLocationsForPlayer(G);
+    setStage(ctx, Stage.BUILD_SETTLEMENT);
 }
 
 export const buildTopLeftRoadAndGoToSettlementStage = (G, ctx, id) => {
@@ -59,23 +73,19 @@ function nextCourseOfActionFollowingStructureBuild(G, id, ctx) {
 
 function nextCourseOfActionFollowingRoadBuild(G, ctx) {
     hideAllTargetLocations(G);
-    let player = currentPlayer(G, ctx);
     showAvailableStructureLocationsForPlayer(G);
-    if (numberOfRoadsForSelectedPlayer(player) == 2 && numberOfSettlementsForSelectedPlayer(player) == 2) {
-        let nextPlayer =
-            ctx.playOrderPos == ctx.playOrder - 1
-            ? ctx.playOrder[0]
-            : ctx.playOrder[ctx.playOrderPos + 1];
-
-        ctx.events.endTurn();
+    let nextPlayerPosition = nextUpPlayerPosition(ctx);
+    if (nextPlayerPosition) {
         let value = {};
-        value[nextPlayer] = Stage.BUILD_SETTLEMENT
+
+        value[nextPlayerPosition] = Stage.BUILD_SETTLEMENT;
+        ctx.events.endTurn();
+
         ctx.events.setActivePlayers(
             {
-                value:value
+                value: value
             }
         );
-        // setNextStage(ctx, Stage.BUILD_SETTLEMENT);
 
     }
 }
@@ -99,4 +109,13 @@ function showTargetLocationForLeftStructureAndPlayer(tile) {
         tile.isLeftStructureAvailable = true;
         tile.hideLeftStructure = false;
     }
+}
+
+function doAllPlayersHaveRoadAndSettlementCount(G, buildingCount) {
+    for (let player of G.playerData) {
+        if (player.settlements != buildingCount && player.roads != buildingCount) {
+            return false;
+        }
+    }
+    return true;
 }

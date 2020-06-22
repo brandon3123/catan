@@ -5,6 +5,6 @@ export const endCurrentStage = (G, ctx) => {
     ctx.events.endStage();
 }
 
-export const setNextStage = (ctx, nextStage) => {
+export const setStage = (ctx, nextStage) => {
     ctx.events.setStage(nextStage);
 }

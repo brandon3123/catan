@@ -26,7 +26,10 @@ import {
     buildTopStructureAndGoToRoadStageIfPermitted,
     buildLeftRoadAndGoToSettlementStage,
     buildTopLeftRoadAndGoToSettlementStage,
-    buildTopRightRoadAndGoToSettlementStage
+    buildTopRightRoadAndGoToSettlementStage,
+    isInitialPhaseCompleted,
+    beginInitialPhaseReversed,
+    isInitialPhaseReversedCompleted
 } from "./utilities/InitialPhaseUtils";
 import {
     buildLeftRoadAndEndStage,
@@ -34,21 +37,13 @@ import {
     buildTopStructureAndEndStage
 } from "./utilities/MoveUtils";
 import {endCurrentStage} from "./utilities/StageUtils";
+import {Phase} from "./enums/Phase";
 
 /*
  Function to randomize the player turn order
  */
 function determinePlayerOrder(ctx) {
     return ctx.playOrder.sort(() => Math.random() - 0.5);
-}
-
-function initialPhaseIsCompleted(G, buildCount) {
-    for (let player of G.playerData) {
-        if (player.settlements != buildCount && player.roads != buildCount) {
-            return false;
-        }
-    }
-    return true;
 }
 
 const Catan = {
@@ -112,7 +107,7 @@ const Catan = {
 
     phases: {
         initialPiecePlacement: {
-            onBegin: (G, ctx) => (beginInitialPhase(G, ctx)),
+            onBegin: (G, ctx) => beginInitialPhase(G, ctx),
             onEnd: (G) => hideAllTargetLocations(G),
             moves: {
                 buildTopStructureAndGoToRoadStageIfPermitted,
@@ -121,39 +116,39 @@ const Catan = {
                 buildLeftRoadAndGoToSettlementStage,
                 buildTopRightRoadAndGoToSettlementStage
             },
-            endIf: (G) => initialPhaseIsCompleted(G, 2),
-            // next: "initialPiecePlacementReverse",
+            endIf: (G) => isInitialPhaseCompleted(G),
+            next: Phase.INITIAL_PLACEMENT_REVERSED,
             start: true
         },
-        //
-        // initialPiecePlacementReverse: {
-        //     onBegin: (G, ctx) => setupInitialPhase(G, ctx),
-        //     onEnd: (G) => hideAllTargetLocations(G),
-        //     moves: {
-        //         buildTopHouse,
-        //         buildLeftHouse,
-        //         buildLeftRoad,
-        //         buildTopLeftRoad,
-        //         buildTopRightRoad
-        //     },
-        //     endIf: (G) => initialPhaseIsCompleted(G, 2),
-        //     turn: {
-        //         order: {
-        //             // Get the initial value of playOrderPos.
-        //             // This is called at the beginning of the phase.
-        //             first: (G, ctx) => ctx.currentPlayer,
-        //
-        //             // Get the next value of playOrderPos.
-        //             // This is called at the end of each turn.
-        //             // The phase ends if this returns undefined.
-        //             next: (G, ctx) => (ctx.playOrderPos + 1) % ctx.numPlayers,
-        //
-        //             // Override the initial value of playOrder.
-        //             // This is called at the beginning of the game / phase.
-        //             playOrder: (G, ctx) => ctx.playOrder.reverse(),
-        //         }
-        //     }
-        // }
+
+        initialPiecePlacementReverse: {
+            onBegin: (G, ctx) => beginInitialPhaseReversed(G, ctx),
+            onEnd: (G) => hideAllTargetLocations(G),
+            moves: {
+                buildTopStructureAndGoToRoadStageIfPermitted,
+                buildLeftStructureAndGoToRoadStageIfPermitted,
+                buildTopLeftRoadAndGoToSettlementStage,
+                buildLeftRoadAndGoToSettlementStage,
+                buildTopRightRoadAndGoToSettlementStage
+            },
+            endIf: (G) => isInitialPhaseReversedCompleted(G),
+            turn: {
+                order: {
+                    // Get the initial value of playOrderPos.
+                    // This is called at the beginning of the phase.
+                    first: (G, ctx) => 0,
+
+                    // Get the next value of playOrderPos.
+                    // This is called at the end of each turn.
+                    // The phase ends if this returns undefined.
+                    next: (G, ctx) => (ctx.playOrderPos + 1) % ctx.numPlayers,
+
+                    // Override the initial value of playOrder.
+                    // This is called at the beginning of the game / phase.
+                    playOrder: (G, ctx) => ctx.playOrder.reverse(),
+                }
+            }
+        }
     }
 }
 
