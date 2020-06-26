@@ -29,12 +29,7 @@ export const stageNameForCurrentPlayer = (ctx) => {
 }
 
 export const currentPhase = (ctx) => {
-    switch (ctx.phase) {
-        case Phase.INITIAL_PLACEMENT:
-            return Phase.INITIAL_PLACEMENT;
-        default:
-            return null;
-    }
+   return ctx.phase;
 }
 
 export const isFirstTurn = (ctx) => {

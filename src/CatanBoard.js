@@ -50,7 +50,7 @@ class CatanBoard extends React.Component {
                                     label="Settlement"
                                     color="primary"
                                     onClick={() => this.setBuildingStage(Stage.BUILD_SETTLEMENT)}
-                                    disabled={this.isStageDisabledForPhase(Stage.BUILD_SETTLEMENT)}
+                                    disabled={this.isStageDisabledForPhase()}
                                     variant="outlined"
                                 />
                                 <Chip
@@ -58,14 +58,14 @@ class CatanBoard extends React.Component {
                                     color="primary"
                                     // color={red}
                                     onClick={() => this.setBuildingStage(Stage.BUILD_CITY)}
-                                    disabled={this.isStageDisabledForPhase(Stage.BUILD_CITY)}
+                                    disabled={this.isStageDisabledForPhase()}
                                     variant="outlined"
                                 />
                                 <Chip
                                     label="Road"
                                     color="primary"
                                     onClick={() => this.setBuildingStage(Stage.BUILD_ROAD)}
-                                    disabled={this.isStageDisabledForPhase(Stage.BUILD_ROAD)}
+                                    disabled={this.isStageDisabledForPhase()}
                                     variant="outlined"
                                 />
 
@@ -80,6 +80,7 @@ class CatanBoard extends React.Component {
                                     label="End Turn"
                                     color="primary"
                                     onClick={() => this.endTurn()}
+                                    disabled={this.isEndTurnButtonDisabled()}
                                     variant="outlined"
                                 />
 
@@ -168,24 +169,19 @@ class CatanBoard extends React.Component {
         showTargetLocationsForPlayerAndStage(this.props.G, this.props.ctx, stage);
     }
 
-    isStageDisabledForPhase(stage) {
+    isEndTurnButtonDisabled() {
+        return this.isStageDisabledForPhase();
+    }
+
+    isStageDisabledForPhase() {
         let currentPhaseName = currentPhase(this.props.ctx);
+
+        console.log(currentPhaseName);
 
         switch (currentPhaseName) {
             case Phase.INITIAL_PLACEMENT:
-                switch (stage) {
-                    case Stage.BUILD_CITY:
-                        return true;
-                    case Stage.BUILD_ROAD:{
-                        let numOfPlayerSettlements = numberOfSettlementsForCurrentPlayer(this.props.G, this.props.ctx);
-                        if (numOfPlayerSettlements == 0 || numOfPlayerSettlements == 2) {
-                            return true
-                        }
-                    }
-                    case Stage.BUILD_SETTLEMENT: {
-                        return numberOfSettlementsForCurrentPlayer(this.props.G, this.props.ctx) == 2;
-                    }
-                }
+            case Phase.INITIAL_PLACEMENT_REVERSED:
+                return true;
         }
 
         return false;
