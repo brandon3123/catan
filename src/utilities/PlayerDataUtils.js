@@ -1,3 +1,5 @@
+import {Resource} from "../enums/Resource";
+
 export const initializePlayerData = (numPlayers) => {
 
     let colors = [
@@ -25,13 +27,18 @@ export const initializePlayerData = (numPlayers) => {
         longestRoad: false,
         largestArmy: false,
         color: getColor(),
-        resources:[
-            {"sheep": 0},
-            {"wood": 0},
-            {"brick": 0},
-            {"coal": 0}
-        ]
+        resources:initializeResourceMap()
     }
+  }
+
+  function initializeResourceMap() {
+      let resourceMap = new Map();
+      resourceMap.set(Resource.ORE, 0);
+      resourceMap.set(Resource.WOOD, 0);
+      resourceMap.set(Resource.SHEEP, 0);
+      resourceMap.set(Resource.WHEAT, 0);
+      resourceMap.set(Resource.BRICK, 0);
+      return resourceMap;
   }
 
   function getColor() {

@@ -29,7 +29,7 @@ import {
     buildTopRightRoadAndGoToSettlementStage,
     isInitialPhaseCompleted,
     beginInitialPhaseReversed,
-    isInitialPhaseReversedCompleted
+    isInitialPhaseReversedCompleted, hideAvailableTargetLocationsAndDistributeResourcesForInitialReversedPhase
 } from "./utilities/InitialPhaseUtils";
 import {
     buildLeftRoadAndEndStage,
@@ -79,6 +79,11 @@ const Catan = {
                     buildLeftRoadAndGoToSettlementStage,
                     buildTopRightRoadAndGoToSettlementStage
                 }
+            },
+            distributeResources: {
+                moves: {
+
+                }
             }
         },
         order: {
@@ -123,7 +128,7 @@ const Catan = {
 
         initialPiecePlacementReverse: {
             onBegin: (G, ctx) => beginInitialPhaseReversed(G, ctx),
-            onEnd: (G) => hideAllTargetLocations(G),
+            onEnd: (G) => hideAvailableTargetLocationsAndDistributeResourcesForInitialReversedPhase(G),
             moves: {
                 buildTopStructureAndGoToRoadStageIfPermitted,
                 buildLeftStructureAndGoToRoadStageIfPermitted,

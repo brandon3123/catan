@@ -15,12 +15,13 @@ import {
     buildTopRightRoadAndSetNextStage
 } from "./MoveUtils";
 import {
-    currentPlayer,
+    currentPlayer, getTilesWithSettlementsFromPlayer,
     numberOfRoadsForSelectedPlayer,
     numberOfSettlementsForCurrentPlayer,
-    numberOfSettlementsForSelectedPlayer
+    numberOfSettlementsForSelectedPlayer, playerDataForGame
 } from "./PlayerUtils";
 import {nextUpPlayerPosition} from "./GameUtils";
+import {addResourcesToPlayerForTile, logPlayersResourcesAmount} from "./ResourceUtils";
 
 export const beginInitialPhase = (G, ctx) => {
     showAllStructureBuildingLocations(G);
@@ -33,6 +34,16 @@ export const isInitialPhaseCompleted = (G) => {
 
 export const isInitialPhaseReversedCompleted = (G) => {
     return doAllPlayersHaveRoadAndSettlementCount(G, 2);
+}
+
+export const hideAvailableTargetLocationsAndDistributeResourcesForInitialReversedPhase = (G) => {
+    hideAllTargetLocations(G);
+    let players = playerDataForGame(G);
+    for (let player of players) {
+        let playersTiles = getTilesWithSettlementsFromPlayer(G, player);
+        addResourcesToPlayerForTile(playersTiles[playersTiles.length - 1], player);
+        logPlayersResourcesAmount(player);
+    }
 }
 
 export const beginInitialPhaseReversed = (G, ctx) => {

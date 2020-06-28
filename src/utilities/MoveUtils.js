@@ -5,7 +5,13 @@ import {
     isTopRightRoadAvailable,
     isTopStructureAvailable
 } from "./CatanUtils";
-import {addStructureToPlayer, currentPlayer} from "./PlayerUtils";
+import {
+    addStructureToPlayer,
+    currentPlayer,
+    getTilesForPlayer, getTilesWithCitiesFromPlayer,
+    getTilesWithSettlementsFromPlayer,
+    playerDataForGame
+} from "./PlayerUtils";
 import {Structure} from "../enums/Structure";
 import {endCurrentStage, setStage} from "./StageUtils";
 
@@ -23,6 +29,17 @@ export const buildTopHouse = (G, ctx, id) => {
 
 export const buildLeftHouse = (G, ctx, id) => {
     buildLeftStructure(G, ctx, id, Structure.SETTLEMENT);
+}
+
+export const distributeResources = (G, ctx) => {
+    let playerData = playerDataForGame(G);
+    for (let player of playerData) {
+        let tilesWithSettlements = getTilesWithSettlementsFromPlayer(G, player);
+        let tilesWithCities = getTilesWithCitiesFromPlayer(G, player);
+
+        
+
+    }
 }
 
 export const buildTopLeftRoadAndSetNextStage = (G, ctx, id, nextStage) => {

@@ -13,12 +13,32 @@ export const addStructureToPlayer = (player, type, id) => {
     player.victoryPoints = calculateVictoryPoints(player);
 }
 
-export const getTilesForPlayer = (G, player) => {
+export const getTilesWithSettlementsFromPlayer = (G, player) => {
     let playersTiles = [];
+
     for (let tileId of player.settlements) {
         let tile = getTile(G, tileId);
         playersTiles.push(tile);
     }
+
+    return playersTiles;
+}
+
+export const getTilesWithCitiesFromPlayer = (G, player) => {
+    let playersTiles = [];
+
+    for (let tileId of player.cities) {
+        let tile = getTile(G, tileId);
+        playersTiles.push(tile);
+    }
+
+    return playersTiles;
+}
+
+export const getTilesForPlayer = (G, player) => {
+    let playersTiles = [];
+    playersTiles = playersTiles.concat(getTilesWithSettlementsFromPlayer(G, player));
+    playersTiles = playersTiles.concat(getTilesWithCitiesFromPlayer(G, player));
     return playersTiles;
 }
 
@@ -43,4 +63,8 @@ export const numberOfSettlementsForSelectedPlayer = (player) => {
 
 export const numberOfRoadsForSelectedPlayer = (player) => {
     return player.roads;
+}
+
+export const playerDataForGame = (G) => {
+    return G.playerData;
 }

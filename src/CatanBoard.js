@@ -176,8 +176,6 @@ class CatanBoard extends React.Component {
     isStageDisabledForPhase() {
         let currentPhaseName = currentPhase(this.props.ctx);
 
-        console.log(currentPhaseName);
-
         switch (currentPhaseName) {
             case Phase.INITIAL_PLACEMENT:
             case Phase.INITIAL_PLACEMENT_REVERSED:
@@ -213,7 +211,6 @@ class CatanBoard extends React.Component {
 
     buildTopStructure = (id) => {
         let stageName = stageNameForCurrentPlayer(this.props.ctx);
-        console.log(stageName);
         switch (stageName) {
             case Stage.BUILD_SETTLEMENT:
                 this.props.moves.buildTopStructureAndGoToRoadStageIfPermitted(id, Structure.SETTLEMENT);

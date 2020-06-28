@@ -6,6 +6,7 @@ import {
     getTilesForPlayer
 } from "./PlayerUtils";
 import {currentPhase} from "./GameUtils";
+import {rightNeighbourForTile} from "./TileUtils";
 
 export const getTile = (G, id) => {
     return G.board.tiles.get(id);
@@ -213,25 +214,7 @@ export const canPlaceLeftStructureForTile = (tile) => {
     return false;
 }
 
-export const rightNeighbourForTile = (tile) => {
-    let topRightNeighbour = tile.topRightNeighbour;
-    if (topRightNeighbour) {
-        let trBrNeighbour = topRightNeighbour.bottomRightNeighbour;
-        if (trBrNeighbour) {
-            return trBrNeighbour;
-        }
-    }
 
-    let bottomRightNeighbour = tile.bottomRightNeighbour;
-    if (bottomRightNeighbour) {
-        let bRtRNeighbour = bottomRightNeighbour.topRightNeighbour;
-        if (bRtRNeighbour) {
-            return bRtRNeighbour;
-        }
-    }
-
-    return null;
-}
 
 export const showRoadPlacementsForPlayer = (G, player) => {
     for (let tile of getAllTiles(G)) {
