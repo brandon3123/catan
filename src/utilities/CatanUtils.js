@@ -240,7 +240,7 @@ export const showRoadPlacementsForPlayer = (G, player) => {
 }
 
 export const showRoadPlacementsForTileAndPlayer = (tile, player) => {
-    if (tileHasNoBuiltRoads(tile)) {
+    if (playerHasNoRoadsOnTile(tile, player)) {
         if (playerOnlyHasTopStructure(tile, player)) {
             showTopLeftRoadTargetForTile(tile);
             showTopRightRoadTargetForTile(tile);
@@ -329,6 +329,10 @@ export const tileHasNoBuiltRoads = (tile) => {
     let tr = (!tile.topRightRoadColor || tile.topRightRoadColor === Structure.TARGET);
     let left = (!tile.leftRoadColor || tile.leftRoadColor === Structure.TARGET);
     return tl && tr && left;
+}
+
+export const playerHasNoRoadsOnTile = (tile, player) => {
+    return !playerHasLeftRoadOnTile(tile, player) && !playerHasTopLeftRoadOnTile(tile, player) && !playerHasTopRightRoadOnTile(tile, player);
 }
 
 export const tileHasNoBuiltStructures = (tile) => {
