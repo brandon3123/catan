@@ -41,8 +41,8 @@ export const hideAvailableTargetLocationsAndDistributeResourcesForInitialReverse
     let players = playerDataForGame(G);
     for (let player of players) {
         let playersTiles = getTilesWithSettlementsFromPlayer(G, player);
-        addResourcesToPlayerForTile(playersTiles[playersTiles.length - 1], player);
-        logPlayersResourcesAmount(player);
+        let lastTileOccupied = playersTiles[playersTiles.length -1];
+        addResourcesToPlayerForTile(lastTileOccupied, player);
     }
 }
 

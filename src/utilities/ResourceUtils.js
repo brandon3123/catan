@@ -41,12 +41,8 @@ function addResourcesToPlayerForTopStructureOnTileAndNeighbours(tile, player) {
 
 function addTileResourceAmountToPlayer(tile, player, amountToAdd) {
     if (tile) {
-        console.log("tile for " + player.color + " " + tile.value);
         let resourceType = tileResourceType(tile);
-        console.log("type for " + player.color + " " + resourceType);
-
         if (resourceTypeCanBeAdded(resourceType)) {
-            console.log("allowed for " + player.color + " " + resourceType);
             let resourceAmountForPlayer = player.resources.get(resourceType);
             resourceAmountForPlayer += amountToAdd;
             player.resources.set(resourceType, resourceAmountForPlayer);
