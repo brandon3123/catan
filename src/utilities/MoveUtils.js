@@ -93,13 +93,16 @@ export const buildTopLeftRoadAndEndStage = (G, ctx, id) => {
 }
 
 function buildTopStructure(G, ctx, id, type) {
+    console.log('meow '+ G);
     let tile = getTile(G, id);
+    console.log('whatttttt' + tile);
     if (isTopStructureAvailable(tile)) {
         let player = currentPlayer(G, ctx);
         tile.topStructure = type;
         tile.topStructureColor = player.color;
         tile.isTopStructureAvailable = false;
         addStructureToPlayer(player, type, id);
+        console.log('after ' + currentPlayer(G, ctx).victoryPoints);
     }
 }
 
@@ -110,6 +113,8 @@ function buildLeftStructure(G, ctx, id, type) {
         tile.leftStructure = type;
         tile.leftStructureColor = player.color;
         tile.isLeftStructureAvailable = false;
+        G.playerData[ctx.currentPlayer].victoryPoints += 1;
+        console.log('victory points ' + G.playerData[ctx.currentPlayer].victoryPoints);
         addStructureToPlayer(player, type, id);
     }
 }

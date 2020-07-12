@@ -25,6 +25,8 @@ import {
 } from "./utilities/CatanUtils";
 import {currentPlayer, numberOfSettlementsForCurrentPlayer} from "./utilities/PlayerUtils";
 import {Structure} from "./enums/Structure";
+import {numberOfResourceTypeForPlayerId} from "./utilities/ResourceUtils";
+import {Resource} from "./enums/Resource";
 
 class CatanBoard extends React.Component {
     static propTypes = {
@@ -37,6 +39,7 @@ class CatanBoard extends React.Component {
     };
 
     render() {
+        console.log('board: ' + JSON.stringify(this.props.G));
         return (
             <div className="container">
                 <div className="actionMenu">
@@ -90,14 +93,18 @@ class CatanBoard extends React.Component {
                                 <Typography className="text-center" color="textSecondary" gutterBottom>
                                     Resources
                                 </Typography>
-                                <Chip
-                                    label="Brick"
-                                    variant="outlined"
-                                    color={red[500]}
-                                />
-                                <Chip label="Sheep" variant="outlined" />
-                                <Chip label="Ore" variant="outlined" />
-                                <Chip label="Wheat" variant="outlined" />
+                                {/*<Chip*/}
+                                {/*    label={"Brick (" + numberOfResourceTypeForPlayerId(this.props.G, this.props.playerID, Resource.BRICK) + ")"}*/}
+                                {/*    variant="outlined" />*/}
+                                {/*<Chip*/}
+                                {/*    label={"Sheep (" + numberOfResourceTypeForPlayerId(this.props.G, this.props.playerID, Resource.SHEEP) + ")"}*/}
+                                {/*    variant="outlined" />*/}
+                                {/*<Chip*/}
+                                {/*    label={"Ore (" + numberOfResourceTypeForPlayerId(this.props.G, this.props.playerID, Resource.ORE) + ")"}*/}
+                                {/*    variant="outlined" />*/}
+                                {/*<Chip*/}
+                                {/*    label={"Wheat (" + numberOfResourceTypeForPlayerId(this.props.G, this.props.playerID, Resource.WHEAT) + ")"}*/}
+                                {/*    variant="outlined" />*/}
                             </CardContent>
                         </Card>
                     </div>

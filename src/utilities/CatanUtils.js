@@ -9,7 +9,8 @@ import {currentPhase} from "./GameUtils";
 import {rightNeighbourForTile} from "./TileUtils";
 
 export const getTile = (G, id) => {
-    return G.board.tiles.get(id);
+    let tile = G.board.tiles.get(id);
+    return tile
 }
 
 export const getAllTiles = (G) => {

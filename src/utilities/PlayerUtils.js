@@ -68,3 +68,7 @@ export const numberOfRoadsForSelectedPlayer = (player) => {
 export const playerDataForGame = (G) => {
     return G.playerData;
 }
+
+export const playerForId = (G, playerId) => {
+    return G.playerData[playerId];
+}

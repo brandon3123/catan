@@ -60,8 +60,14 @@ const Catan = {
                 moves: {
                     buildTopStructureAndEndStage,
                     buildLeftStructureAndEndStage,
-                    buildTopStructureAndGoToRoadStageIfPermitted: buildTopStructureAndGoToRoadStageIfPermitted,
-                    buildLeftStructureAndGoToRoadStageIfPermitted: buildLeftStructureAndGoToRoadStageIfPermitted
+                    buildTopStructureAndGoToRoadStageIfPermitted: {
+                        move: buildTopStructureAndGoToRoadStageIfPermitted,
+                        client: false
+                    },
+                    buildLeftStructureAndGoToRoadStageIfPermitted: {
+                        move:buildLeftStructureAndGoToRoadStageIfPermitted,
+                        client: false
+                    }
                 }
             },
             buildCity: {
@@ -72,12 +78,30 @@ const Catan = {
             },
             buildRoad: {
                 moves: {
-                    buildLeftRoadAndEndStage,
-                    buildTopLeftRoadAndEndStage,
-                    buildTopRightRoadAndEndStage,
-                    buildTopLeftRoadAndGoToSettlementStage,
-                    buildLeftRoadAndGoToSettlementStage,
-                    buildTopRightRoadAndGoToSettlementStage
+                    buildLeftRoadAndEndStage: {
+                        move: buildLeftRoadAndEndStage,
+                        client: false
+                    },
+                    buildTopLeftRoadAndEndStage: {
+                        move: buildTopLeftRoadAndEndStage,
+                        client: false
+                    },
+                    buildTopRightRoadAndEndStage: {
+                        move: buildTopRightRoadAndEndStage,
+                        client: false
+                    },
+                    buildTopLeftRoadAndGoToSettlementStage: {
+                        move: buildTopLeftRoadAndGoToSettlementStage,
+                        client: false
+                    },
+                    buildLeftRoadAndGoToSettlementStage: {
+                        move: buildLeftRoadAndGoToSettlementStage,
+                        client: false
+                    },
+                    buildTopRightRoadAndGoToSettlementStage: {
+                        move: buildTopRightRoadAndGoToSettlementStage,
+                        client: false
+                    }
                 }
             },
             distributeResources: {
@@ -155,6 +179,8 @@ const Catan = {
             }
         }
     }
+
+    // playerView: (G, ctx, playerID) =>
 }
 
 export default Catan;

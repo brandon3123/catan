@@ -1,7 +1,6 @@
 import {Resource} from "../enums/Resource";
 
 export const initializePlayerData = (numPlayers) => {
-
     let colors = [
         {used: false, color: 'red'},
         {used: false, color: 'blue'},

@@ -29,10 +29,12 @@ export const beginInitialPhase = (G, ctx) => {
 }
 
 export const isInitialPhaseCompleted = (G) => {
+    console.log('initial');
     return doAllPlayersHaveRoadAndSettlementCount(G, 1);
 }
 
 export const isInitialPhaseReversedCompleted = (G) => {
+    console.log('initial reveresed');
     return doAllPlayersHaveRoadAndSettlementCount(G, 2);
 }
 
@@ -68,6 +70,9 @@ export const buildTopRightRoadAndGoToSettlementStage = (G, ctx, id) => {
 
 export const buildTopStructureAndGoToRoadStageIfPermitted = (G, ctx, id, type) => {
     buildTopStructureAndSetNextStage(G, ctx, id, type, Stage.BUILD_ROAD);
+    console.log("G1: " + JSON.stringify(G));
+    console.log("ctx1: " + JSON.stringify(ctx));
+    console.log("id1: " + JSON.stringify(id));
     nextCourseOfActionFollowingStructureBuild(G, id, ctx);
 }
 
@@ -97,7 +102,6 @@ function nextCourseOfActionFollowingRoadBuild(G, ctx) {
                 value: value
             }
         );
-
     }
 }
 
@@ -124,9 +128,11 @@ function showTargetLocationForLeftStructureAndPlayer(tile) {
 
 function doAllPlayersHaveRoadAndSettlementCount(G, buildingCount) {
     for (let player of G.playerData) {
-        if (player.settlements != buildingCount && player.roads != buildingCount) {
+        if (player.settlements !== buildingCount && player.roads !== buildingCount) {
+            console.log('not ended');
             return false;
         }
     }
+    console.log('ended');
     return true;
 }

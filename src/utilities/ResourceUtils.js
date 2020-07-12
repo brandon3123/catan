@@ -2,6 +2,7 @@ import {playerHasLeftStructure, playerHasTopStructure} from "./CatanUtils";
 import {tileResourceType, tileValue} from "./TileUtils";
 import {Structure} from "../enums/Structure";
 import {Resource} from "../enums/Resource";
+import {playerForId} from "./PlayerUtils";
 
 export const addResourcesToPlayerForTile = (tile, player) => {
     if (playerHasLeftStructure(tile, player)) {
@@ -14,6 +15,15 @@ export const addResourcesToPlayerForTile = (tile, player) => {
 export const logPlayersResourcesAmount = (player) => {
     for (const [key, value] of player.resources.entries()) {
         console.log("player: " + player.color + " Resource: " + key + " - " + value);
+    }
+}
+
+export const numberOfResourceTypeForPlayerId = (G, playerId, resourceType) => {
+    if (playerId) {
+        let player = playerForId(G, playerId);
+        return player.resources.get(resourceType);
+    } else {
+        return 0;
     }
 }
 
